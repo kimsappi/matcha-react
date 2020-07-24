@@ -1,6 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
-const Login = () => {
+import getThisPage from '../modules/httpQueries';
+
+const Login = props => {
+	useEffect(() => {
+		getThisPage(window.location.href)
+		  .then(data => {
+			if (data.loggedIn && data.loggedIn !== props.state.loggedIn)
+			  props.setState({...props.state, loggedIn: data.loggedIn});
+		  });
+	});
 	return (
 		<div>
 			<h1>Login page</h1>

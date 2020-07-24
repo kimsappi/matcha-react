@@ -1,10 +1,6 @@
 /* GET home page. */
 const get = (req, res, next) => {
 	console.log(req.session.user);
-	return res.json({
-		loggedIn: true,
-		username: 'admin'
-	});
 	res.render('index',
 		{
 			title: 'Express',

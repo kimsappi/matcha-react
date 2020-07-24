@@ -9,15 +9,20 @@ import Index from './components/Index';
 import getThisPage from './modules/httpQueries';
 
 function App() {
+  let loggedIn = localStorage.getItem('loggedIn');
+  if (!loggedIn)
+    loggedIn = false;
+
   const [state, setState] = useState({
-    loggedIn: false
+    loggedIn: loggedIn
   });
 
   useEffect(() => {
     getThisPage(window.location.href)
       .then(data => {
-        if (data.loggedIn !== state.loggedIn)
+        if (data.loggedIn && data.loggedIn !== state.loggedIn)
           setState({...state, loggedIn: data.loggedIn});
+          localStorage.setItem('loggedIn', data.loggedIn);
       });
   });
 
@@ -29,7 +34,7 @@ function App() {
         <Switch>
 
           <Route path='/login'>
-            <Login />
+            <Login setState={setState} state={state}/>
           </Route>
 
           <Route path='/'>
