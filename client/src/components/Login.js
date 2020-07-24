@@ -1,19 +1,16 @@
 import React, {useEffect} from 'react';
 
-import getThisPage from '../modules/httpQueries';
+import submitLogin from '../modules/httpQueries';
 
-const Login = props => {
-	useEffect(() => {
-		getThisPage(window.location.href)
-		  .then(data => {
-			if (data.loggedIn && data.loggedIn !== props.state.loggedIn)
-			  props.setState({...props.state, loggedIn: data.loggedIn});
-		  });
-	});
+const Login = props => {	
 	return (
 		<div>
 			<h1>Login page</h1>
-			<input type='text' />
+			<label htmlFor='username' />
+			<input type='text' name='username' id='username' />
+			<label htmlFor='password' />
+			<input type='password' name='password' id='password' />
+			<button type='button' onClick={submitLogin}>OK</button>
 		</div>
 	);
 };

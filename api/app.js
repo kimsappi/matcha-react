@@ -8,6 +8,7 @@ var logger = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 const config = require('./config.json');
+// const {authenticationMiddleware} = require('./modules/authentication');
 //const pool = require('./modules/dbConnect');
 
 // Routes
@@ -27,6 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({secret: config.secret}));
 app.use(cors());
+// app.use(authenticationMiddleware);
 
 // -----------------------------------------------------------------------------
 // Routes

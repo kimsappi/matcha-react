@@ -6,25 +6,23 @@ import Header from './components/Header';
 import Login from './components/Login';
 import Index from './components/Index';
 
-import getThisPage from './modules/httpQueries';
+import {getUser} from './modules/userData';
 
 function App() {
-  let loggedIn = localStorage.getItem('loggedIn');
-  if (!loggedIn)
-    loggedIn = false;
+  let user = getUser();
 
   const [state, setState] = useState({
-    loggedIn: loggedIn
+    user: user
   });
 
-  useEffect(() => {
-    getThisPage(window.location.href)
-      .then(data => {
-        if (data.loggedIn && data.loggedIn !== state.loggedIn)
-          setState({...state, loggedIn: data.loggedIn});
-          localStorage.setItem('loggedIn', data.loggedIn);
-      });
-  });
+  // useEffect(() => {
+  //   getThisPage(window.location.href)
+  //     .then(data => {
+  //       if (data.loggedIn && data.loggedIn !== state.loggedIn)
+  //         setState({...state, loggedIn: data.loggedIn});
+  //         localStorage.setItem('loggedIn', data.loggedIn);
+  //     });
+  // });
 
   return (
     <>
