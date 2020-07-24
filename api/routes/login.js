@@ -3,6 +3,7 @@ const pool = require('../modules/dbConnect');
 const hashPassword = require('../modules/hash');
 const mysqlDatetime = require('../modules/mysqlDatetime');
 const {getLoginCoordinates} = require('../modules/getLoginCoordinates');
+const {generateJWT} = require('../modules/authentication');
 
 const get = (req, res, next) => {
 	// User is already logged in
@@ -18,12 +19,13 @@ const get = (req, res, next) => {
 
 const post = (req, res, next) => {
 	// User is already logged in
+	console.log(req.session.user);
 	if (req.session.user)
 		return res.status(301).redirect('/');
 	
 	// Username or password not provided
 	if (!req.body.username || !req.body.password)
-		return res.render('login');
+		return res.json(null);
 	
 	const hashedPassword = hashPassword(req.body.username, req.body.password);
 	const query = 'SELECT * FROM `users` WHERE username = ? AND password = ?;';
@@ -42,8 +44,10 @@ const post = (req, res, next) => {
 
 			req.session.user = {
 				id: results[0].id,
-				username: results[0].username
+				username: results[0].username,
+				token: generateJWT(results[0].username)
 			};
+			console.log('session set');
 			pool.query(`UPDATE users
 				SET last_login = '${mysqlDatetime(new Date())}',
 					latitude = ${loginCoordinates.latitude},

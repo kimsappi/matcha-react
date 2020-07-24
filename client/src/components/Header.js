@@ -7,7 +7,7 @@ const Header = props => {
 	console.log(props);
 	if (props.state.loggedIn)
 		return (
-			<NavLoggedIn />
+			<NavLoggedIn username={props.state.username} />
 		);
 	else
 		return (<Nav />);

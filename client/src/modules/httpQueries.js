@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {setUser} from './userData';
+import {setUser, setToken} from './userData';
 
 const baseUrl = 'http://localhost:3001/';
 
@@ -11,20 +11,26 @@ const getThisPage = url => {
 	return request.then(response => response.data);
 }
 
-const submitLogin = () => {
-	const username = document.getElementById('username');
-	const password = document.getElementById('password');
+const submitLogin = (state, setState) => {
+	const username = document.getElementById('username').value;
+	const password = document.getElementById('password').value;
 
 	const request = axios.post(baseUrl + 'login', {
 		username: username,
 		password: password
 	})
 		.then(response => {
-			if (!response.data)
+			if (!response.data) {
+				setState({});
+				setUser(null, null);
+				setToken(null);
 				return false;
+			}
 			else {
 				console.log(response.data);
 				setUser(response.data.username, response.data.id);
+				setToken(response.data.token);
+				setState({loggedIn: true, username: response.data.username, id: response.data.id});
 				return true;
 			}
 		});

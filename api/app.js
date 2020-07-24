@@ -8,7 +8,7 @@ var logger = require('morgan');
 const cors = require('cors');
 const session = require('express-session');
 const config = require('./config.json');
-// const {authenticationMiddleware} = require('./modules/authentication');
+const {authenticationMiddleware} = require('./modules/authentication');
 //const pool = require('./modules/dbConnect');
 
 // Routes
@@ -26,9 +26,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(session({secret: config.secret}));
+app.use(session({
+  secret: config.secret,
+  cookie: {
+    sameSite: false,
+    httpOnly: false
+  }
+}));
 app.use(cors());
-// app.use(authenticationMiddleware);
+app.use(authenticationMiddleware);
 
 // -----------------------------------------------------------------------------
 // Routes

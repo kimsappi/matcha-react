@@ -7,7 +7,13 @@ const setUser = (username, id) => {
 	}));
 };
 
+const getToken = () => JSON.parse(localStorage.getItem('token'));
+
+const setToken = token => localStorage.setItem('token', token);
+
 module.exports = {
 	getUser,
-	setUser
+	setUser,
+	getToken,
+	setToken
 };
