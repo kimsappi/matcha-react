@@ -6,23 +6,23 @@ const pool = require('../../modules/dbConnect');
 
 const get = (req, res, next) => {
 	// User is not logged in
-	if (!req.session.user)
-		return res.status(301).redirect('/login');
+	console.log(req.user);
+	if (!req.user)
+		return res.json(null);
 
 	// I wonder if doing some kind of join here would make more sense
-	const query = `SELECT * FROM users WHERE id = ${req.session.user.id};`;
+	const query = `SELECT * FROM users WHERE id = ${req.user.id};`;
 	pool.query(query, (error, results) => {
 		if (error || !results)
-			return res.status(301).redirect('/');
+		return res.json(null);
 
-		const tagsQuery = `SELECT string FROM tags WHERE user = ${req.session.user.id};`;
+		const tagsQuery = `SELECT string FROM tags WHERE user = ${req.user.id};`;
 		pool.query(tagsQuery, (tagsError, tagsResults) => {
 			if (tagsError)
-				return res.status(301).redirect('/');
+				return res.json(null);
 
-			return res.render('myProfile/profile', {
+			return res.json({
 				userData: results[0],
-				user: req.session.user,
 				biography: escape(results[0].biography),
 				tags: stringifyTags(tagsResults)
 			});

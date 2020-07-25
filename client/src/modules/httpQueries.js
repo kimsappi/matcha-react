@@ -1,21 +1,24 @@
 import axios from 'axios';
 
 import {setUser, setToken} from './userData';
+import {getToken} from './userData';
 
 const baseUrl = 'http://localhost:3001/';
 
-const getThisPage = url => {
+export const getThisPage = url => {
 	url = url.replace('3000', '3001');
+	console.log('Requesting from url:');
 	console.log(url);
-	const request = axios.get(url);
+	console.log(getToken());
+	const request = axios.get(url, {headers: {Authorization: `Bearer ${getToken()}`}});
 	return request.then(response => response.data);
 }
 
-const submitLogin = (state, setState) => {
+export const submitLogin = (state, setState) => {
 	const username = document.getElementById('username').value;
 	const password = document.getElementById('password').value;
 
-	const request = axios.post(baseUrl + 'login', {
+	axios.post(baseUrl + 'login', {
 		username: username,
 		password: password
 	})
@@ -36,9 +39,18 @@ const submitLogin = (state, setState) => {
 		});
 };
 
+export const logOut = (state, setState) => {
+	setState({});
+	setUser(null, null);
+	setToken(null);
+};
+
 // module.exports = {
 // 	getThisPage,
 // 	submitLogin
 // };
 
-export default submitLogin;
+// module.exports = {
+// 	submitLogin,
+// 	logOut
+// };

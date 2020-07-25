@@ -5,6 +5,7 @@ import './App.css';
 import Header from './components/Header';
 import Login from './components/Login';
 import Index from './components/Index';
+import MyProfile from './components/MyProfile';
 
 import {getUser} from './modules/userData';
 
@@ -27,12 +28,16 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header state={state} />
+        <Header state={state} setState={setState} />
 
         <Switch>
 
+          <Route path='/myProfile'>
+            <MyProfile setState={setState} state={state} />
+          </Route>
+
           <Route path='/login'>
-            <Login setState={setState} state={state}/>
+            <Login setState={setState} state={state} />
           </Route>
 
           <Route path='/'>

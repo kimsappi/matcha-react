@@ -45,7 +45,7 @@ const post = (req, res, next) => {
 			req.session.user = {
 				id: results[0].id,
 				username: results[0].username,
-				token: generateJWT(results[0].username)
+				token: generateJWT({user: results[0].username, id: results[0].id})
 			};
 			console.log('session set');
 			pool.query(`UPDATE users

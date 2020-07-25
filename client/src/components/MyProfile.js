@@ -1,8 +1,15 @@
 import React, {useEffect} from 'react';
 
-import {submitLogin} from '../modules/httpQueries';
+import {getThisPage} from '../modules/httpQueries';
 
-const Login = props => {	
+const MyProfile = ({state, setState}) => {	
+	useEffect(() => {
+		getThisPage(window.location.href)
+			.then(response => {
+				console.log('Profile response:');
+				console.log(response);
+			});
+	});
 
 	return (
 		<div>
@@ -11,9 +18,8 @@ const Login = props => {
 			<input type='text' name='username' id='username' />
 			<label htmlFor='password' />
 			<input type='password' name='password' id='password' />
-			<button type='button' onClick={() => submitLogin(props.state, props.setState)}>OK</button>
 		</div>
 	);
 };
 
-export default Login;
+export default MyProfile;
