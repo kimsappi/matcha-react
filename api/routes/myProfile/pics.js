@@ -5,39 +5,38 @@ const pool = require('../../modules/dbConnect');
 
 const get = (req, res, next) => {
 	// User is not logged in
-	if (!req.session.user)
-		return res.status(301).redirect('/login');
+	if (!req.user)
+		return res.json(null);
 
-	const query = 'SELECT * FROM user_photos WHERE `user` = ' + req.session.user.id + ';';
+	const query = 'SELECT * FROM user_photos WHERE `user` = ' + req.user.id + ';';
 	pool.query(query, (error, results) => {
 		if (error) {
 			// TODO
 			console.log('error getting pics');
 			console.log(error);
+			return res.json('DB error');
 		}
 		else if (!results || !results[0]) {
 			// TODO
-			res.render('myProfile/pics');
+			return res.json('empty');
 		}
 		else {
 			console.log(results[0]);
-			res.render('myProfile/pics', {
-				'results': results,
-				'title': 'Your photos',
-				'user': req.session.user
-			});
+			return res.json({photos: results});
 		}
 	});
 };
 
 const post = (req, res, next) => {
 	console.log(req.files);
-	const query = 'SELECT COUNT(id) AS count FROM user_photos WHERE `user` = ' + req.session.user.id + ';';
+	if (!req.user)
+		return res.json(null);
+	const query = 'SELECT COUNT(id) AS count FROM user_photos WHERE `user` = ?;';
 	let imageCount = 0;
-	pool.query(query, (error, result) => {
+	pool.query(mysql.format(query, [req.user.id]), (error, result) => {
 		if (error) {
 			// TODO
-			console.log('error');
+			return res.json(null);
 		}
 		else
 			imageCount = result[0].count;
@@ -50,12 +49,12 @@ const post = (req, res, next) => {
 			if (!/^[a-zA-Z]+/.test(extension))
 				break;
 			const insertQuery = 'INSERT INTO user_photos (`user`, `extension`) VALUES (?, ?);';
-			let preparedQuery = mysql.format(insertQuery, [req.session.user.id, extension]);
+			let preparedQuery = mysql.format(insertQuery, [req.user.id, extension]);
 			let filename = '';
 			pool.query(preparedQuery, (error, result) => {
 				if (error) {
 					//todo
-					console.log('error inserting picture');
+					return res.json('DB error');
 				}
 				else {
 					filename = result.insertId;
@@ -63,14 +62,15 @@ const post = (req, res, next) => {
 					
 					// User uploads their first image, make that default
 					if (!imageCount) {
-						const defaultQuery = `UPDATE users SET main_pic = ${filename} WHERE id = ${req.session.user.id};`;
+						const defaultQuery = `UPDATE users SET main_pic = ${filename} WHERE id = ${req.user.id};`;
 						pool.query(defaultQuery);
 					}
+					return res.json('OK');
 				}
 			});
 		}
 	});
-	return res.redirect('back');
+	return res.json(null);
 };
 
 module.exports = {
