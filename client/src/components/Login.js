@@ -12,9 +12,11 @@ const Login = props => {
 			<input type='text' name='username' id='username' />
 			<label htmlFor='password' />
 			<input type='password' name='password' id='password' />
-			<button type='button' onClick={() => submitLogin(props.state, props.setState)}>OK</button>
 		</div>
 	);
 };
+
+//			<button type='button' onClick={() => submitLogin(props.state, props.setState)}>OK</button>
+
 
 export default Login;
