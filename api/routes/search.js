@@ -18,33 +18,35 @@ const filterProfiles = (profiles, params) => {
 
 const get = (req, res, next) => {
 	// User is not logged in
-	if (!req.session.user)
-		return res.status(301).redirect('/');
-	const query = `SELECT * FROM users WHERE id = ${req.session.user.id};`;
+	if (!req.user)
+		return res.json(null);
+	const query = `SELECT * FROM users WHERE id = ${req.user.id};`;
 	pool.query(query, (error, result) => {
-		if (error || !result || !result[0])
-			return res.status(301).redirect('/');
+		if (error || !result)
+			return res.json(null);
+		if (!result[0])
+			return res.json('empty');
 		const myData = result[0];
 		if (!myData.gender)
-			res.status(301).redirect('/myProfile/profile');
+			return res.json('gender not set');
 		const genderQueries = getGenderQueries(myData);
-		const usersQuery = `SELECT * FROM users WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ${req.session.user.id};`;
+		const usersQuery = `SELECT * FROM users WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ${req.user.id};`;
 		pool.query(usersQuery, (error, results) => {
 			if (error)
-				return res.status(301).redirect('/');
-			res.render('search', {
+				return res.json(null);
+			return res.json({
 				profiles: filterProfiles(results, req.params),
-				user: req.session.user
+				user: req.user
 			});
 		});
 	});
 };
 
-const post = (req, res, next) => {
+// const post = (req, res, next) => {
 	
-};
+// };
 
 module.exports = {
-	get,
-	post
+	get
+	//post
 };

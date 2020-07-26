@@ -5,18 +5,18 @@ const pool = require('../modules/dbConnect');
 const sendEmail = require('../modules/mail');
 const getRootUrl = require('../modules/getRootUrl');
 
-const get = (req, res, next) => {
-	// User is already logged in
-	if (req.session.user)
-		return res.status(301).redirect('/');
+// const get = (req, res, next) => {
+// 	// User is already logged in
+// 	if (req.user)
+// 		return res.json(null);
 
-	res.render('forgotPassword');
-};
+// 	res.render('forgotPassword');
+// };
 
 const post = (req, res, next) => {
 	// User is already logged in
-	if (req.session.user || !req.body.email)
-		return res.status(301).redirect('/');
+	if (req.user || !req.body.email)
+		return res.json(null);
 	
 	const resetToken = crypto.createHash('md5').update(req.query.email + new Date()).digest('hex');
 	const query = `
@@ -40,10 +40,10 @@ const post = (req, res, next) => {
 			sendEmail(req.body.email, 'Matcha | Reset password', emailContent, true)
 	});
 
-	res.status(301).redirect('/');
+	res.json('OK');
 };
 
 module.exports = {
-	get,
+	//get,
 	post
 };

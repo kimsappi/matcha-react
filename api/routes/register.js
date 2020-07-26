@@ -10,7 +10,7 @@ const getRootUrl = require('../modules/getRootUrl');
 /* GET registration page */
 const get = (req, res, next) => {
 	// User is already logged in
-	if (req.session.user)
+	if (req.user)
 		return res.status(301).redirect('/');
 
 	res.render('register');
@@ -19,11 +19,11 @@ const get = (req, res, next) => {
 /* POST to registration page (attempt to register new account) */
 const post = (req, res, next) => {
 	// User is already logged in
-	if (req.session.user)
-		return res.status(301).redirect('/');
+	if (req.user)
+		return res.json(null);
 
 	if (!validateRegistrationData(req.body))
-		return res.render('register');
+		return res.json(null)
 	else {
 		const query = ' \
 			INSERT INTO `users` SET \
@@ -55,11 +55,11 @@ const post = (req, res, next) => {
 				// Insert failed probably because of email/username clash
 				if (error) {
 					console.log('error',error);
-					return res.render('register');
+					return res.json(null);
 				}
 				else {
 					sendEmail(req.body.email, 'Matcha | Confirm your email', emailContent, true);
-					return res.render('index');
+					return res.json('OK');
 				}
 			}
 		);
