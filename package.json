@@ -1,0 +1,12 @@
+{
+	"name": "matcha",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"start": "concurrently \"npm run --prefix api nodemon\" \"npm run --prefix client start\""
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"concurrently": "^5.2.0"
+	}
+}

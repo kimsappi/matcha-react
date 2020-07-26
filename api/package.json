@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "nodemon": "./node_modules/.bin/nodemon --ext js,json --exec npm start"
+    "nodemon": "./node_modules/.bin/nodemon --ext js,json --exec npm start",
+    "react": "npm run start --",
+    "dev": "concurrently \"npm run nodemon\" \"npm run react\""
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
