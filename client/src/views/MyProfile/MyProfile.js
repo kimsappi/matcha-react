@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 
-import {getThisPage} from '../modules/httpQueries';
+import {getThisPage} from '../../modules/httpQueries';
 
 const MyProfile = ({state, setState}) => {	
 	useEffect(() => {

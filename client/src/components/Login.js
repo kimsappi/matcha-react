@@ -7,6 +7,7 @@ const Login = props => {
 	return (
 		<div>
 			<h1>Login page</h1>
+			<p>Preset accounts: [admin1, 123], [admin2, 123]</p>
 			<label htmlFor='username' />
 			<input type='text' name='username' id='username' />
 			<label htmlFor='password' />

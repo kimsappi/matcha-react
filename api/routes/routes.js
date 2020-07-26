@@ -19,6 +19,8 @@ const profile = require('./profile');
 
 const router = express.Router();
 
+// Public routes
+
 // index.js
 router.get('/', function(req, res, next) {
 	index.get(req, res, next);
@@ -70,6 +72,10 @@ router.post('/resetPassword', (req, res, next) => {
 	resetPassword.post(req, res, next);
 });
 
+
+// Private routes
+// From here on in, everything probably requires the user to be logged in
+
 // myProfile/profile.js
 router.get('/myProfile/profile', (req, res, next) => {
 	myProfile.get(req, res, next);
@@ -97,7 +103,7 @@ router.post('/profile/:id', (req, res, next) => {
 	profile.post(req, res, next);
 });
 
-// profile.js
+// search.js
 router.get('/search', (req, res, next) => {
 	search.get(req, res, next);
 });

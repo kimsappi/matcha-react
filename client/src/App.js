@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
 import './App.css';
-import Header from './components/Header';
+import Header from './views/Header/Header';
 import Login from './components/Login';
-import Index from './components/Index';
-import MyProfile from './components/MyProfile';
+import Index from './views/Index/Index';
+import MyProfile from './views/MyProfile/MyProfile';
 
 import {getUser} from './modules/userData';
 
