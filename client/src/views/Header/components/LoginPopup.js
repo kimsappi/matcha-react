@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
 
 import {Popup} from '../../../components/Popup';
+import InputWithLabel from '../../../components/InputWithLabel';
 
 import {setUser, setToken} from '../../../modules/userData';
 
 
 const baseUrl = 'http://localhost:3001/';
 
-const submitLogin = (event, state, setState) => {
+const submitLogin = (event, state, setState, setPopupState, username, password) => {
 	event.preventDefault();
-	const username = document.getElementById('username').value;
-	const password = document.getElementById('password').value;
+	setPopupState(false);
 
 	axios.post(baseUrl + 'login', {
 		username: username,
@@ -34,12 +34,27 @@ const submitLogin = (event, state, setState) => {
 		});
 };
 
-export const LoginPopup = ({state, setState}) => {
+export const LoginPopup = ({state, setState, setPopupState}) => {
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+
 	return (
 		<Popup>
-			<form onSubmit={event => submitLogin(event, state, setState)}>
-				<input type='text' name='username' id='username' />
-				<input type='password' name='password' id='password' />
+			<form onSubmit={event => submitLogin(event, state, setState, setPopupState, username, password)}>
+				<InputWithLabel
+					type='text'
+					name='username' 
+					label='Username'
+					state={username}
+					setState={setUsername}
+				/>
+				<InputWithLabel
+					type='password'
+					name='password' 
+					label='Password'
+					state={password}
+					setState={setPassword}
+				/>
 				<input type='submit' name='submit' value='OK' />
 			</form>
 		</Popup>

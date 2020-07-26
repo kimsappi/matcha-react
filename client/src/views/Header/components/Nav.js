@@ -5,10 +5,6 @@ import {LoginPopup} from './LoginPopup';
 
 import {logOut} from '../../../modules/httpQueries';
 
-const renderLoginPopup = (setPopupState) => {
-	setPopupState(true);
-};
-
 const Nav = ({state, setState}) => {
 	const [popupState, setPopupState] = useState(false);
 
@@ -17,9 +13,9 @@ const Nav = ({state, setState}) => {
 			<>
 				<div>
 					<Link to='/'>Home</Link>
-					<Link to='#' onClick={() => renderLoginPopup(setPopupState)}>Log in</Link>
+					<Link to='#' onClick={() => setPopupState(true)}>Log in</Link>
 				</div>
-				{popupState ? <LoginPopup state={state} setState={setState} /> : null}
+				{popupState ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 			</>
 		);
 
