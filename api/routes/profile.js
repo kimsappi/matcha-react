@@ -35,47 +35,45 @@ const getLikeButtonStatus = async (user, other) => {
 const get = async (req, res, next) => {
 	const userId = req.params.id;
 	// User is not logged in or no id provided or id is invalid
-	if (!req.session || !req.session.user ||
+	if (!req.user ||
 		!userId || !Number.isInteger(parseFloat(userId))
 	)
-		return res.status(301).redirect('/');
+		return res.json(null);
 
 	// userId is already verified to be an integer so no need to prepare
 	const query = `SELECT * FROM users WHERE id = ${userId};`;
 
 	pool.query(query, async (error, results) => {
 		if (error || !results || !results[0])
-			return res.status(301).redirect('/');
+			return res.json(null);
 		
 		const visitQuery = `DELETE FROM visits WHERE visitor = ? AND visitee = ?;
 		INSERT INTO visits (visitor, visitee, \`time\`) VALUES (?, ?, ?);`
 		const preparedVisitQuery = mysql.format(visitQuery, [
-			req.session.user.id, results[0].id, req.session.user.id, results[0].id, mysqlDatetime(new Date())
+			req.user.id, results[0].id, req.user.id, results[0].id, mysqlDatetime(new Date())
 		]);
 
 		// Don't really care about success so no callback
 		pool.query(preparedVisitQuery);
 
-		const likeButtonStatus = getLikeButtonStatus(req.session.user, results[0]);
+		const likeButtonStatus = getLikeButtonStatus(req.user, results[0]);
 		likeButtonStatus.then(likeButtonStatus => {
 			console.log('like button: ' + likeButtonStatus);
-			return res.render('profile', 
-				{
-					user: req.session.user,
-					profileData: results[0],
-					lookingFor: getGenderEmoji(results[0].target_genders),
-					gender: getGenderEmoji(results[0].gender),
-					title: `${results[0].first_name} ${results[0].last_name[0]}.`,
-					likeButton: likeButtonStatus
-				}
-			);
+			return res.json({
+				user: req.user,
+				profileData: results[0],
+				lookingFor: getGenderEmoji(results[0].target_genders),
+				gender: getGenderEmoji(results[0].gender),
+				title: `${results[0].first_name} ${results[0].last_name[0]}.`,
+				likeButton: likeButtonStatus
+			});
 		});
 	});
 };
 
 const post = (req, res, next) => {
 	// User is not logged in or action not set
-	if (!req.session.user || !req.body.action)
+	if (!req.user || !req.body.action)
 		return res.status(301).redirect('/');
 	console.log(req.body);
 };
