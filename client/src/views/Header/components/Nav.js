@@ -13,9 +13,9 @@ const Nav = ({state, setState}) => {
 			<>
 				<div>
 					<Link to='/'>Home</Link>
-					<Link to='#' onClick={() => setPopupState(true)}>Log in</Link>
+					<Link to='#' onClick={() => setPopupState(popupState === 'login' ? false : 'login')}>Log in</Link>
 				</div>
-				{popupState ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
+				{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 			</>
 		);
 

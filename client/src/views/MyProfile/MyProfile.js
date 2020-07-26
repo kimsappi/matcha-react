@@ -1,25 +1,28 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {getThisPage} from '../../modules/httpQueries';
 
 const MyProfile = ({state, setState}) => {	
+	const [profileState, setProfileState] = useState(null);
 	useEffect(() => {
 		getThisPage(window.location.href)
 			.then(response => {
 				console.log('Profile response:');
 				console.log(response);
+				setProfileState(response);
 			});
-	});
+	}, []);
 
-	return (
-		<div>
-			<h1>Login page</h1>
-			<label htmlFor='username' />
-			<input type='text' name='username' id='username' />
-			<label htmlFor='password' />
-			<input type='password' name='password' id='password' />
-		</div>
-	);
+	if (profileState)
+		return (<>
+			<h1>My profile</h1>
+			<h2>{profileState.userData.first_name} {profileState.userData.last_name}</h2>
+		</>);
+
+	else
+		return (
+			<h1>Profile empty</h1>
+		);
 };
 
 export default MyProfile;
