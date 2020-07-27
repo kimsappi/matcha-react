@@ -22,7 +22,7 @@ const get = (req, res, next) => {
 	if (!req.user)
 		res.json(null);
 
-	const selectLiker = 'liker.id AS liker, liker.first_name as likerFName, liker.last_name as likerLName, \
+	const selectLiker = 'liker.username AS likerUsername, liker.fame AS likerFame, liker.main_pic AS likerPic, liker.id AS liker, liker.first_name as likerFName, liker.last_name as likerLName, \
 	liker.latitude as likerLat, liker.longitude as likerLon';
 	const selectLikee = selectLiker.split("liker").join("likee");
 	const select = selectLiker + ', ' + selectLikee;
@@ -33,6 +33,7 @@ const get = (req, res, next) => {
 		WHERE likes.liker = ? OR likes.likee = ?;'
 		//ORDER BY FIELD(liker, ?);'
 	console.log(query);
+
 	const preparedQuery = mysql.format(query, [req.user.id, req.user.id, req.user.id, req.user.id]);
 	pool.query(preparedQuery, (error, results) => {
 		if (error)

@@ -4,7 +4,7 @@ import MyProfileInfo from './MyProfileInfo';
 import MyProfileImages from './MyProfileImages';
 
 import {getThisPage} from '../../modules/httpQueries';
-import {Link} from 'react-router-dom';
+
 
 const MyProfile = ({state, setState}) => {	
 	const [profileState, setProfileState] = useState(null);
@@ -35,7 +35,10 @@ const MyProfile = ({state, setState}) => {
 
 	else
 		return (
-			<h1>Profile empty</h1>
+			<>
+			<ProfileNav />
+			<h1></h1>
+			</>
 		);
 };
 

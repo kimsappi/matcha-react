@@ -1,27 +1,49 @@
 import React, {useEffect, useState} from 'react';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import Table from 'react-bootstrap/Table'
+
 import ProfileNav from './ProfileNav';
+import Likes from './MyLikesLikes';
+import Likee from './MyLikesLikee';
 
 import {getThisPage} from '../../modules/httpQueries';
-import {Link} from 'react-router-dom';
 
-const MyLikes = ({state, setState}) => {	
-	const [profileState, setProfileState] = useState(null);
+
+const MyLikes = ({state, setState}) => {
+
+	const [likesState, setLikesState] = useState(null);
 	useEffect(() => {
 		getThisPage(window.location.href)
 			.then(response => {
 				console.log('myProfiles/likes response:');
 				console.log(response);
-				// setProfileState(response);
+				setLikesState(response);
 			});
 	}, []);
 
-	if (profileState)
-		return (<>
-		<ProfileNav />
-		
-			<h1>My likes</h1>
-			<h2>{profileState.userData.first_name} {profileState.userData.last_name}</h2>
-		</>);
+	if (likesState)
+		return (
+        <>
+            
+                <ProfileNav />
+                <div className="row">
+                    <div className="col-sm-6">
+                    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="w-80" style={{margin: '20px'}}>
+                        <Tab eventKey="home" title="Users you have liked" className="w-80" style={{margin: '20px'}}>
+                            <Likes likes={likesState.liked} />
+                        </Tab>
+                        <Tab eventKey="profile" title="Users that have liked you" className="w-80" style={{margin: '20px'}}>
+                            <Likee likes={likesState.likedMe} />
+                        </Tab>
+                    </Tabs>
+                    </div>
+                <div className="col-sm-5" style={{margin: '20px'}}>
+                    Viereisen listan kayttajat buttoneita, ja tahan valitun kayttajan esikatselu
+                    
+                </div>
+            </div>
+        </>);
 
 	else
 		return (
