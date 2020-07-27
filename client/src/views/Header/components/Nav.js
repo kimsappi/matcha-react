@@ -11,29 +11,44 @@ const Nav = ({state, setState}) => {
 	if (!state.loggedIn)
 		return (
 			<>
-				<li class="nav-item">
-					<Link to='/'>Home</Link>
-				</li>
-				<li class="nav-item">
-					<Link to='#' onClick={() => setPopupState(popupState === 'login' ? false : 'login')}>Log in</Link>
-				</li>
-				{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
+				<ul className="navbar-nav mr-auto">
+					<li className="nav-item nav-link">
+						<Link to='/'>Home</Link>
+					</li>
+					
+				</ul>
+				<ul className="navbar-nav ml-auto">
+					<li className="nav-item nav-link">
+						{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
+					</li>
+					<li className="nav-item nav-link">
+						<Link to='#' onClick={() => setPopupState(popupState === 'login' ? false : 'login')}>Log in</Link>
+					</li>
+				</ul>
 			</>
 		);
 
 	else
 		return (
 			<>
-				<p>{state.username}</p>
-				<li class="nav-item active">
-					<Link to='/'>Home</Link>
-				</li>
-				<li class="nav-item active">
-					<Link to='/myProfile/profile'>Profile</Link>
-				</li>
-				<li class="nav-item active">
-					<Link to='#' onClick={() => logOut(state, setState)}>Log out</Link>
-				</li>
+				<ul className="navbar-nav mr-auto">
+					
+					<li className="nav-item nav-link">
+						<Link to='/'>Home</Link>
+					</li>
+					<li className="nav-item nav-link">
+						<Link to='/myProfile/profile'>Profile</Link>
+					</li>
+					
+				</ul>
+				<ul className="navbar-nav ml-auto">
+					<li className="nav-item nav-link">
+						<p>{state.username}</p>
+					</li>
+					<li className="nav-item nav-link">
+						<Link to='#' onClick={() => logOut(state, setState)}>Log out</Link>
+					</li>
+				</ul>
 			</>
 		);
 };

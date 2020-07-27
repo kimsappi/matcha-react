@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import ProfileNav from './ProfileNav';
-import MyProfileInfo from './MyProfileInfo';
-import MyProfileImages from './MyProfileImages';
 
 import {getThisPage} from '../../modules/httpQueries';
 import {Link} from 'react-router-dom';
 
-const MyProfile = ({state, setState}) => {	
+const MyLikes = ({state, setState}) => {	
 	const [profileState, setProfileState] = useState(null);
 	useEffect(() => {
 		getThisPage(window.location.href)
@@ -20,23 +18,19 @@ const MyProfile = ({state, setState}) => {
 	if (profileState)
 		return (<>
 		<ProfileNav />
-		<div className="row">
-			<div className="col-sm-6">
-				<MyProfileInfo setState={setState} state={state} />
-			</div>
-			<div className="col-sm-6">
-				<MyProfileImages  setState={setState} state={state} />
-			</div>
-		</div>
 		
-			<h1>My profile</h1>
+			<h1>My likes</h1>
 			<h2>{profileState.userData.first_name} {profileState.userData.last_name}</h2>
 		</>);
 
 	else
 		return (
+        <>
+            <ProfileNav />
 			<h1>Profile empty</h1>
-		);
+            <h1>Serverille 'myProfile/likes'</h1>
+        </>
+        );
 };
 
-export default MyProfile;
+export default MyLikes;

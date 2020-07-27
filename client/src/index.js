@@ -6,7 +6,7 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <div class="container-fluid">
+    <div className="container-fluid">
       <App />
     </div>
   </React.StrictMode>,
