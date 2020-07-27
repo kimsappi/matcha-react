@@ -21,10 +21,17 @@ const get = (req, res, next) => {
 			if (tagsError)
 				return res.json(null);
 
-			return res.json({
-				userData: results[0],
-				biography: escape(results[0].biography),
-				tags: stringifyTags(tagsResults)
+			const imgQuery = `SELECT * FROM user_photos WHERE user = ${req.user.id};`;
+			pool.query(imgQuery, (error, imagesResults) => {
+				if (error)
+					return res.json(null);
+
+				return res.json({
+					userData: results[0],
+					biography: escape(results[0].biography),
+					tags: stringifyTags(tagsResults),
+					images: imagesResults
+				});
 			});
 		});		
 	});

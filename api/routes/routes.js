@@ -15,6 +15,7 @@ const search = require('./search');
 const myProfile = require('./myProfile/profile');
 const myPics = require('./myProfile/pics');
 const likes = require('./myProfile/likes');
+const visits = require('./myProfile/visits');
 
 const profile = require('./profile');
 
@@ -113,9 +114,14 @@ router.post('/search', (req, res, next) => {
 	search.post(req, res, next);
 });
 
-//likes.js
+// likes.js
 router.get('/myProfile/likes', (req, res, next) => {
 	likes.get(req, res, next);
+});
+
+// visits.js
+router.get('/myProfile/visits', (req, res, next) => {
+	visits.get(req, res, next);
 });
 
 module.exports = router;
