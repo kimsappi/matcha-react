@@ -91,7 +91,7 @@ const post = (req, res, next) => {
 	else if (req.body.action === 'report')
 		query = 'INSERT INTO reports (reporter, reportee) VALUES (reporter = ?, reportee = ?);';	
 
-	if (query.length)
+	if (query.length) {
 		preparedQuery = mysql.format(query, [req.user.id, req.body.id]);
 		pool.query(preparedQuery, (error, results) => {
 			if (error)
@@ -99,6 +99,7 @@ const post = (req, res, next) => {
 			else
 				return res.json('OK');
 		});
+	}
 };
 
 module.exports = {
