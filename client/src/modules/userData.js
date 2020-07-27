@@ -1,9 +1,10 @@
 const getUser = () => JSON.parse(localStorage.getItem('user'));
 
-const setUser = (username, id) => {
+const setUser = (username, id, loggedIn) => {
 	localStorage.setItem('user', JSON.stringify({
 		'username': username,
 		'id': id,
+		'loggedIn': loggedIn
 	}));
 };
 

@@ -71,11 +71,32 @@ const get = async (req, res, next) => {
 	});
 };
 
+// Liking another user, etc.
 const post = (req, res, next) => {
 	// User is not logged in or action not set
-	if (!req.user || !req.body.action)
-		return res.status(301).redirect('/');
+	if (!req.user || !req.body.action || !req.body.id)
+		return res.json(null);
 	console.log(req.body);
+
+	let query = ''; let preparedQuery = '';
+
+	if (req.body.action === 'like') {
+		query = 'INSERT INTO likes (liker, likee) VALUES (?, ?);';
+		preparedQuery = mysql.format(query, [user.id, req.body.id]);
+	}
+
+	else if (req.body.action === 'unlike') {
+		query = 'DELETE FROM likes WHERE liker = ? AND likee = ?);';
+		preparedQuery = mysql.format(query, [user.id, req.body.id]);
+	}
+
+	if (query.length)
+		pool.query(preparedQuery, (error, results) => {
+			if (error)
+				return res.json(null);
+			else
+				return res.json('OK');
+		});
 };
 
 module.exports = {

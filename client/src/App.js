@@ -11,6 +11,7 @@ import {getUser} from './modules/userData';
 
 function App() {
   let user = getUser();
+  console.log(user);
 
   const [state, setState] = useState(user);
   
