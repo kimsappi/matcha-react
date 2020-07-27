@@ -80,23 +80,26 @@ const post = (req, res, next) => {
 
 	let query = ''; let preparedQuery = '';
 
-	if (req.body.action === 'like') {
+	if (req.body.action === 'like')
 		query = 'INSERT INTO likes (liker, likee) VALUES (?, ?);';
-		preparedQuery = mysql.format(query, [user.id, req.body.id]);
-	}
-
-	else if (req.body.action === 'unlike') {
+	else if (req.body.action === 'unlike')
 		query = 'DELETE FROM likes WHERE liker = ? AND likee = ?);';
-		preparedQuery = mysql.format(query, [user.id, req.body.id]);
-	}
+	else if (req.body.action === 'block')
+		query = 'INSERT INTO blocks (blocker, blockee) VALUES (blocker = ?, blockee = ?);';
+	else if (req.body.action === 'unblock')
+		query = 'DELETE FROM blocks WHERE blocker = ?, blockee = ?;';
+	else if (req.body.action === 'report')
+		query = 'INSERT INTO reports (reporter, reportee) VALUES (reporter = ?, reportee = ?);';	
 
-	if (query.length)
+	if (query.length) {
+		preparedQuery = mysql.format(query, [req.user.id, req.body.id]);
 		pool.query(preparedQuery, (error, results) => {
 			if (error)
 				return res.json(null);
 			else
 				return res.json('OK');
 		});
+	}
 };
 
 module.exports = {

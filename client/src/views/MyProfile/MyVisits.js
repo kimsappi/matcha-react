@@ -6,21 +6,20 @@ import {Link} from 'react-router-dom';
 
 const MyVisits = ({state, setState}) => {	
 	const [profileState, setProfileState] = useState(null);
-	// useEffect(() => {
-	// 	getThisPage(window.location.href)
-	// 		.then(response => {
-	// 			console.log('Profile response:');
-	// 			console.log(response);
-	// 			setProfileState(response);
-	// 		});
-	// }, []);
+	useEffect(() => {
+		getThisPage(window.location.href)
+			.then(response => {
+				console.log('Profile response:');
+				console.log(response);
+				//setProfileState(response);
+			});
+	}, []);
 
 	if (profileState)
 		return (<>
 		<ProfileNav />
 		
 			<h1>My likes</h1>
-			<h2>{profileState.userData.first_name} {profileState.userData.last_name}</h2>
 		</>);
 
 	else

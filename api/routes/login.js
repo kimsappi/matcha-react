@@ -46,7 +46,6 @@ const post = (req, res, next) => {
 				username: results[0].username,
 				token: generateJWT({user: results[0].username, id: results[0].id})
 			};
-			console.log('session set');
 			pool.query(`UPDATE users
 				SET last_login = '${mysqlDatetime(new Date())}',
 					latitude = ${loginCoordinates.latitude},
@@ -55,8 +54,8 @@ const post = (req, res, next) => {
 			return res.json(userData);
 		}
 		// Email address is not confirmed
-		else if (results) {
-			return res.json('email not confirmed');
+		else if (results[0]) {
+			return res.json('email');
 		}
 		// Password or username incorrect
 		else

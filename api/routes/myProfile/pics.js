@@ -3,29 +3,29 @@ const fs = require('fs');
 
 const pool = require('../../modules/dbConnect');
 
-const get = (req, res, next) => {
-	// User is not logged in
-	if (!req.user)
-		return res.json(null);
+// const get = (req, res, next) => {
+// 	// User is not logged in
+// 	if (!req.user)
+// 		return res.json(null);
 
-	const query = 'SELECT * FROM user_photos WHERE `user` = ' + req.user.id + ';';
-	pool.query(query, (error, results) => {
-		if (error) {
-			// TODO
-			console.log('error getting pics');
-			console.log(error);
-			return res.json('DB error');
-		}
-		else if (!results || !results[0]) {
-			// TODO
-			return res.json('empty');
-		}
-		else {
-			console.log(results[0]);
-			return res.json({photos: results});
-		}
-	});
-};
+// 	const query = 'SELECT * FROM user_photos WHERE `user` = ' + req.user.id + ';';
+// 	pool.query(query, (error, results) => {
+// 		if (error) {
+// 			// TODO
+// 			console.log('error getting pics');
+// 			console.log(error);
+// 			return res.json('DB error');
+// 		}
+// 		else if (!results || !results[0]) {
+// 			// TODO
+// 			return res.json('empty');
+// 		}
+// 		else {
+// 			console.log(results[0]);
+// 			return res.json({photos: results});
+// 		}
+// 	});
+// };
 
 const post = (req, res, next) => {
 	console.log(req.files);
@@ -74,6 +74,6 @@ const post = (req, res, next) => {
 };
 
 module.exports = {
-	get,
+	// get,
 	post
 };

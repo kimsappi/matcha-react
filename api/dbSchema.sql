@@ -65,6 +65,24 @@ CREATE TABLE IF NOT EXISTS messages (
  	FOREIGN KEY (recipient) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS blocks (
+	blocker INT UNSIGNED NOT NULL,
+	blockee INT UNSIGNED NOT NULL,
+	`time` DATETIME NOT NULL,
+	PRIMARY KEY (blocker, blockee),
+	FOREIGN KEY (blocker) REFERENCES users(id),
+	FOREIGN KEY (blockee) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS reports (
+	reporter INT UNSIGNED NOT NULL,
+	reportee INT UNSIGNED NOT NULL,
+	`time` DATETIME NOT NULL,
+	PRIMARY KEY (reporter, reportee),
+	FOREIGN KEY (reporter) REFERENCES users(id),
+	FOREIGN KEY (reportee) REFERENCES users(id)
+);
+
 -- CREATE TABLE IF NOT EXISTS chats (
 -- 	id INT UNSIGNED AUTO_INCREMENT,
 -- 	chatter1 INT UNSIGNED NOT NULL,
