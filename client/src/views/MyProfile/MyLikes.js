@@ -9,9 +9,9 @@ const MyLikes = ({state, setState}) => {
 	useEffect(() => {
 		getThisPage(window.location.href)
 			.then(response => {
-				console.log('Profile response:');
+				console.log('myProfiles/likes response:');
 				console.log(response);
-				setProfileState(response);
+				// setProfileState(response);
 			});
 	}, []);
 
