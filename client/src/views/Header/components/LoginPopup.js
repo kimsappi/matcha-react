@@ -20,13 +20,13 @@ const submitLogin = (event, state, setState, setPopupState, username, password) 
 		.then(response => {
 			if (!response.data) {
 				setState({});
-				setUser(null, null);
+				setUser(null, null, false);
 				setToken(null);
 				return false;
 			}
 			else {
 				console.log(response.data);
-				setUser(response.data.username, response.data.id);
+				setUser(response.data.username, response.data.id, true);
 				setToken(response.data.token);
 				setState({loggedIn: true, username: response.data.username, id: response.data.id});
 				return true;
