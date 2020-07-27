@@ -11,23 +11,30 @@ const Nav = ({state, setState}) => {
 	if (!state.loggedIn)
 		return (
 			<>
-				<div>
+				<li class="nav-item">
 					<Link to='/'>Home</Link>
+				</li>
+				<li class="nav-item">
 					<Link to='#' onClick={() => setPopupState(popupState === 'login' ? false : 'login')}>Log in</Link>
-				</div>
+				</li>
 				{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 			</>
 		);
 
 	else
 		return (
-			<div>
-				<h1>You're logged in</h1>
-				<p>Username: {state.username}</p>
-				<Link to='/'>Home</Link>
-				<Link to='/myProfile/profile'>Profile</Link>
-				<Link to='#' onClick={() => logOut(state, setState)}>Log out</Link>
-			</div>
+			<>
+				<p>{state.username}</p>
+				<li class="nav-item active">
+					<Link to='/'>Home</Link>
+				</li>
+				<li class="nav-item active">
+					<Link to='/myProfile/profile'>Profile</Link>
+				</li>
+				<li class="nav-item active">
+					<Link to='#' onClick={() => logOut(state, setState)}>Log out</Link>
+				</li>
+			</>
 		);
 };
 

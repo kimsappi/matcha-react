@@ -12,9 +12,8 @@ import {getUser} from './modules/userData';
 function App() {
   let user = getUser();
 
-  const [state, setState] = useState({
-    user: user
-  });
+  const [state, setState] = useState(user);
+  
 
   // useEffect(() => {
   //   getThisPage(window.location.href)
