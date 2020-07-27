@@ -1,6 +1,22 @@
-const MyProfileImages = ({state, setState}) => {	
+import React, {useEffect, useState} from 'react';
 
-    return ("Printed from MyProfileImages-component");
+const MyProfileImages = ({profile}) => {	
+
+    return (
+        <>
+        <p>Printed from MyProfileImages-component</p>
+        <div className="row" id="MyProfilePhoto">
+            photo1
+        </div>
+        <div className="row" id="MyProfilePhoto">
+            photo2
+        </div>
+        <div className="row" id="MyProfilePhoto">
+            photo3
+        </div>
+
+        </>
+        );
 }
 
 export default MyProfileImages;

@@ -22,10 +22,10 @@ const MyProfile = ({state, setState}) => {
 		<ProfileNav />
 		<div className="row">
 			<div className="col-sm-6">
-				<MyProfileInfo setState={setState} state={state} />
+				<MyProfileInfo profile={profileState} />
 			</div>
 			<div className="col-sm-6">
-				<MyProfileImages  setState={setState} state={state} />
+				<MyProfileImages profile={profileState} />
 			</div>
 		</div>
 		
