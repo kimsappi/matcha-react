@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 import {Popup} from '../../../components/Popup';
 import InputWithLabel from '../../../components/InputWithLabel';
 
 import {setUser, setToken} from '../../../modules/userData';
-
+import {userGeolocation} from '../../../modules/geolocate';
 
 const baseUrl = 'http://localhost:3001/';
 
@@ -13,10 +13,18 @@ const submitLogin = (event, state, setState, setPopupState, username, password) 
 	event.preventDefault();
 	setPopupState(false);
 
-	axios.post(baseUrl + 'login', {
+	let reqBody = {
 		username: username,
 		password: password
-	})
+	};
+	if (document.querySelector('#latitude')) {
+		reqBody = {...reqBody,
+			latitude: document.querySelector('#latitude').value || null,
+			longitude: document.querySelector('#longitude').value || null
+		}
+	}
+
+	axios.post(baseUrl + 'login', reqBody)
 		.then(response => {
 			if (!response.data) {
 				setState({});
@@ -38,9 +46,14 @@ export const LoginPopup = ({state, setState, setPopupState}) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
+	useEffect(() => {
+		userGeolocation()
+	}, []);
+	
+
 	return (
 		<Popup>
-			<form onSubmit={event => submitLogin(event, state, setState, setPopupState, username, password)}>
+			<form id='loginForm' onSubmit={event => submitLogin(event, state, setState, setPopupState, username, password)}>
 				<InputWithLabel
 					type='text'
 					name='username' 
