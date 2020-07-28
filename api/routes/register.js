@@ -8,13 +8,13 @@ const sendEmail = require('../modules/mail');
 const getRootUrl = require('../modules/getRootUrl');
 
 /* GET registration page */
-const get = (req, res, next) => {
-	// User is already logged in
-	if (req.user)
-		return res.status(301).redirect('/');
+// const get = (req, res, next) => {
+// 	// User is already logged in
+// 	if (req.user)
+// 		return res.status(301).redirect('/');
 
-	res.render('register');
-};
+// 	res.render('register');
+// };
 
 /* POST to registration page (attempt to register new account) */
 const post = (req, res, next) => {
@@ -67,6 +67,6 @@ const post = (req, res, next) => {
 };
 
 module.exports = {
-	get,
+	// get,
 	post
 };
