@@ -21,7 +21,7 @@ const get = (req, res, next) => {
 	if (!req.user)
 		res.json(null);
 
-	const selectvisitor = 'visitor.id AS visitor, visitor.first_name as visitorFName, visitor.last_name as visitorLName, \
+	const selectvisitor = 'visitor.username AS visitorUsername, visitor.fame AS visitorFame, visitor.id AS visitor, visitor.first_name as visitorFName, visitor.last_name as visitorLName, \
 	visitor.latitude as visitorLat, visitor.longitude as visitorLon';
 	const selectvisitee = selectvisitor.split("visitor").join("visitee");
 	const select = selectvisitor + ', ' + selectvisitee;

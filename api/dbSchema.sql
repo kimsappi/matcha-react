@@ -119,6 +119,15 @@ INSERT INTO likes (liker, likee) VALUES
 	(3, 1),
 	(4, 1);
 
+INSERT INTO visits (visitor, visitee, time) VALUES
+(4, 1, CURRENT_TIMESTAMP),
+(4, 2, CURRENT_TIMESTAMP),
+(4, 3, CURRENT_TIMESTAMP),
+(1, 2, CURRENT_TIMESTAMP),
+(1, 3, CURRENT_TIMESTAMP),
+(1, 3, CURRENT_TIMESTAMP),
+(3, 1, CURRENT_TIMESTAMP);
+
 
 -- DROP USER 'dbuser'@'%';
 -- CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY '123dbuser';

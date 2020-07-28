@@ -5,7 +5,13 @@
 	"scripts": {
 		"start": "concurrently \"npm run --prefix api nodemon\" \"npm run --prefix client start\""
 	},
-	"dependencies": {},
+	"dependencies": {
+		"body-parser": "^1.19.0",
+		"cookie": "^0.4.1",
+		"cookie-parser": "^1.4.5",
+		"express": "^4.17.1",
+		"http-errors": "^1.8.0"
+	},
 	"devDependencies": {
 		"concurrently": "^5.2.0"
 	}

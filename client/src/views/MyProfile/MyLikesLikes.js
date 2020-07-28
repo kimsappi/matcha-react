@@ -1,14 +1,19 @@
 import React, {useEffect, useState} from 'react';
 
 // Databasen 'likes' tableen lisattava id columni, jotta key helpompi saada uniikiksi.
-const MyLikesLikes = ({likes}, {modifyPreview}) => {
+const MyLikesLikes = ({likes, modifyPreview, modifyWho}) => {
 
     const [likeList, setLikes] = useState(null);
     useEffect(() => {
         const ret = likes.map( (like) =>
-                <div key={like.likerUsername} style={{border: '1px solid gray', padding: '10px', margin: '5px'}}>
-                    Pieni profiilikuva{like.likeePic} <b>{like.likeeUsername}</b>
-                </div>
+        <>
+            <button className="btn btn-success" onClick={() => {modifyPreview(like); modifyWho(1);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
+                <b>{like.likeeUsername ? like.likeeUsername : like.visiteeUsername}</b>
+                {like.likeePic}
+                
+            </button>
+            <br />
+        </>
         );
         setLikes(ret);
     }, []);
