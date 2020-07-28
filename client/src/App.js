@@ -55,7 +55,7 @@ function App() {
           </Route>
 
           <Route path='/'>
-            <Index />
+            <Index state={state} />
           </Route>
 
         </Switch>

@@ -6,7 +6,6 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-const config = require('./config.json');
 const {authenticationMiddleware} = require('./modules/authentication');
 //const pool = require('./modules/dbConnect');
 
@@ -14,11 +13,6 @@ const {authenticationMiddleware} = require('./modules/authentication');
 var routes = require('./routes/routes');
 
 var app = express();
-
-// view engine setup
-app.engine('pug', require('pug').__express);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -46,7 +40,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json(null);
+  //res.render('error');
 });
 
 // Creating required directories

@@ -62,7 +62,7 @@ const post = (req, res, next) => {
 					
 					// User uploads their first image, make that default
 					if (!imageCount) {
-						const defaultQuery = `UPDATE users SET main_pic = ${filename} WHERE id = ${req.user.id};`;
+						const defaultQuery = mysql.format(`UPDATE users SET main_pic = ${filename} WHERE id = ?;`, [req.user.id]);
 						pool.query(defaultQuery);
 					}
 					return res.json('OK');

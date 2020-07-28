@@ -25,7 +25,7 @@ const router = express.Router();
 
 // index.js
 router.get('/', function(req, res, next) {
-	index.get(req, res, next);
+	search.get(req, res, next);
 });
 
 // register.js
@@ -106,13 +106,13 @@ router.post('/profile/:id', (req, res, next) => {
 });
 
 // search.js
-router.get('/search', (req, res, next) => {
-	search.get(req, res, next);
-});
+// router.get('/search', (req, res, next) => {
+// 	search.get(req, res, next);
+// });
 
-router.post('/search', (req, res, next) => {
-	search.post(req, res, next);
-});
+// router.post('/search', (req, res, next) => {
+// 	search.post(req, res, next);
+// });
 
 // likes.js
 router.get('/myProfile/likes', (req, res, next) => {

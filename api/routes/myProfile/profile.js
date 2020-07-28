@@ -11,17 +11,17 @@ const get = (req, res, next) => {
 		return res.json(null);
 
 	// I wonder if doing some kind of join here would make more sense
-	const query = `SELECT * FROM users WHERE id = ${req.user.id};`;
+	const query = mysql.format('SELECT * FROM users WHERE id = ?;', [req.user.id]);
 	pool.query(query, (error, results) => {
 		if (error || !results)
 		return res.json(null);
 
-		const tagsQuery = `SELECT string FROM tags WHERE user = ${req.user.id};`;
+		const tagsQuery = mysql.format('SELECT string FROM tags WHERE user = ?;', [req.user.id]);
 		pool.query(tagsQuery, (tagsError, tagsResults) => {
 			if (tagsError)
 				return res.json(null);
 
-			const imgQuery = `SELECT * FROM user_photos WHERE user = ${req.user.id};`;
+			const imgQuery = mysql.format('SELECT * FROM user_photos WHERE user = ?;', [req.user.id]);
 			pool.query(imgQuery, (error, imagesResults) => {
 				if (error)
 					return res.json(null);
@@ -62,13 +62,13 @@ const post = (req, res, next) => {
 UPDATE users
 	SET email = ?, first_name = ?, last_name = ?, gender = ?, target_genders = ?,
 		biography = ? ${updatedCoordinates}, age = ?
-	WHERE id = ${req.session.user.id};
-DELETE FROM tags WHERE user = ${req.session.user.id};` + generateTagsQuery(tags, req.session.user.id);
+	WHERE id = ?;
+DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 	const preparedQuery = mysql.format(query,
 		[
 			req.body.email, req.body.firstName, req.body.lastName,
 			req.body.gender, req.body.target, req.body.biography,
-			parseInt(req.body.age)
+			parseInt(req.body.age), req.user.id, req.user.id
 		]
 	);
 	//console.log(query);

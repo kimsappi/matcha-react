@@ -11,8 +11,10 @@ const getLikeButtonStatus = async (user, other) => {
 	if (user.id === other.id)
 		return null;
 
-	const query = `SELECT * FROM likes WHERE (liker = ${user.id} AND likee = ${other.id}) OR (liker = ${other.id} AND likee = ${user.id});`;
-	
+	const query = mysql.format(
+		'SELECT * FROM likes WHERE (liker = ? AND likee = ?) OR (liker = ? AND likee = ?);',
+		[user.id, other.id, other.id, user.id]);
+
 	const ret = new Promise((resolve, reject) => {
 		pool.query(query, (error, results) => {
 			// No likes either way
