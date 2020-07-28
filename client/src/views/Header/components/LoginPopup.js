@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {Link} from 'react-router-dom';
 
 import {Popup} from '../../../components/Popup';
 import InputWithLabel from '../../../components/InputWithLabel';
@@ -13,7 +14,6 @@ export const LoginPopup = ({state, setState, setPopupState}) => {
 	useEffect(() => {
 		userGeolocation()
 	}, []);
-	
 
 	return (
 		<Popup>
@@ -34,6 +34,9 @@ export const LoginPopup = ({state, setState, setPopupState}) => {
 				/>
 				<input type='submit' name='submit' value='OK' />
 			</form>
+			<Link to='#' onClick={() => setPopupState('forgotPassword')}>
+				Forgot your password?
+			</Link>
 		</Popup>
 	);
 };

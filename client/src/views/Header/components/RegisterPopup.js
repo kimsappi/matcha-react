@@ -15,7 +15,13 @@ export const RegisterPopup = ({state, setState, setPopupState}) => {
 
 	return (
 		<Popup>
-			<form id='registerForm' onSubmit={event => submitRegister(event, state, setState, setPopupState, username, password)}>
+			<form id='registerForm'
+				onSubmit={event =>
+					submitRegister(event, setPopupState,
+					username, password, confirmPassword,
+					email, firstName, lastName)}
+			>
+				
 				<InputWithLabel
 					type='text'
 					name='username' 

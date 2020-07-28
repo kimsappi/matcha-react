@@ -42,7 +42,6 @@ export const submitLike = (path, action, state, setState) => {
 
 export const submitLogin = (event, state, setState, setPopupState, username, password) => {
 	event.preventDefault();
-	setPopupState(false);
 
 	let reqBody = {
 		username: username,
@@ -63,6 +62,8 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 				setToken(null);
 				if (response.data === 'email')
 					alert('Make sure to confirm your email address before logging in.');
+				else
+					alert('Login failed.');
 				return false;
 			}
 			else {
@@ -71,15 +72,45 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 				setUser(response.data.username, response.data.id, true);
 				setToken(response.data.token);
 				setState({loggedIn: true, username: response.data.username, id: response.data.id});
+				setPopupState(false);
 				return true;
 			}
 		});
 };
 
-export const submitRegister = (event, state, setState, setPopupState, username, password) => {
+export const submitRegister = (event, setPopupState, username, password, confirmPassword, email, firstName, lastName) => {
 	event.preventDefault();
-	setPopupState(false);
-	return true;
+
+	const reqBody = {
+		username: username,
+		password: password,
+		confirmPassword: confirmPassword, 
+		email: email,
+		firstName: firstName,
+		lastName: lastName
+	};
+
+	axios.post(baseUrl + '/register', reqBody)
+		.then(response => {
+			if (response.data)
+				setPopupState(false);
+			else
+				alert('Failed to register an account.');
+		});
+};
+
+export const submitForgot = (event, setPopupState, email) => {
+	event.preventDefault();
+
+	const reqBody = {email: email};
+
+	axios.post(baseUrl + '/register', reqBody)
+		.then(response => {
+			if (response.data)
+				alert('Something went wrong, nothing has been done.');
+			else
+				setPopupState(false);
+		});
 };
 
 // module.exports = {

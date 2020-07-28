@@ -4,7 +4,7 @@ export const userGeolocation = () => {
 			if (!position.coords.longitude || !position.coords.latitude)
 				return;
 
-			setTimeout(() => {
+			//setTimeout(() => {
 				const form = document.querySelector('#loginForm');
 				// Append lat and lon fields to the form as invisible fields
 				['longitude','latitude'].forEach(value => {
@@ -15,7 +15,7 @@ export const userGeolocation = () => {
 					newInput.style.display = 'none';
 					form.appendChild(newInput);
 				});
-			}, 1000);
+			//}, 1000);
 		});
 	}
 };

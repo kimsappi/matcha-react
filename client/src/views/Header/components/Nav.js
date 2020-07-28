@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 
 import {LoginPopup} from './LoginPopup';
 import {RegisterPopup} from './RegisterPopup';
+import {ForgotPopup} from './ForgotPopup';
 
 import {logOut} from '../../../modules/httpQueries';
 
@@ -29,6 +30,7 @@ const Nav = ({state, setState}) => {
 
 				{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 				{popupState === 'register' ? <RegisterPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
+				{popupState === 'forgotPassword' ? <ForgotPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 			</>
 		);
 
