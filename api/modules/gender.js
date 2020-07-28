@@ -7,11 +7,11 @@
 
 const getGenderEmoji = gender => {
 	if (gender.length === 2)
-		return '&#x26A5';
+		return '⚥';
 	else if (gender === 'm')
-		return '&#x2642;'
+		return '♂️'
 	else if (gender === 'f')
-		return '&#x2640;'
+		return '♀️'
 	return '';
 }
 

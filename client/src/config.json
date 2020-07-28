@@ -1,0 +1,8 @@
+{
+	"likeButtonStrings": {
+		"noLikes": "Like!",
+		"youLike": "Unlike",
+		"theyLike": "Connect!",
+		"mutualLike": "Disconnect"
+	}
+}

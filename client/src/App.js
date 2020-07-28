@@ -9,6 +9,7 @@ import Index from './views/Index/Index';
 import MyProfile from './views/MyProfile/MyProfile';
 import MyLikes from './views/MyProfile/MyLikes';
 import MyVisits from './views/MyProfile/MyVisits';
+import Profile from './views/Profile/Profile';
 
 import {getUser} from './modules/userData';
 
@@ -46,6 +47,8 @@ function App() {
           <Route path='/myProfile/visits'>
             <MyVisits setState={setState} state={state} />
           </Route>
+
+          <Route path='/profile/:id' component={Profile} />
 
           <Route path='/login'>
             <Login setState={setState} state={state} />

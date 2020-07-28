@@ -35,8 +35,8 @@ const getLikeButtonStatus = async (user, other) => {
 const get = async (req, res, next) => {
 	const userId = req.params.id;
 	// User is not logged in or no id provided or id is invalid
-	if (!req.user ||
-		!userId || !Number.isInteger(parseFloat(userId))
+	if (!req.user || !userId ||
+		req.user.id == userId || !Number.isInteger(parseFloat(userId))
 	)
 		return res.json(null);
 
@@ -73,8 +73,11 @@ const get = async (req, res, next) => {
 
 // Liking another user, etc.
 const post = (req, res, next) => {
+	const userId = req.params.id;
+	console.log(req.user);
 	// User is not logged in or action not set
-	if (!req.user || !req.body.action || !req.body.id)
+	if (!req.user || !req.body.action || !userId || req.user.id == userId ||
+		!Number.isInteger(parseFloat(userId)))
 		return res.json(null);
 	console.log(req.body);
 
@@ -83,7 +86,7 @@ const post = (req, res, next) => {
 	if (req.body.action === 'like')
 		query = 'INSERT INTO likes (liker, likee) VALUES (?, ?);';
 	else if (req.body.action === 'unlike')
-		query = 'DELETE FROM likes WHERE liker = ? AND likee = ?);';
+		query = 'DELETE FROM likes WHERE liker = ? AND likee = ?;';
 	else if (req.body.action === 'block')
 		query = 'INSERT INTO blocks (blocker, blockee) VALUES (blocker = ?, blockee = ?);';
 	else if (req.body.action === 'unblock')
@@ -92,7 +95,8 @@ const post = (req, res, next) => {
 		query = 'INSERT INTO reports (reporter, reportee) VALUES (reporter = ?, reportee = ?);';	
 
 	if (query.length) {
-		preparedQuery = mysql.format(query, [req.user.id, req.body.id]);
+		preparedQuery = mysql.format(query, [req.user.id, parseInt(userId)]);
+		console.log(preparedQuery);
 		pool.query(preparedQuery, (error, results) => {
 			if (error)
 				return res.json(null);
@@ -100,6 +104,8 @@ const post = (req, res, next) => {
 				return res.json('OK');
 		});
 	}
+	else
+		return res.json(null);
 };
 
 module.exports = {
