@@ -5,7 +5,10 @@ export const Popup = ({children}) => {
 		position: 'absolute',
 		top: '100px',
 		left: '100px',
-		zIndex: '9'
+		zIndex: '9',
+		backgroundColor: 'white',
+		border: '1px solid black',
+		padding: '1em'
 	};
 
 	return (

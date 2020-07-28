@@ -3,10 +3,10 @@ import axios from 'axios';
 import {setUser, setToken} from './userData';
 import {getToken} from './userData';
 
-const baseUrl = 'http://localhost:3001/';
+const baseUrl = 'http://localhost:3001';
 
-export const getThisPage = url => {
-	url = url.replace('3000', '3001');
+export const getThisPage = relativeUrl => {
+	const url = baseUrl + relativeUrl
 	console.log('Requesting from url:');
 	console.log(url);
 	console.log(getToken());

@@ -14,7 +14,7 @@ const MyLikes = ({state, setState}) => {
 
 	const [likesState, setLikesState] = useState(null);
 	useEffect(() => {
-		getThisPage(window.location.href)
+		getThisPage(window.location.pathname)
 			.then(response => {
 				console.log('myProfiles/likes response:');
 				console.log(response);

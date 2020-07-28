@@ -7,7 +7,7 @@ import {Link} from 'react-router-dom';
 const MyVisits = ({state, setState}) => {	
 	const [profileState, setProfileState] = useState(null);
 	useEffect(() => {
-		getThisPage(window.location.href)
+		getThisPage(window.location.pathname)
 			.then(response => {
 				console.log('Profile response:');
 				console.log(response);
