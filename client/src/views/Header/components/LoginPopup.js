@@ -1,50 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
 
 import {Popup} from '../../../components/Popup';
-
 import InputWithLabel from '../../../components/InputWithLabel';
 
-import {setUser, setToken} from '../../../modules/userData';
 import {userGeolocation} from '../../../modules/geolocate';
-
-const baseUrl = 'http://localhost:3001/';
-
-const submitLogin = (event, state, setState, setPopupState, username, password) => {
-	event.preventDefault();
-	setPopupState(false);
-
-	let reqBody = {
-		username: username,
-		password: password
-	};
-	if (document.querySelector('#latitude')) {
-		reqBody = {...reqBody,
-			latitude: document.querySelector('#latitude').value || null,
-			longitude: document.querySelector('#longitude').value || null
-		}
-	}
-
-	axios.post(baseUrl + 'login', reqBody)
-		.then(response => {
-			if (!response.data || response.data === 'email') {
-				setState({});
-				setUser(null, null, false);
-				setToken(null);
-				if (response.data === 'email')
-					alert('Make sure to confirm your email address before logging in.');
-				return false;
-			}
-			else {
-				console.log(response.data);
-				console.log('asddd');
-				setUser(response.data.username, response.data.id, true);
-				setToken(response.data.token);
-				setState({loggedIn: true, username: response.data.username, id: response.data.id});
-				return true;
-			}
-		});
-};
+import {submitLogin} from '../../../modules/httpQueries';
 
 export const LoginPopup = ({state, setState, setPopupState}) => {
 	const [username, setUsername] = useState('');

@@ -21,8 +21,8 @@ const Index = ({state}) => {
 			<div>
 				<div className="row">
 					<div className="col-sm-6 h-25" id="suggestionContainer">
+						<h1>Suggestions</h1>
 						<Suggestions users={users} />
-						<h1>asd</h1>
 					</div>
 					<div className="col-sm-6 h-25" id="searchContainer">
 						<h1>User search</h1>

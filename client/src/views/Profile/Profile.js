@@ -5,6 +5,8 @@ import { getThisPage, submitLike } from '../../modules/httpQueries';
 const Profile = ({match}) => {
 	const [profileState, setProfileState] = useState(null);
 	const [rerenderTrick, setRerenderTrick] = useState(false);
+	// rerenderTrick is my attempt to get the page to rerender when you click the
+	// like/unlike button, but doesn't quite seem to work
 
 	useEffect(() => {
 		getThisPage(window.location.pathname)
@@ -15,7 +17,9 @@ const Profile = ({match}) => {
 					window.location.pathname = '/';
 				setProfileState(response);
 			});
-	}, [rerenderTrick]);
+	}, [rerenderTrick, window.location.href]);
+	// window.location.href is necessary, because all /profile/:id URLs are
+	// considered the same route, but this will take care of it
 
 	if (!profileState)
 		return (

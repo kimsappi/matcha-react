@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {LoginPopup} from './LoginPopup';
+import {RegisterPopup} from './RegisterPopup';
 
 import {logOut} from '../../../modules/httpQueries';
 
@@ -19,12 +20,15 @@ const Nav = ({state, setState}) => {
 				</ul>
 				<ul className="navbar-nav ml-auto">
 					<li className="nav-item nav-link">
-						{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
-					</li>
-					<li className="nav-item nav-link">
 						<Link to='#' onClick={() => setPopupState(popupState === 'login' ? false : 'login')}>Log in</Link>
 					</li>
+					<li className="nav-item nav-link">
+						<Link to='#' onClick={() => setPopupState(popupState === 'register' ? false : 'register')}>Register</Link>
+					</li>
 				</ul>
+
+				{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
+				{popupState === 'register' ? <RegisterPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 			</>
 		);
 
