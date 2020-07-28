@@ -12,7 +12,8 @@ import {getThisPage} from '../../modules/httpQueries';
 
 const MyLikes = ({state, setState}) => {
 
-	const [likesState, setLikesState] = useState(null);
+    const [likesState, setLikesState] = useState(null);
+    const [previewState, modifyPreviewState] = useState('1');
 	useEffect(() => {
 		getThisPage(window.location.pathname)
 			.then(response => {
@@ -22,7 +23,7 @@ const MyLikes = ({state, setState}) => {
 			});
 	}, []);
 
-	if (likesState)
+	if (likesState && previewState)
 		return (
         <>
             
@@ -31,15 +32,17 @@ const MyLikes = ({state, setState}) => {
                     <div className="col-sm-6">
                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="w-80" style={{margin: '20px'}}>
                         <Tab eventKey="home" title="Users you have liked" className="w-80" style={{margin: '20px'}}>
-                            <Likes likes={likesState.liked} />
+                            <Likes likes={likesState.liked} modifyPreview={modifyPreviewState} />
                         </Tab>
                         <Tab eventKey="profile" title="Users that have liked you" className="w-80" style={{margin: '20px'}}>
-                            <Likee likes={likesState.likedMe} />
+                            <Likee likes={likesState.likedMe} modifyPreview={modifyPreviewState} />
                         </Tab>
                     </Tabs>
                     </div>
                 <div className="col-sm-5" style={{margin: '20px'}}>
                     Viereisen listan kayttajat buttoneita, ja tahan valitun kayttajan esikatselu
+                    {previewState}
+                    <button onClick={() => modifyPreviewState('3')}>asd</button>
                     
                 </div>
             </div>

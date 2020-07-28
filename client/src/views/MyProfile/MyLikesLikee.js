@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 // Databasen 'likes' tableen lisattava id columni, jotta key helpompi saada uniikiksi.
-const MyLikesLikee = ({likes}) => {
+const MyLikesLikee = ({likes}, {modifyPreview}) => {
 
     const [likeList, setLikes] = useState(null);
     useEffect(() => {
@@ -22,7 +22,12 @@ const MyLikesLikee = ({likes}) => {
     }
     else
     {
-        return(likeList);
+        return(
+            <>
+            likeList
+            <button onClick={() => modifyPreview('3')}>asd</button>
+            </>
+            );
     }
 }
 
