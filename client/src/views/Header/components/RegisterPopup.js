@@ -14,7 +14,7 @@ export const RegisterPopup = ({state, setState, setPopupState}) => {
 	const [lastName, setLastName] = useState('');
 
 	return (
-		<Popup>
+		<Popup setPopupState={setPopupState}>
 			<form id='registerForm'
 				onSubmit={event =>
 					submitRegister(event, setPopupState,

@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 
 import Suggestions from './Suggestions';
 import {getThisPage, submitConfirmEmail, parseSearchString} from '../../modules/httpQueries';
+import PopupTest from './PopupTest';
+
 
 const Index = ({state, action, setPopupState}) => {
 	const [users, setUsers] = useState([]);
@@ -38,7 +40,7 @@ const Index = ({state, action, setPopupState}) => {
 					<div className="col-sm-6 h-25" id="searchContainer">
 						<h1>User search</h1>
 					</div>
-					
+					<PopupTest />
 				</div>
 				
 			</div>

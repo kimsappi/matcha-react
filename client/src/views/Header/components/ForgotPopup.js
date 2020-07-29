@@ -10,7 +10,7 @@ export const ForgotPopup = ({state, setState, setPopupState}) => {
 	const [email, setEmail] = useState('');
 
 	return (
-		<Popup>
+		<Popup setPopupState={setPopupState}>
 			<form id='forgotPasswordForm' onSubmit={event => submitForgot(event, setPopupState, email)}>
 				<InputWithLabel
 					type='email'
