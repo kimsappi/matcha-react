@@ -58,6 +58,10 @@ function App() {
             <Index state={state} action='confirmEmail' setPopupState={setPopupState} />
           </Route>
 
+          <Route path='/resetPassword'>
+            <Index state={state} action='resetPassword' setPopupState={setPopupState} />
+          </Route>
+
           <Route path='/'>
             <Index state={state} />
           </Route>

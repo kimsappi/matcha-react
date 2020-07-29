@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 
 import Suggestions from './Suggestions';
-import {getThisPage, submitConfirmEmail, parseSearchString} from '../../modules/httpQueries';
+import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString} from '../../modules/httpQueries';
 import PopupTest from './PopupTest';
 
 
 const Index = ({state, action, setPopupState}) => {
 	const [users, setUsers] = useState([]);
+	if (action === 'resetPassword')
+		setPopupState('resetPassword');
 
 	useEffect(() => {
 		if (action === 'confirmEmail') {
@@ -14,12 +16,12 @@ const Index = ({state, action, setPopupState}) => {
 			console.log(searchObj);
 			if (!searchObj || !searchObj.user || !searchObj.token)
 				return;
-			if (submitConfirmEmail(searchObj)) {
+			if (submitConfirmEmailOrResetPassword(searchObj, action)) {
 				setPopupState('login');
 				window.location.href = '/';
 			}
 		}
-		else
+		else if (!action)
 			getThisPage(window.location.pathname)
 				.then(response => {
 					console.log('/ search response:');

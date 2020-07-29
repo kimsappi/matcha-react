@@ -24,6 +24,7 @@ export const logOut = (state, setState) => {
 	setState({});
 	setUser(null, null);
 	setToken(null);
+	window.location.href = '/';
 };
 
 export const submitLike = (path, action, state, setState) => {
@@ -73,6 +74,7 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 				setToken(response.data.token);
 				setState({loggedIn: true, username: response.data.username, id: response.data.id});
 				setPopupState(false);
+				window.location.href = '/';
 				return true;
 			}
 		});
@@ -113,8 +115,20 @@ export const submitForgot = (event, setPopupState, email) => {
 		});
 };
 
-export const submitConfirmEmail = obj => {
-	axios.post(baseUrl + '/confirmEmail', obj)
+export const submitResetPassword = (event, setPopupState, password, confirmPassword) => {
+	event.preventDefault();
+
+	axios.post(baseUrl + '/resetPassword', {password: password, confirmPassword: confirmPassword})
+		.then(response => {
+			if (!response.data)
+				alert('Something went wrong');
+			else
+				setPopupState(false);
+		});
+};
+
+export const submitConfirmEmailOrResetPassword = (obj, endpoint) => {
+	axios.post(baseUrl + '/' + endpoint, obj)
 		.then(response => {
 			if (!response.data)
 				alert('Something went wrong, nothing has been done.');

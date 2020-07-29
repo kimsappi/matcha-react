@@ -57,18 +57,18 @@ router.post('/confirmEmail', (req, res, next) => {
 });
 
 // forgotPassword.js
-router.get('/forgotPassword', (req, res, next) => {
-	forgotPassword.get(req, res, next);
-});
-
 router.post('/forgotPassword', (req, res, next) => {
 	forgotPassword.post(req, res, next);
 });
 
+// router.post('/forgotPassword', (req, res, next) => {
+// 	forgotPassword.post(req, res, next);
+// });
+
 // resetPassword.js
-router.get('/resetPassword', (req, res, next) => {
-	resetPassword.get(req, res, next);
-});
+// router.get('/resetPassword', (req, res, next) => {
+// 	resetPassword.get(req, res, next);
+// });
 
 router.post('/resetPassword', (req, res, next) => {
 	resetPassword.post(req, res, next);
