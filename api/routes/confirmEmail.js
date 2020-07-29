@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 const pool = require('../modules/dbConnect');
 
-const get = (req, res, next) => {
+const post = (req, res, next) => {
 	// User is already logged in
-	if (req.user || !req.query.user || !req.query.token)
+	if (req.user || !req.body.user || !req.body.token)
 		return res.json(null);
 	
 	const query = `
@@ -12,11 +12,11 @@ const get = (req, res, next) => {
 		WHERE username = ? AND email_confirmation_string = ?;
 	`;
 
-	const preparedQuery = mysql.format(query, [req.query.user, req.query.token]);
+	const preparedQuery = mysql.format(query, [req.body.user, req.body.token]);
 	pool.query(preparedQuery);
 	return res.json('OK');
 };
 
 module.exports = {
-	get
+	post
 };

@@ -52,8 +52,8 @@ router.get('/logout', (req, res, next) => {
 });
 
 // confirmEmail.js
-router.get('/confirmEmail', (req, res, next) => {
-	confirmEmail.get(req, res, next);
+router.post('/confirmEmail', (req, res, next) => {
+	confirmEmail.post(req, res, next);
 });
 
 // forgotPassword.js

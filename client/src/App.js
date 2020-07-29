@@ -18,7 +18,7 @@ function App() {
   console.log(user);
 
   const [state, setState] = useState(user);
-  
+	const [popupState, setPopupState] = useState(false);  
 
   // useEffect(() => {
   //   getThisPage(window.location.href)
@@ -32,7 +32,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header state={state} setState={setState} />
+        <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
 
         <Switch>
 
@@ -52,6 +52,10 @@ function App() {
 
           <Route path='/login'>
             <Login setState={setState} state={state} />
+          </Route>
+
+          <Route path='/confirmEmail'>
+            <Index state={state} action='confirmEmail' setPopupState={setPopupState} />
           </Route>
 
           <Route path='/'>

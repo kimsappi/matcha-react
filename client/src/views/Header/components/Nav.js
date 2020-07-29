@@ -7,9 +7,7 @@ import {ForgotPopup} from './ForgotPopup';
 
 import {logOut} from '../../../modules/httpQueries';
 
-const Nav = ({state, setState}) => {
-	const [popupState, setPopupState] = useState(false);
-
+const Nav = ({state, setState, popupState, setPopupState}) => {
 	if (!state.loggedIn)
 		return (
 			<>

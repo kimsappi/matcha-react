@@ -1,19 +1,30 @@
 import React, {useState, useEffect} from 'react';
 
 import Suggestions from './Suggestions';
-import {getThisPage} from '../../modules/httpQueries';
+import {getThisPage, submitConfirmEmail, parseSearchString} from '../../modules/httpQueries';
 
-const Index = ({state}) => {
+const Index = ({state, action, setPopupState}) => {
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		getThisPage(window.location.pathname)
-			.then(response => {
-				console.log('/ search response:');
-				console.log(response);
-				response = response || [];
-				setUsers(response);
-			});
+		if (action === 'confirmEmail') {
+			const searchObj = parseSearchString(window.location.search);
+			console.log(searchObj);
+			if (!searchObj || !searchObj.user || !searchObj.token)
+				return;
+			if (submitConfirmEmail(searchObj)) {
+				setPopupState('login');
+				window.location.href = '/';
+			}
+		}
+		else
+			getThisPage(window.location.pathname)
+				.then(response => {
+					console.log('/ search response:');
+					console.log(response);
+					response = response || [];
+					setUsers(response);
+				});
 	}, []);
 
 	if (state.loggedIn)

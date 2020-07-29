@@ -104,14 +104,37 @@ export const submitForgot = (event, setPopupState, email) => {
 
 	const reqBody = {email: email};
 
-	axios.post(baseUrl + '/register', reqBody)
+	axios.post(baseUrl + '/forgotPassword', reqBody)
 		.then(response => {
-			if (response.data)
+			if (!response.data)
 				alert('Something went wrong, nothing has been done.');
 			else
 				setPopupState(false);
 		});
 };
+
+export const submitConfirmEmail = obj => {
+	axios.post(baseUrl + '/confirmEmail', obj)
+		.then(response => {
+			if (!response.data)
+				alert('Something went wrong, nothing has been done.');
+			else
+				return true;
+			return false;				
+		});
+};
+
+export const parseSearchString = str => {
+	if (str.length < 2)
+		return null;
+	const arr = str.substring(1).split('&');
+	const ret = {};
+	arr.forEach(value => {
+		if (value.split('=').length === 2)
+			ret[value.split('=')[0]] = value.split('=')[1];
+	});
+	return ret;
+}
 
 // module.exports = {
 // 	getThisPage,
