@@ -5,6 +5,7 @@ const pool = require('../../modules/dbConnect');
 
 const post = (req, res, next) => {
 	console.error('###\nNEED TO HANDLE DELETING DEFAULT PHOTO\nroutes/myProfile/photoActions.js\n###');
+	console.error('ALSO CHECK THAT THE USER CAN ONLY SET THEIR OWN PHOTOS AS PROFILE PIC');
 	if (!req.user || !req.body.action || !req.body.id)
 		res.json(null);
 	let query = '';

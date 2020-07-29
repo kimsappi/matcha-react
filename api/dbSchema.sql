@@ -125,13 +125,17 @@ INSERT INTO visits (visitor, visitee, time) VALUES
 (4, 3, CURRENT_TIMESTAMP),
 (1, 2, CURRENT_TIMESTAMP),
 (1, 3, CURRENT_TIMESTAMP),
-(1, 3, CURRENT_TIMESTAMP),
 (3, 1, CURRENT_TIMESTAMP);
 
 CREATE VIEW user_and_photos AS
 SELECT * FROM users
-LEFT OUTER JOIN (SELECT id AS photo_id, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
+LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
 ON user_photos.user = users.id;
+
+CREATE VIEW user_and_main_photo AS
+SELECT * FROM users
+LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
+ON user_photos.user = users.id AND user_photos.photo_id = users.main_pic;
 
 -- DROP USER 'dbuser'@'%';
 -- CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY '123dbuser';

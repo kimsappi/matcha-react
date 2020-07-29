@@ -34,7 +34,7 @@ const get = (req, res, next) => {
 		if (!myData.gender)
 			return res.json('gender not set');
 		const genderQueries = getGenderQueries(myData);
-		const usersQuery = mysql.format(`SELECT * FROM user_and_photos WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ?;`, [req.user.id]);
+		const usersQuery = mysql.format(`SELECT * FROM user_and_main_photo WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ?;`, [req.user.id]);
 		pool.query(usersQuery, (error, results) => {
 			if (error)
 				return res.json(null);

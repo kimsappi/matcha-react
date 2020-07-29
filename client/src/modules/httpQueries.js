@@ -7,9 +7,19 @@ import {likeButtonStrings} from '../config.json';
 
 const baseUrl = 'http://localhost:3001';
 
+// This function will generate a link to a user image on the server.
+// Can be used with 2 arguments: (id, extension) or 1: (filename)
 export const generateImageUrl = (id, extension) => {
-	return baseUrl + '/img/userPhotos/' + id + '.' + extension;
+	const dirUrl = baseUrl + '/img/userPhotos/'
+	if (typeof extension === 'undefined')
+		return dirUrl + id;
+	else
+		return dirUrl + id + '.' + extension;
 };
+
+export const fallbackImageUrl = event => {
+	event.target.src = generateImageUrl('placeholder.png');
+}
 
 const getAuthHeader = () => {
 	return {Authorization: `Bearer ${getToken()}`};
