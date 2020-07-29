@@ -1,7 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 tmp/
-public/img/userPhotos/
+api/public/img/userPhotos/
 .DS_Store
 
 # Email details and other secrets

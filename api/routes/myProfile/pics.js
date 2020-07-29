@@ -40,6 +40,8 @@ const post = (req, res, next) => {
 		}
 		else
 			imageCount = result[0].count;
+
+		console.log('imageCount: ' + imageCount);
 		
 		// Loop through images, insert them to database, and rename
 		for (let i = 0; i + imageCount < 5; ++i) {
@@ -51,6 +53,7 @@ const post = (req, res, next) => {
 			const insertQuery = 'INSERT INTO user_photos (`user`, `extension`) VALUES (?, ?);';
 			let preparedQuery = mysql.format(insertQuery, [req.user.id, extension]);
 			let filename = '';
+			console.log(preparedQuery);
 			pool.query(preparedQuery, (error, result) => {
 				if (error) {
 					//todo
@@ -58,19 +61,20 @@ const post = (req, res, next) => {
 				}
 				else {
 					filename = result.insertId;
+					console.log(`filename: ${filename}.${extension}`);
 					fs.renameSync(req.files[i].path, `public/img/userPhotos/${filename}.${extension}`);
 					
+				console.log('rename success');
 					// User uploads their first image, make that default
 					if (!imageCount) {
 						const defaultQuery = mysql.format(`UPDATE users SET main_pic = ${filename} WHERE id = ?;`, [req.user.id]);
 						pool.query(defaultQuery);
 					}
-					return res.json('OK');
 				}
 			});
 		}
+		return res.json('OK');
 	});
-	return res.json(null);
 };
 
 module.exports = {
