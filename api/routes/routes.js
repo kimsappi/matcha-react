@@ -14,6 +14,7 @@ const search = require('./search');
 
 const myProfile = require('./myProfile/profile');
 const myPics = require('./myProfile/pics');
+const photoActions = require('./myProfile/photoActions');
 const likes = require('./myProfile/likes');
 const visits = require('./myProfile/visits');
 
@@ -94,6 +95,11 @@ router.get('/myProfile/pics', (req, res, next) => {
 
 router.post('/myProfile/pics', upload.array('photos', 5), (req, res, next) => {
 	myPics.post(req, res, next);
+});
+
+// myProfile/photoActions.js
+router.post('/myProfile/photoActions', (req, res, next) => {
+	photoActions.post(req, res, next);
 });
 
 // profile.js

@@ -8,7 +8,7 @@ import {likeButtonStrings} from '../config.json';
 const baseUrl = 'http://localhost:3001';
 
 export const generateImageUrl = (id, extension) => {
-	return 'http://localhost:3001/img/userPhotos/' + id + '.' + extension;
+	return baseUrl + '/img/userPhotos/' + id + '.' + extension;
 };
 
 const getAuthHeader = () => {
@@ -41,6 +41,13 @@ export const uploadPhoto = photos => {
 	const request = axios.post(baseUrl + '/myProfile/pics', formData, {headers: getAuthHeader()});
 	return request.then(response => response.data);
 }
+
+export const photoActions = (action, id) => {
+	const request = axios.post(baseUrl + '/myProfile/photoActions',
+		{action: action, id: id},
+		{headers: getAuthHeader()});
+	return request.then(response => response.data);
+};
 
 export const submitLike = (path, action, state, setState) => {
 	console.log(path, action);

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
-import {uploadPhoto, generateImageUrl} from '../../modules/httpQueries';
+import MyProfileImage from './MyProfileImage';
+
+import {uploadPhoto} from '../../modules/httpQueries';
 
 const MyProfileImages = ({profile}) => {	
 
@@ -19,28 +21,14 @@ const MyProfileImages = ({profile}) => {
                 console.log(res);
     }
 
-    const myProfileImages = profile.images.map(photo => 
-        <div className="row" id="MyProfilePhoto">
-            <img src={generateImageUrl(photo.id, photo.extension)} />
-        </div>
-    );
-
     return (
         <>
         <label htmlFor='photoUpload'>Upload a photo</label>
         <input type='file' name='photoUpload' onChange={event => uploadPhotos(event)} multiple />
         <p>Printed from MyProfileImages-component</p>
-        {myProfileImages}
-        <div className="row" id="MyProfilePhoto">
-            photo1
-        </div>
-        <div className="row" id="MyProfilePhoto">
-            photo2
-        </div>
-        <div className="row" id="MyProfilePhoto">
-            photo3
-        </div>
-
+        {profile.images.length ?
+            profile.images.map(photo => <MyProfileImage photo={photo} key={photo.id} />) :
+            <p>You haven't uploaded any images!</p>}
         </>
         );
 }
