@@ -44,7 +44,14 @@ const post = (req, res, next) => {
 			const userData = {
 				id: results[0].id,
 				username: results[0].username,
-				token: generateJWT({user: results[0].username, id: results[0].id})
+				lat: loginCoordinates.latitude,
+				lon: loginCoordinates.longitude,
+				token: generateJWT({
+					user: results[0].username,
+					id: results[0].id,
+					lat: results[0].latitude,
+					lon: results[0].longitude
+				})
 			};
 			pool.query(`UPDATE users
 				SET last_login = '${mysqlDatetime(new Date())}',

@@ -5,6 +5,7 @@ const {getGenderEmoji} = require('../modules/gender.js');
 const mysqlDatetime = require('../modules/mysqlDatetime');
 
 const config = require('../config.json');
+const calculateDistance = require('../modules/calculateDistance');
 
 const getLikeButtonStatus = async (user, other) => {
 	// User is looking at their own profile
@@ -68,19 +69,15 @@ const get = async (req, res, next) => {
 		]);
 
 		// Don't really care about success so no callback
-		//pool.query(preparedVisitQuery, (error, results) => {});
+		pool.query(preparedVisitQuery, (error, results) => {});
 
 		const likeButtonStatus = getLikeButtonStatus(req.user, results[0]);
 		const images = getImages(req.params.id);
-		//CONCAT(id, '.', extension)
-		//images.then(data => console.log(data));
-		console.log('#############images error ends#############');
 		Promise.all([likeButtonStatus, images])
-			.then((likeButtonStatus, images) => {
+			.then((likeButtonStatus) => {
 				console.log('like button: ' + likeButtonStatus);
 				return res.json({
-					user: req.user,
-					profileData: results[0],
+					profileData: {...results[0], distance: calculateDistance(req.user.lat, req.user.lon, results[0].latitude, results[0].longitude)},
 					images: likeButtonStatus[1],
 					lookingFor: getGenderEmoji(results[0].target_genders),
 					gender: getGenderEmoji(results[0].gender),

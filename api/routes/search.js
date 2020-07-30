@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 
 const pool = require('../modules/dbConnect');
-const gender = require('../modules/gender');
+const calculateDistance = require('../modules/calculateDistance');
 
 const getGenderQueries = myData => {
 	let ret = {};
@@ -14,7 +14,14 @@ const getGenderQueries = myData => {
 	return ret;
 }
 
-const filterProfiles = (profiles, params) => {
+const filterProfiles = (profiles, params, user) => {
+	const ret = profiles.map(profile => {
+		let distance = calculateDistance(user.lat, user.lon, profile.latitude, profile.longitude);
+		if (isNaN(distance))
+			distance = 'Unknown';
+		return {...profile, distance: distance};
+	});
+	console.log(ret);
 	return profiles;
 };
 
@@ -38,7 +45,7 @@ const get = (req, res, next) => {
 		pool.query(usersQuery, (error, results) => {
 			if (error)
 				return res.json(null);
-			return res.json(filterProfiles(results, req.params));
+			return res.json(filterProfiles(results, req.params, req.user));
 		});
 	});
 };
