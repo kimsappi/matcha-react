@@ -6,6 +6,7 @@ import MyProfileImages from './MyProfileImages';
 import {getThisPage} from '../../modules/httpQueries';
 
 
+
 const MyProfile = ({state, setState}) => {	
 	const [profileState, setProfileState] = useState(null);
 	useEffect(() => {
