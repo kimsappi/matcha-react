@@ -34,6 +34,18 @@ const getLikeButtonStatus = async (user, other) => {
 	return ret;
 };
 
+const getImages = async id => {
+	const ret = new Promise((resolve, reject) => {
+		pool.query(mysql.format("SELECT * FROM user_photos WHERE user = ?;", [parseInt(id)]), (error, results) => {
+		//pool.query("SELECT * FROM user_photos WHERE user = 1;", (error, results) => {
+			if (error)
+				reject('error');
+			resolve(results);
+		});
+	});
+	return ret;
+};
+
 const get = async (req, res, next) => {
 	const userId = req.params.id;
 	// User is not logged in or no id provided or id is invalid
@@ -56,20 +68,26 @@ const get = async (req, res, next) => {
 		]);
 
 		// Don't really care about success so no callback
-		pool.query(preparedVisitQuery);
+		//pool.query(preparedVisitQuery, (error, results) => {});
 
 		const likeButtonStatus = getLikeButtonStatus(req.user, results[0]);
-		likeButtonStatus.then(likeButtonStatus => {
-			console.log('like button: ' + likeButtonStatus);
-			return res.json({
-				user: req.user,
-				profileData: results[0],
-				lookingFor: getGenderEmoji(results[0].target_genders),
-				gender: getGenderEmoji(results[0].gender),
-				title: `${results[0].first_name} ${results[0].last_name[0]}.`,
-				likeButton: likeButtonStatus
+		const images = getImages(req.params.id);
+		//CONCAT(id, '.', extension)
+		//images.then(data => console.log(data));
+		console.log('#############images error ends#############');
+		Promise.all([likeButtonStatus, images])
+			.then((likeButtonStatus, images) => {
+				console.log('like button: ' + likeButtonStatus);
+				return res.json({
+					user: req.user,
+					profileData: results[0],
+					images: likeButtonStatus[1],
+					lookingFor: getGenderEmoji(results[0].target_genders),
+					gender: getGenderEmoji(results[0].gender),
+					title: `${results[0].first_name} ${results[0].last_name[0]}.`,
+					likeButton: likeButtonStatus[0]
+				});
 			});
-		});
 	});
 };
 
