@@ -17,6 +17,7 @@ function App() {
   let user = getUser();
   console.log(user);
 
+  const [webSocket, setWebSocket] = useState(null);
   const [state, setState] = useState(user);
 	const [popupState, setPopupState] = useState(false);  
 
@@ -32,7 +33,10 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
+        <Header state={state} setState={setState}
+          popupState={popupState} setPopupState={setPopupState}
+          webSocket={webSocket} setWebSocket={setWebSocket}
+        />
 
         <Switch>
 

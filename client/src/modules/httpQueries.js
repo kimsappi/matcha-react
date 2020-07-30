@@ -1,4 +1,5 @@
 import axios from 'axios';
+import React, {Redirect} from 'react';
 
 import {setUser, setToken} from './userData';
 import {getToken} from './userData';
@@ -73,7 +74,23 @@ export const submitLike = (path, action, state, setState) => {
 	setState(!state);
 };
 
-export const submitLogin = (event, state, setState, setPopupState, username, password) => {
+const startWebSocket = () => {
+	console.log('Creating socket');
+	const socket = new WebSocket('ws://localhost:3002/');
+
+	socket.onopen = function() {
+
+		console.log('Socket open.');
+		socket.send(JSON.stringify({message: 'What is the meaning of life, the universe and everything?'}));
+		console.log('Message sent.')
+	};
+
+	socket.onmessage = function(message) {
+		console.log('Socket server message', message);
+	};
+}
+
+export const submitLogin = (event, state, setState, setPopupState, username, password, webSocket, setWebSocket) => {
 	event.preventDefault();
 
 	let reqBody = {
@@ -106,8 +123,9 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 				setToken(response.data.token);
 				setState({loggedIn: true, username: response.data.username, id: response.data.id});
 				setPopupState(false);
-				window.location.href = '/';
-				return true;
+				startWebSocket();
+
+				return <Redirect to='/' />;
 			}
 		});
 };

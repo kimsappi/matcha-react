@@ -7,7 +7,7 @@ import InputWithLabel from '../../../components/InputWithLabel';
 import {userGeolocation} from '../../../modules/geolocate';
 import {submitLogin} from '../../../modules/httpQueries';
 
-export const LoginPopup = ({state, setState, setPopupState}) => {
+export const LoginPopup = ({state, setState, setPopupState, webSocket, setWebSocket}) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -17,7 +17,7 @@ export const LoginPopup = ({state, setState, setPopupState}) => {
 
 	return (
 		<Popup setPopupState={setPopupState}>
-			<form id='loginForm' onSubmit={event => submitLogin(event, state, setState, setPopupState, username, password)}>
+			<form id='loginForm' onSubmit={event => submitLogin(event, state, setState, setPopupState, username, password, webSocket, setWebSocket)}>
 				<InputWithLabel
 					type='text'
 					name='username' 

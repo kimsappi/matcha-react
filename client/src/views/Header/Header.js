@@ -11,7 +11,10 @@ const Header = props => {
 			</button>
 			<div className="collapse navbar-collapse" id="navbarSupportedContent">
     			
-					<Nav state={props.state} setState={props.setState} popupState={props.popupState} setPopupState={props.setPopupState} />
+					<Nav state={props.state} setState={props.setState}
+						popupState={props.popupState} setPopupState={props.setPopupState}
+						webSocket={props.webSocket} setWebSocket={props.setWebSocket}
+					/>
 			</div>
 		</nav>
 	);

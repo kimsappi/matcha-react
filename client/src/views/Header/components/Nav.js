@@ -8,7 +8,7 @@ import {ResetPopup} from './ResetPopup';
 
 import {logOut} from '../../../modules/httpQueries';
 
-const Nav = ({state, setState, popupState, setPopupState}) => {
+const Nav = ({state, setState, popupState, setPopupState, webSocket, setWebSocket}) => {
 	if (!state.loggedIn)
 		return (
 			<>
@@ -27,7 +27,7 @@ const Nav = ({state, setState, popupState, setPopupState}) => {
 					</li>
 				</ul>
 
-				{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
+				{popupState === 'login' ? <LoginPopup state={state} setState={setState} setPopupState={setPopupState} webSocket={webSocket} setWebSocket={setWebSocket} /> : null}
 				{popupState === 'register' ? <RegisterPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 				{popupState === 'forgotPassword' ? <ForgotPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
 				{popupState === 'resetPassword' ? <ResetPopup state={state} setState={setState} setPopupState={setPopupState} /> : null}
