@@ -20,14 +20,15 @@ const MyLikes = ({state, setState}) => {
 
     const mainPicStyle = 
     {
-        width: '200px',
+        maxWidth: '100%',
+        maxHeight: '100%',
         borderRadius: '100px'
     }
 
     const smallPicStyle =
     {
-        width: '50px',
-        margin: '30px'
+        maxWidth: '100%',
+        maxHeight: '100%',
     }
 
     // Remove all default stylings from the button, that the image is just a button
@@ -95,7 +96,7 @@ const MyLikes = ({state, setState}) => {
                             </>
                         : null}
                         {imagePopupState === true ?
-                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')}/></Popup>
+                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={smallPicStyle}/></Popup>
                         : ''}
                 </div>
             </div>
