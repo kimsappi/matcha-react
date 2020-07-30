@@ -59,6 +59,27 @@ export const photoActions = (action, id) => {
 	return request.then(response => response.data);
 };
 
+export const sendMyProfileData = (firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags) => {
+	const url = baseUrl + '/myProfile/profile';
+	const reqBody = {
+		firstName: firstName,
+		lastName: lastName,
+		age: age,
+		latitude: latitude,
+		longitude: longitude,
+		email: email,
+		gender: gender,
+		target: target,
+		biography: biography,
+		tags: tags
+	};
+
+	const request = axios.post(url, reqBody, {headers: getAuthHeader()});
+	request.then(response => {
+		console.log(response.data);
+	})
+}
+
 export const submitLike = (path, action, state, setState) => {
 	console.log(path, action);
 	const url = baseUrl + path;

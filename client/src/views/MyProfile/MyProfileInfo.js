@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from 'react';
+import {Button} from 'react-bootstrap';
 
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioWithLabel from '../../components/RadioWithLabel';
+
+import {sendMyProfileData} from '../../modules/httpQueries';
 
 const MyProfileInfo = ({profile}) => {	
     const [firstName, setFirstName] = useState(profile.userData.first_name);
@@ -12,6 +15,8 @@ const MyProfileInfo = ({profile}) => {
     const [email, setEmail] = useState(profile.userData.email);
     const [gender, setGender] = useState(profile.userData.gender);
     const [target, setTarget] = useState(profile.userData.target_genders);
+    const [biography, setBiography] = useState(profile.userData.biography);
+    const [tags, setTags] = useState(profile.tags);
 
     return (
         <>
@@ -79,6 +84,22 @@ const MyProfileInfo = ({profile}) => {
                 {label: 'Women', value: 'f'}
             ]}
         />
+        <InputWithLabel
+            type='textarea'
+            name='biography'
+            label='Biography'
+            state={biography}
+            setState={setBiography}
+        />
+        <InputWithLabel
+            type='textarea'
+            name='tags'
+            label='Tags PLACEHOLDER'
+            state={tags}
+            setState={setTags}
+        />
+
+        <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags)}>OK</Button>
         </>
         );
 }

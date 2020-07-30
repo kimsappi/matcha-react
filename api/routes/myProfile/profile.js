@@ -38,14 +38,14 @@ const get = (req, res, next) => {
 };
 
 const post = (req, res, next) => {
-	// User is not logged in
-	if (!req.session.user)
-		return res.status(301).redirect('/login');
-
 	console.log(req.body);
+	// User is not logged in
+	if (!req.user)
+		return res.json(null);
+
 	// Profile is not filled completely/correctly
 	if (!validateMyProfileData(req.body))
-		return res.status(301).redirect('/myProfile/profile');
+		return res.json(null);
 	//console.log('passed validation');
 
 	// Parse tags from string to array
@@ -75,10 +75,10 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 
 	pool.query(preparedQuery, (error) => {
 		if (error)
-			return res.status(301).redirect('/myProfile/profile');
+			return res.json(null);
 		else
 			console.log('query success');
-			return res.status(301).redirect('/myProfile/profile');
+			return res.json('OK');
 	});
 };
 
