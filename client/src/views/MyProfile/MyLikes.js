@@ -34,10 +34,10 @@ const MyLikes = ({state, setState}) => {
                 <div className="row">
                     <div className="col-sm-6">
                         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="w-80" style={{margin: '20px'}}>
-                            <Tab eventKey="home" title="Users you have liked" className="w-80" style={{margin: '20px'}}>
+                            <Tab eventKey="home" title="Users you have liked" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
                                 <Likes likes={likesState.liked} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState}/>
                             </Tab>
-                            <Tab eventKey="profile" title="Users that have liked you" className="w-80" style={{margin: '20px'}}>
+                            <Tab eventKey="profile" title="Users that have liked you" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
                                 <Likee likes={likesState.likedMe} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState}/>
                             </Tab>
                         </Tabs>
@@ -48,6 +48,7 @@ const MyLikes = ({state, setState}) => {
                     {previewLikedWhoState === 1 ? 
                     <>
                         <h1>(Profile pic here..)</h1>
+                        <h5>(other images here..)</h5>
                         <h1>Username: {previewState.likeeUsername}</h1>
                         <h2>UserId: {previewState.likee}</h2>
                         <Link to={'/profile/' + previewState.likee}>
@@ -58,13 +59,14 @@ const MyLikes = ({state, setState}) => {
                     {previewLikedWhoState === 2 ?
                     <>
                         <h1>(Profile pic here..)</h1>
+                        <h5>(other images here..)</h5>
                         <h1>Username: {previewState.likerUsername}</h1>
                         <h2>UserId: {previewState.liker}</h2>
                         <Link to={'/profile/' + previewState.liker}>
                             <div key={previewState.liker}>View profile</div>
                         </Link>
                     </>
-                    : ''}       
+                    : ''}
                 </div>
             </div>
         </>

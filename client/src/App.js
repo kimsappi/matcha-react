@@ -18,7 +18,7 @@ function App() {
   console.log(user);
 
   const [state, setState] = useState(user);
-	const [popupState, setPopupState] = useState(false);  
+	const [popupState, setPopupState] = useState(false);
 
   // useEffect(() => {
   //   getThisPage(window.location.href)

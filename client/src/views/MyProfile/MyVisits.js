@@ -33,10 +33,10 @@ const MyVisits = ({state, setState}) => {
                 <div className="row">
                     <div className="col-sm-6">
                         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="w-80" style={{margin: '20px'}}>
-                            <Tab eventKey="home" title="Users you have visited" className="w-80" style={{margin: '20px'}}>
+                            <Tab eventKey="home" title="Users you have visited" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
 								<Likes likes={visitsState.visited} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState}/>
                             </Tab>
-                            <Tab eventKey="profile" title="Users that have visited you" className="w-80" style={{margin: '20px'}}>
+                            <Tab eventKey="profile" title="Users that have visited you" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
 								<Likee likes={visitsState.visitedMe} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState}/>
                             </Tab>
                         </Tabs>
@@ -46,7 +46,8 @@ const MyVisits = ({state, setState}) => {
                     
                     {previewLikedWhoState === 1 ? 
                     <>
-                        <h1>(Profile pic here..)</h1>
+                        <h1>(Main profile pic here..)</h1>
+                        <h5>(other images here..)</h5>
                         <h1>Username: {previewState.visiteeUsername}</h1>
                         <h2>UserId: {previewState.visitee}</h2>
                         <Link to={'/profile/' + previewState.visitee}>
@@ -57,6 +58,7 @@ const MyVisits = ({state, setState}) => {
                     {previewLikedWhoState === 2 ?
                     <>
                         <h1>(Profile pic here..)</h1>
+                        <h5>(other images here..)</h5>
                         <h1>Username: {previewState.visitorUsername}</h1>
                         <h2>UserId: {previewState.visitor}</h2>
                         <Link to={'/profile/' + previewState.visitor}>

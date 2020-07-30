@@ -5,9 +5,10 @@ export const Popup = ({children, setPopupState}) => {
 	{
 		width: '100%',
 		height: '100%',
-		backgroundColor: 'rgba(0, 0, 0, 0.6)',
+		backgroundColor: 'rgba(0, 0, 0, 0.3)',
 		position: 'fixed',
 		top: '0',
+		left: '0',
 		justifyContent: 'center',
 		alignItems: 'center'
 	}
@@ -35,8 +36,13 @@ export const Popup = ({children, setPopupState}) => {
 		backgroundColor: 'white',
 		borderRadius: '15px',
 		border: '1px solid gray',
-		boxShadow: '6px 6px 29px -4px rgba(0, 0, 0, 0.75)',
+		boxShadow: '6px 6px 29px -1px rgba(0, 0, 0, 1)',
 		cursor: 'pointer'
+	}
+
+	const button = 
+	{
+		
 	}
 
 	return (
