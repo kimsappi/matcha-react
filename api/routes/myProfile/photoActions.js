@@ -12,7 +12,7 @@ const post = (req, res, next) => {
 	if (req.body.action === 'delete')
 		query = mysql.format('DELETE FROM user_photos WHERE user = ? AND id = ?;', [req.user.id, req.body.id]);
 	else if (req.body.action === 'primary')
-		query = mysql.format('UPDATE users SET main_pic = ? WHERE id = ?', [req.body.id, req.user.id]);
+		query = mysql.format('UPDATE users SET main_pic = ? WHERE id = ? AND EXISTS (SELECT * FROM user_photos WHERE id = ? and user = ?);', [req.body.id, req.user.id, req.body.id, req.user.id]);
 	
 	if (!query.length)
 		return res.json(null);
