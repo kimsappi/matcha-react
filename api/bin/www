@@ -8,6 +8,8 @@ var app = require('../app');
 var debug = require('debug')('matcha:server');
 var http = require('http');
 
+const ws = require('ws');
+
 /**
  * Get port from environment and store in Express.
  */
@@ -88,3 +90,23 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// Websocket server
+const wsServer = http.createServer();
+const socketServer = new ws.Server({server: wsServer});
+const wsPort = 3002;
+
+wsServer.on('request', app);
+socketServer.on('connection', socket => {
+  socket.on('message', message => console.log(message));
+  socket.send(JSON.stringify('response'));
+  setInterval(() => {
+    socket.send(JSON.stringify('5 seconds'));
+  }, 5000);
+});
+
+wsServer.on('listening', () => {
+  console.log('Websocket server started on ' + wsPort);
+});
+
+wsServer.listen(wsPort);
