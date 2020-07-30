@@ -44,7 +44,7 @@ const MyVisits = ({state, setState}) => {
                 <div className="col-sm-5" style={{margin: '20px', justifyContent: 'center', textAlign: 'center'}}>
 
                     
-                    {previewLikedWhoState === 1 ? 
+                    {/* {previewLikedWhoState === 1 ? 
                     <>
                         <h1>(Main profile pic here..)</h1>
                         <h5>(other images here..)</h5>
@@ -65,7 +65,7 @@ const MyVisits = ({state, setState}) => {
                             <div key={previewState.visitor}>View profile</div>
                         </Link>
                     </>
-                    : ''}       
+                    : ''}        */}
                 </div>
             </div>
         </>

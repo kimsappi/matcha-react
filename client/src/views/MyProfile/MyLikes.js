@@ -3,19 +3,18 @@ import {Link} from 'react-router-dom';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Table from 'react-bootstrap/Table'
-
 import ProfileNav from './ProfileNav';
 import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';
 
 import {getThisPage} from '../../modules/httpQueries';
 
-
 const MyLikes = ({state, setState}) => {
 
     const [likesState, setLikesState] = useState(null);
     const [previewState, modifyPreviewState] = useState(null);
     const [previewLikedWhoState, modifyPreviewLikedWhoState] = useState(null);
+
 	useEffect(() => {
 		getThisPage(window.location.pathname)
 			.then(response => {
@@ -45,7 +44,7 @@ const MyLikes = ({state, setState}) => {
                 <div className="col-sm-5" style={{margin: '20px', justifyContent: 'center', textAlign: 'center'}}>
 
                     
-                    {previewLikedWhoState === 1 ? 
+                    {/* {previewLikedWhoState === 1 ? 
                     <>
                         <h1>(Profile pic here..)</h1>
                         <h5>(other images here..)</h5>
@@ -66,7 +65,7 @@ const MyLikes = ({state, setState}) => {
                             <div key={previewState.liker}>View profile</div>
                         </Link>
                     </>
-                    : ''}
+                    : ''} */}
                 </div>
             </div>
         </>
