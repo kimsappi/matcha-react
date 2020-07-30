@@ -1,11 +1,11 @@
 import React from 'react';
 
-const generateRandomId = () => Math.floor(1 + Math.random());
+// const generateRandomId = () => Math.floor(1 + Math.random());
 
 const InputWithLabel = ({
 	type, name, label, state, setState
 }) => {
-	const id = generateRandomId();
+	// const id = generateRandomId();
 
 	const eventHandler = event => {
 		setState(event.target.value);
