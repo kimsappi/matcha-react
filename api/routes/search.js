@@ -22,7 +22,7 @@ const filterProfiles = (profiles, params, user) => {
 		return {...profile, distance: distance};
 	});
 	console.log(ret);
-	return profiles;
+	return ret;
 };
 
 const get = (req, res, next) => {

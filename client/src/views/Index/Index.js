@@ -1,12 +1,14 @@
 import React, {useState, useEffect} from 'react';
 
 import Suggestions from './Suggestions';
+import Filters from './Filters';
 import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString} from '../../modules/httpQueries';
 import PopupTest from './PopupTest';
 
 
 const Index = ({state, action, setPopupState}) => {
 	const [users, setUsers] = useState([]);
+	const [distanceFilter, setDistanceFilter] = useState(100);
 	if (action === 'resetPassword')
 		setPopupState('resetPassword');
 
@@ -37,10 +39,11 @@ const Index = ({state, action, setPopupState}) => {
 				<div className="row">
 					<div className="col-sm-6 h-25" id="suggestionContainer">
 						<h1>Suggestions</h1>
-						<Suggestions users={users} />
+						<Suggestions users={users} distanceFilter={distanceFilter} />
 					</div>
 					<div className="col-sm-6 h-25" id="searchContainer">
 						<h1>User search</h1>
+						<Filters filters={distanceFilter} setFilters={setDistanceFilter} />
 					</div>
 					<PopupTest />
 				</div>
