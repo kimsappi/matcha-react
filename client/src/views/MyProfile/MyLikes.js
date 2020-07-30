@@ -27,8 +27,9 @@ const MyLikes = ({state, setState}) => {
 
     const smallPicStyle =
     {
-        maxWidth: '100%',
-        maxHeight: '100%',
+        maxWidth: '120px',
+        maxHeight: '100px',
+        padding: '20px'
     }
 
     // Remove all default stylings from the button, that the image is just a button
@@ -41,6 +42,12 @@ const MyLikes = ({state, setState}) => {
         font: 'inherit',
         cursor: 'pointer',
         outline: 'inherit'
+    }
+
+    const popUpImage = 
+    {
+        maxWidth: '100%',
+        maxHeight: '100%',
     }
 
 	useEffect(() => {
@@ -96,7 +103,7 @@ const MyLikes = ({state, setState}) => {
                             </>
                         : null}
                         {imagePopupState === true ?
-                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={smallPicStyle}/></Popup>
+                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage}/></Popup>
                         : ''}
                 </div>
             </div>
