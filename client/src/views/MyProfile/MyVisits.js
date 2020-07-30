@@ -6,15 +6,51 @@ import Table from 'react-bootstrap/Table'
 
 import ProfileNav from './ProfileNav';
 
-import {getThisPage} from '../../modules/httpQueries';
+import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
 import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';
+import {Popup} from '../../components/Popup';
 
 const MyVisits = ({state, setState}) => {
 
     const [visitsState, setVisitsState] = useState(null);
     const [previewState, modifyPreviewState] = useState(null);
     const [previewLikedWhoState, modifyPreviewLikedWhoState] = useState(null);
+    const [previewImage, modifyPreviewImage] = useState(null);
+    const [imagePopupState, modifyImagePopupState] = useState(false);
+
+    const mainPicStyle = 
+    {
+        maxWidth: '100%',
+        maxHeight: '100%',
+        borderRadius: '100px'
+    }
+
+    const smallPicStyle =
+    {
+        maxWidth: '120px',
+        maxHeight: '100px',
+        padding: '20px'
+    }
+
+    // Remove all default stylings from the button, that the image is just a button
+    const imageButton =
+    {
+        background: 'none',
+        color: 'inherit',
+        border: 'none',
+        padding: '0',
+        font: 'inherit',
+        cursor: 'pointer',
+        outline: 'inherit'
+    }
+
+    const popUpImage = 
+    {
+        maxWidth: '100%',
+        maxHeight: '100%',
+    }
+
 	useEffect(() => {
 		getThisPage(window.location.pathname)
 			.then(response => {
@@ -43,29 +79,31 @@ const MyVisits = ({state, setState}) => {
                     </div>
                 <div className="col-sm-5" style={{margin: '20px', justifyContent: 'center', textAlign: 'center'}}>
 
-                    
-                    {/* {previewLikedWhoState === 1 ? 
-                    <>
-                        <h1>(Main profile pic here..)</h1>
-                        <h5>(other images here..)</h5>
-                        <h1>Username: {previewState.visiteeUsername}</h1>
-                        <h2>UserId: {previewState.visitee}</h2>
-                        <Link to={'/profile/' + previewState.visitee}>
-                            <div key={previewState.visitee}>View profile</div>
-                        </Link>
-                    </>
-                    : ''}
-                    {previewLikedWhoState === 2 ?
-                    <>
-                        <h1>(Profile pic here..)</h1>
-                        <h5>(other images here..)</h5>
-                        <h1>Username: {previewState.visitorUsername}</h1>
-                        <h2>UserId: {previewState.visitor}</h2>
-                        <Link to={'/profile/' + previewState.visitor}>
-                            <div key={previewState.visitor}>View profile</div>
-                        </Link>
-                    </>
-                    : ''}        */}
+                {previewState && previewState.profileData ?
+                            <>
+                                <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
+                                <h3>{previewState.gender}</h3>
+                                <div style={{width: '100%'}}>
+                                    <button onClick={() => {modifyPreviewImage(previewState.profileData.main_pic); modifyImagePopupState(true);}}  style={imageButton}>
+                                        <img src={generateImageUrl(previewState.profileData.main_pic, 'png')} style={mainPicStyle}/>
+                                    </button>
+                                </div>
+                                {previewState.images.map( (image) => 
+                                    <>
+                                        {image.id !== previewState.profileData.main_pic ?
+                                        <button onClick={() => {modifyPreviewImage(image.id); modifyImagePopupState(true);}} style={imageButton}>
+                                            <img src={generateImageUrl(image.id, image.extension)} style={smallPicStyle}/>
+                                        </button>
+                                        : null}
+                                    </>
+                                )};
+                                <p>{previewState.profileData.biography}</p>
+                            </>
+                        : null}
+                        {imagePopupState === true ?
+                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage}/></Popup>
+                        : ''}
+                  
                 </div>
             </div>
         </>

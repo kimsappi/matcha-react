@@ -50,13 +50,17 @@ export const uploadPhoto = photos => {
 	console.log(formData.getAll('photos'));
 	const request = axios.post(baseUrl + '/myProfile/pics', formData, {headers: getAuthHeader()});
 	return request.then(response => response.data);
+	
 }
 
 export const photoActions = (action, id) => {
 	const request = axios.post(baseUrl + '/myProfile/photoActions',
 		{action: action, id: id},
 		{headers: getAuthHeader()});
+	if (action === 'delete')
+		window.location.reload(false);
 	return request.then(response => response.data);
+	
 };
 
 export const sendMyProfileData = (firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags) => {

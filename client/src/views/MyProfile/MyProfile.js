@@ -9,6 +9,8 @@ import {getThisPage} from '../../modules/httpQueries';
 
 const MyProfile = ({state, setState}) => {	
 	const [profileState, setProfileState] = useState(null);
+	
+	
 	useEffect(() => {
 		getThisPage(window.location.pathname)
 			.then(response => {
@@ -32,6 +34,7 @@ const MyProfile = ({state, setState}) => {
 		
 			<h1>My profile</h1>
 			<h2>{profileState.userData.first_name} {profileState.userData.last_name}</h2>
+			
 		</>);
 
 	else

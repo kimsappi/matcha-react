@@ -15,9 +15,11 @@ export const Popup = ({children, setPopupState}) => {
 	const box =
 	{
 		display: 'inline-block',
-		maxWidth: '100%',
-		maxHeight: '100%',
-
+		width: 'fit-content',
+		height: 'fit-content',
+		maxHeight: '93%',
+		maxWidth: '93%',
+		
 		backgroundColor: 'white',
 		position: 'fixed',
 		borderRadius: '10px',
@@ -51,9 +53,7 @@ export const Popup = ({children, setPopupState}) => {
 		<>
 			<div style={backGround}>
 				<div style={box}>
-
 					{children}
-
 					<button onClick={() => {setPopupState(false)}} style={closeButton}>X</button>
 				</div>
 			</div>
