@@ -8,7 +8,7 @@ const Suggestions = ({users}) => {
 		return <div>There are currently no suggestions available for you!</div>;
 	const userCards = users.map(element => 
 		<Link to={'/profile/' + element.id}>
-			<img src={generateImageUrl(element.filename)} onError={event => fallbackImageUrl(event)}/>
+			<img alt='User' src={generateImageUrl(element.filename)} onError={event => fallbackImageUrl(event)}/>
 			<div key={element.id}>{element.username}</div>
 		</Link>
 	);

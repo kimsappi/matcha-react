@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Button} from 'react-bootstrap';
 
 import InputWithLabel from '../../components/InputWithLabel';
@@ -48,6 +48,7 @@ const MyProfileInfo = ({profile}) => {
             label='Age'
             state={age}
             setState={setAge}
+            step='1'
         />
         <InputWithLabel
             type='number'
@@ -55,6 +56,7 @@ const MyProfileInfo = ({profile}) => {
             label='Latitude'
             state={latitude}
             setState={setLatitude}
+            step='0.0001'
         />
         <InputWithLabel
             type='number'
@@ -62,6 +64,7 @@ const MyProfileInfo = ({profile}) => {
             label='Longitude'
             state={longitude}
             setState={setLongitude}
+            step='0.0001'
         />
         <div>I am a...</div>
         <RadioWithLabel
