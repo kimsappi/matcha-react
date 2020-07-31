@@ -8,7 +8,7 @@ import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';
 import {Popup} from '../../components/Popup';
 
-import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
+import {getThisPage, generateImageUrl, submitLike} from '../../modules/httpQueries';
 
 const MyLikes = ({state, setState}) => {
 
@@ -17,6 +17,7 @@ const MyLikes = ({state, setState}) => {
     const [previewLikedWhoState, modifyPreviewLikedWhoState] = useState(null);
     const [previewImage, modifyPreviewImage] = useState(null);
     const [imagePopupState, modifyImagePopupState] = useState(false);
+    const [rerenderTrick, setRerenderTrick] = useState(false);
 
     const mainPicStyle = 
     {
@@ -51,26 +52,38 @@ const MyLikes = ({state, setState}) => {
     }
 
 	useEffect(() => {
+        console.log("USE");
 		getThisPage(window.location.pathname)
 			.then(response => {
-				console.log('myProfiles/likes response:');
-				console.log(response);
-				setLikesState(response);
-			});
-	}, []);
-    console.log({previewState});
-    console.log("ASD");
-    console.log("imagepreview" + previewImage);
+				//console.log('myProfiles/likes response:');
+				//console.log(response);
+                setLikesState(response);
+            });
+        if (previewState)
+        {
+            console.log("jees")
+            getThisPage('/profile/'+previewState.profileData.id)
+                .then(response => {
+                    modifyPreviewState(response);
+                });
+        }
+    }, [rerenderTrick]);
+
+    
+
+    console.log(likesState);
+    console.log(rerenderTrick);
+    //console.log("imagepreview" + previewImage);
 	if (likesState)
 		return (
         <>  
             <ProfileNav />
-                <h1>Likes</h1>
+                
                 <div className="row">
                     <div className="col-sm-6">
                         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="w-80" style={{margin: '20px'}}>
                             <Tab eventKey="home" title="Users you have liked" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
-                                <Likes likes={likesState.liked} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState}/>
+                                <Likes likes={likesState.liked} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState} render={rerenderTrick}/>
                             </Tab>
                             <Tab eventKey="profile" title="Users that have liked you" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
                                 <Likee likes={likesState.likedMe} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState}/>
@@ -100,6 +113,8 @@ const MyLikes = ({state, setState}) => {
                                     </>
                                 )};
                                 <p>{previewState.profileData.biography}</p>
+                                <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
+
                             </>
                         : null}
                         {imagePopupState === true ?

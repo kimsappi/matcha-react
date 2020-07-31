@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {getThisPage} from '../../modules/httpQueries';
 
 // Databasen 'likes' tableen lisattava id columni, jotta key helpompi saada uniikiksi.
-const MyLikesLikes = ({likes, modifyPreview, modifyWho}) => {
+const MyLikesLikes = ({likes, modifyPreview, modifyWho, rerenderTrick}) => {
 
 
     function changePreview(profile)
@@ -11,8 +11,8 @@ const MyLikesLikes = ({likes, modifyPreview, modifyWho}) => {
         {
         getThisPage('/profile/' + profile.likee)
 			.then(response => {
-				console.log('myProfiles/likes response:');
-				console.log(response);
+				//console.log('myProfiles/likes response:');
+				//console.log(response);
                 modifyPreview(response);
             });
         }
@@ -21,38 +21,32 @@ const MyLikesLikes = ({likes, modifyPreview, modifyWho}) => {
             console.log(profile);
             getThisPage('/profile/' + profile.visitee)
 			.then(response => {
-				console.log('myProfiles/likes response:');
-				console.log(response);
+				//console.log('myProfiles/likes response:');
+				//console.log(response);
                 modifyPreview(response);
             });
         }
     }
 
-    const [likeList, setLikes] = useState(null);
-    useEffect(() => {
-        const ret = likes.map( (like) =>
-        <>
-            <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(1);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
-                <b>{like.likeeUsername ? like.likeeUsername : like.visiteeUsername}</b>
-                {like.likeePic}
-                
-            </button>
-            <br />
-        </>
-        );
-        setLikes(ret);
-    }, []);
 
 
 
-
-    if (!likeList)
+    if (!likes)
     {
         return(<h1>Loading</h1>);
     }
     else
     {
-        return(likeList);
+        return ( 
+            likes.map( (like) =>
+            <>
+                <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(1);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
+                    <b>{like.likeeUsername ? like.likeeUsername : like.visiteeUsername}</b>
+                    {like.likeePic}
+                </button>
+                <br />
+            </>)
+        ) 
     }
 }
 
