@@ -1,16 +1,16 @@
 import React from 'react';
 
-const Filters = ({filters, setFilters}) => {
+const Filters = ({distance, setDistance}) => {
 
 	const eventHandler = event => {
-		console.log(event.target.value);
-		setFilters(event.target.value);
+		setDistance(event.target.value);
 	};
 
 	return (
 		<>
-		<label for='distance'>Distance</label>
-		<input type='range' name='distance' value={filters.distance} max='9000' onChange={event => eventHandler(event, setFilters)} />
+		<label for='distance'>Maximum distance</label>
+		<input type='range' name='distance' value={distance} max='9000' onChange={event => eventHandler(event)} />
+		<input type='number' name='distance' value={distance} max='9000' onChange={event => eventHandler(event)} />
 		</>
 	);
 };

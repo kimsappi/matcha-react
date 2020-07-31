@@ -4,13 +4,17 @@ import Suggestions from './Suggestions';
 import Filters from './Filters';
 import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString} from '../../modules/httpQueries';
 import PopupTest from './PopupTest';
-
+import UserCard from './UserCard';
 
 const Index = ({state, action, setPopupState}) => {
 	const [users, setUsers] = useState([]);
 	const [distanceFilter, setDistanceFilter] = useState(100);
 	if (action === 'resetPassword')
 		setPopupState('resetPassword');
+
+	const generateUserCards = users => {
+		return users.map(user => <UserCard profile={user} />);
+	};
 
 	useEffect(() => {
 		if (action === 'confirmEmail') {
@@ -29,7 +33,7 @@ const Index = ({state, action, setPopupState}) => {
 					console.log('/ search response:');
 					console.log(response);
 					response = response || [];
-					setUsers(response);
+					setUsers(generateUserCards(response));
 				});
 	}, []);
 
@@ -43,7 +47,7 @@ const Index = ({state, action, setPopupState}) => {
 					</div>
 					<div className="col-sm-6 h-25" id="searchContainer">
 						<h1>User search</h1>
-						<Filters filters={distanceFilter} setFilters={setDistanceFilter} />
+						<Filters distance={distanceFilter} setDistance={setDistanceFilter} />
 					</div>
 					<PopupTest />
 				</div>
