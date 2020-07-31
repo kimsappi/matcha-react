@@ -29,8 +29,8 @@ const MyProfileImages = ({profile}) => {
         //         alert('File ' + file.name + ' is not an image or is too large.');
         // })
                 const res = uploadPhoto(element.files);
-
-                console.log(res);
+                res.then(r => console.log(r));
+                
                 // MITEN RES:sta SAADAAN PROMISE VALUE ULOS?
                 //window.location.reload(false);
     }

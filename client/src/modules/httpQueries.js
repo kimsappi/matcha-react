@@ -94,7 +94,6 @@ export const sendMyProfileData = (firstName, lastName, age, latitude, longitude,
 }
 
 export const submitLike = (path, action, state, setState) => {
-	console.log(path, action);
 	const url = baseUrl + path;
 	let likeAction = '';
 	if (action === likeButtonStrings.noLikes || action === likeButtonStrings.theyLike)

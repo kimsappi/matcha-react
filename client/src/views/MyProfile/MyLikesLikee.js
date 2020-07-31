@@ -12,8 +12,8 @@ const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
         {
         getThisPage('/profile/' + profile.liker)
 			.then(response => {
-				console.log('myProfiles/likes response:');
-				console.log(response);
+				//console.log('myProfiles/likes response:');
+				//console.log(response);
                 modifyPreview(response);
             });
         }
@@ -21,16 +21,22 @@ const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
         {
             getThisPage('/profile/' + profile.visitor)
 			.then(response => {
-				console.log('myProfiles/likes response:');
-				console.log(response);
+				//console.log('myProfiles/likes response:');
+				//console.log(response);
                 modifyPreview(response);
             });
         }
     }
 
-    const [likeList, setLikes] = useState(null);
-    useEffect(() => {
-        const ret = likes.map( (like) =>
+
+    if (!likes)
+    {
+        return(<h1>Loading</h1>);
+    }
+    else
+    {
+        return (
+        likes.map( (like) =>
         <>
             <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(2);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
                 <b>{like.likerUsername ? like.likerUsername : like.visitorUsername}</b>
@@ -38,28 +44,19 @@ const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
                 
             </button>
             <br />
-        </>
-        );
-        setLikes(ret);
-    }, []);
-
-
-
-
-    if (!likeList)
-    {
-        return(<h1>Loading</h1>);
-    }
-    else
-    {
-        return(
-            <>
-            <div style={{display: 'flex', justifyContent: 'center'}}>
-            {likeList}
-            </div>
-            </>
-            );
+        </>))
     }
 }
 
 export default MyLikesLikee;
+
+// return ( 
+//     likes.map( (like) =>
+//     <>
+//         <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(1);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
+//             <b>{like.likeeUsername ? like.likeeUsername : like.visiteeUsername}</b>
+//             {like.likeePic}
+//         </button>
+//         <br />
+//     </>)
+// ) 

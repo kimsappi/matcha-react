@@ -1,8 +1,16 @@
 import React from 'react';
 
 const Suggestions = ({users, distanceFilter}) => {
+
+	const suggestionImage = 
+		{
+			maxHeight: '20px',
+			maxWidth: '20px'
+		}
+
 	if (!users.length)
 		return <div>There are currently no suggestions available for you!</div>;
+
 	const userCards = users.map(element => {
 		console.log(element);
 		if (element.props.profile.distance < distanceFilter) {
