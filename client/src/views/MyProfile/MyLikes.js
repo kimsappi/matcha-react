@@ -19,6 +19,39 @@ const MyLikes = ({state, setState}) => {
     const [imagePopupState, modifyImagePopupState] = useState(false);
     const [rerenderTrick, setRerenderTrick] = useState(false);
 
+    var blockFilter = {display: 'block'};
+    if (previewState)
+    {
+        if (previewState.blockStatus == false)
+        {
+            blockFilter = 
+            {
+                
+            }
+        }
+        else
+        {
+            blockFilter = 
+            {
+                position: 'absolute',
+                margin: '0',
+                padding: '0',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                backgroundSize: 'cover',
+                WebkitFilter: 'blur(4px)',
+                MozFilter: 'blur(4px)',
+                MsFilter: 'blur(4px)',
+                OFilter: 'blur(4px)',
+                filter: 'blur(4px)',
+                Zindex: '13'
+            }
+        }
+    }
+
     const mainPicStyle = 
     {
         maxWidth: '100%',
@@ -71,14 +104,14 @@ const MyLikes = ({state, setState}) => {
 
     
 
-    console.log(likesState);
+    console.log(previewState);
     console.log(rerenderTrick);
     //console.log("imagepreview" + previewImage);
 	if (likesState)
 		return (
         <>  
             <ProfileNav />
-                
+                <h1>Likes</h1>
                 <div className="row">
                     <div className="col-sm-6">
                         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="w-80" style={{margin: '20px'}}>
@@ -92,10 +125,23 @@ const MyLikes = ({state, setState}) => {
                     </div>
                 <div className="col-sm-5" style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px'}}>
 
+                {previewState ? 
+                previewState.blockStatus === true ? 
+                <h1 style={{position: 'relative', top: '300px', textAlign: 'center', transform: 'translate(-50%, -50%)', fontWeight: 'bolder', fontSize: '90px', transform: 'rotate(45deg)', color: 'red'}}>BLOCKED</h1> : ""
                     
-                        
+                    : ''}
+
+                    {previewState && previewState.blockStatus ? 
+                        <button onClick={() => 
+                        submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ?
+                         "unblock" : "block", rerenderTrick, setRerenderTrick)}
+                          className="btn btn-danger">Unblock user</button>
+                        : ''}
+                    <div className="blockFilter" style={blockFilter}></div>
+                    
                         {previewState && previewState.profileData ?
                             <>
+                            
                                 <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
                                 <h3>{previewState.gender}</h3>
                                 <div style={{width: '100%'}}>
@@ -113,13 +159,21 @@ const MyLikes = ({state, setState}) => {
                                     </>
                                 )};
                                 <p>{previewState.profileData.biography}</p>
+                                {previewState && previewState.blockStatus === false ? 
                                 <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
+                                : ''}
+                                {previewState && previewState.blockStatus === false ? 
+                                <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick)} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
+                                : ''} 
 
                             </>
                         : null}
                         {imagePopupState === true ?
                         <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage}/></Popup>
                         : ''}
+                    
+                    
+                
                 </div>
             </div>
         </>

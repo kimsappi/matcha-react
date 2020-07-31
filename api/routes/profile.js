@@ -7,6 +7,28 @@ const mysqlDatetime = require('../modules/mysqlDatetime');
 const config = require('../config.json');
 const calculateDistance = require('../modules/calculateDistance');
 
+
+const getBlockButtonStatus = async (user, other) => {
+	// User is looking at their own profile
+	if (user.id === other.id)
+		return null;
+
+	const query = mysql.format(
+		'SELECT * FROM blocks WHERE (blocker = ? AND blockee = ?);',
+		[user.id, other.id]);
+
+	const ret = new Promise((resolve, reject) => {
+		pool.query(query, (error, results) => {
+			// No likes either way
+			if (error || !results.length)
+				resolve(false);
+			else
+				resolve(true);
+		})
+	});
+	return ret;
+}
+
 const getLikeButtonStatus = async (user, other) => {
 	// User is looking at their own profile
 	if (user.id === other.id)
@@ -56,7 +78,7 @@ const get = async (req, res, next) => {
 		return res.json(null);
 
 	// userId is already verified to be an integer so no need to prepare
-	const query = `SELECT * FROM users WHERE id = ${userId};`;
+	const query = `SELECT * FROM users WHERE id = ${userId} AND ${req.user.id} NOT IN (SELECT blockee FROM blocks WHERE blocker=${userId});`;
 
 	pool.query(query, async (error, results) => {
 		if (error || !results || !results[0])
@@ -71,18 +93,20 @@ const get = async (req, res, next) => {
 		// Don't really care about success so no callback
 		pool.query(preparedVisitQuery, (error, results) => {});
 
+		const blockButtonStatus = getBlockButtonStatus(req.user, results[0]);
 		const likeButtonStatus = getLikeButtonStatus(req.user, results[0]);
 		const images = getImages(req.params.id);
-		Promise.all([likeButtonStatus, images])
+		Promise.all([likeButtonStatus, blockButtonStatus, images])
 			.then((likeButtonStatus) => {
 				console.log('like button: ' + likeButtonStatus);
 				return res.json({
 					profileData: {...results[0], distance: calculateDistance(req.user.lat, req.user.lon, results[0].latitude, results[0].longitude)},
-					images: likeButtonStatus[1],
+					images: likeButtonStatus[2],
 					lookingFor: getGenderEmoji(results[0].target_genders),
 					gender: getGenderEmoji(results[0].gender),
 					title: `${results[0].first_name} ${results[0].last_name[0]}.`,
-					likeButton: likeButtonStatus[0]
+					likeButton: likeButtonStatus[0],
+					blockStatus: likeButtonStatus[1]
 				});
 			});
 	});
@@ -105,14 +129,14 @@ const post = (req, res, next) => {
 	else if (req.body.action === 'unlike')
 		query = 'DELETE FROM likes WHERE liker = ? AND likee = ?;';
 	else if (req.body.action === 'block')
-		query = 'INSERT INTO blocks (blocker, blockee) VALUES (blocker = ?, blockee = ?);';
+		query = 'INSERT INTO blocks (blocker, blockee, time) VALUES (?, ?, ?);';
 	else if (req.body.action === 'unblock')
-		query = 'DELETE FROM blocks WHERE blocker = ?, blockee = ?;';
+		query = 'DELETE FROM blocks WHERE blocker = ? AND blockee = ?;';
 	else if (req.body.action === 'report')
-		query = 'INSERT INTO reports (reporter, reportee) VALUES (reporter = ?, reportee = ?);';	
+		query = 'INSERT INTO reports (reporter, reportee) VALUES (?, ?);';	
 
 	if (query.length) {
-		preparedQuery = mysql.format(query, [req.user.id, parseInt(userId)]);
+		preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), mysqlDatetime()]);
 		console.log(preparedQuery);
 		pool.query(preparedQuery, (error, results) => {
 			if (error)

@@ -92,12 +92,19 @@ export const sendMyProfileData = (firstName, lastName, age, latitude, longitude,
 }
 
 export const submitLike = (path, action, state, setState) => {
+	
 	const url = baseUrl + path;
 	let likeAction = '';
-	if (action === likeButtonStrings.noLikes || action === likeButtonStrings.theyLike)
+	if (action === 'block')
+		likeAction = 'block';
+	else if (action === 'unblock')
+		likeAction = 'unblock';
+	else if (action === likeButtonStrings.noLikes || action === likeButtonStrings.theyLike)
 		likeAction = 'like';
 	else
 		likeAction = 'unlike';
+		console.log("ASd");
+	console.error(url);
 	const request = axios.post(url, {action: likeAction},
 		{headers: getAuthHeader()});
 	request.then(response => console.log(response.data));

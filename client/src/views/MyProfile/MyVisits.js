@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table'
 
 import ProfileNav from './ProfileNav';
 
-import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
+import {getThisPage, generateImageUrl, submitLike} from '../../modules/httpQueries';
 import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';
 import {Popup} from '../../components/Popup';
@@ -18,6 +18,40 @@ const MyVisits = ({state, setState}) => {
     const [previewLikedWhoState, modifyPreviewLikedWhoState] = useState(null);
     const [previewImage, modifyPreviewImage] = useState(null);
     const [imagePopupState, modifyImagePopupState] = useState(false);
+    const [rerenderTrick, setRerenderTrick] = useState(false);
+
+    var blockFilter = {display: 'block'};
+    if (previewState)
+    {
+        if (previewState.blockStatus == false)
+        {
+            blockFilter = 
+            {
+                
+            }
+        }
+        else
+        {
+            blockFilter = 
+            {
+                position: 'absolute',
+                margin: '0',
+                padding: '0',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '100%',
+                backgroundSize: 'cover',
+                WebkitFilter: 'blur(4px)',
+                MozFilter: 'blur(4px)',
+                MsFilter: 'blur(4px)',
+                OFilter: 'blur(4px)',
+                filter: 'blur(4px)',
+                Zindex: '13'
+            }
+        }
+    }
 
     const mainPicStyle = 
     {
@@ -57,8 +91,17 @@ const MyVisits = ({state, setState}) => {
 				console.log('myProfiles/visits response:');
 				console.log(response);
 				setVisitsState(response);
-			});
-	}, []);
+            });
+            if (previewState)
+            {
+                console.log("jees")
+                getThisPage('/profile/'+previewState.profileData.id)
+                    .then(response => {
+                        modifyPreviewState(response);
+                    });
+            }
+
+	}, [rerenderTrick]);
     console.log({previewState});
     console.log("ASD");
 	if (visitsState)
@@ -79,6 +122,22 @@ const MyVisits = ({state, setState}) => {
                     </div>
                 <div className="col-sm-5" style={{margin: '20px', justifyContent: 'center', textAlign: 'center'}}>
 
+                {previewState ? 
+                previewState.blockStatus === true ? 
+                <h1 style={{position: 'relative', top: '300px', textAlign: 'center', transform: 'translate(-50%, -50%)', fontWeight: 'bolder', fontSize: '90px', transform: 'rotate(45deg)', color: 'red'}}>BLOCKED</h1> : ""
+                    
+                    : ''}
+
+                    {previewState && previewState.blockStatus ? 
+                        <button onClick={() => 
+                        submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ?
+                         "unblock" : "block", rerenderTrick, setRerenderTrick)}
+                          className="btn btn-danger">Unblock user</button>
+                        : ''}
+                    <div className="blockFilter" style={blockFilter}></div>
+
+
+
                 {previewState && previewState.profileData ?
                             <>
                                 <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
@@ -98,6 +157,12 @@ const MyVisits = ({state, setState}) => {
                                     </>
                                 )};
                                 <p>{previewState.profileData.biography}</p>
+                                {previewState && previewState.blockStatus === false ? 
+                                <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
+                                : ''}
+                                {previewState && previewState.blockStatus === false ? 
+                                <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick)} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
+                                : ''} 
                             </>
                         : null}
                         {imagePopupState === true ?
