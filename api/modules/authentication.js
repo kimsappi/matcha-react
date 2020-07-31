@@ -19,8 +19,8 @@ const authenticationMiddleware = (req, res, next) => {
 			}
 			else {
 				console.log('querying online status');
-				pool.query(mysql.format('SELECT `online` FROM users WHERE id = ?;', [user.id]), (error, results) => {
-					if (error || !results[0].online)
+				pool.query(mysql.format('SELECT `online` FROM users WHERE id = ? AND login_id = ?;', [user.id, user.login_id]), (error, results) => {
+					if (error || !results[0] || !results[0].online)
 						return res.json('logged out');
 					else {
 						req.user = user;

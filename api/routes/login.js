@@ -50,7 +50,8 @@ const post = (req, res, next) => {
 					user: results[0].username,
 					id: results[0].id,
 					lat: loginCoordinates.latitude,
-					lon: loginCoordinates.longitude
+					lon: loginCoordinates.longitude,
+					login_id: results[0].login_id
 				})
 			};
 			pool.query(`UPDATE users
