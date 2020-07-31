@@ -1,4 +1,6 @@
 import axios from 'axios';
+import React from 'react';
+import {Redirect} from 'react-router-dom';
 
 import {setUser, setToken} from './userData';
 import {getToken} from './userData';
@@ -35,10 +37,13 @@ export const getThisPage = relativeUrl => {
 }
 
 export const logOut = (state, setState) => {
+	const url = baseUrl + '/logout';
+	const request = axios.post(url, {logout: true}, {headers: getAuthHeader()});
+	console.log(getAuthHeader());
 	setState({});
 	setUser(null, null);
 	setToken(null);
-	window.location.href = '/';
+	request.then(response => <Redirect to='/' />);
 };
 
 export const uploadPhoto = photos => {

@@ -56,7 +56,8 @@ const post = (req, res, next) => {
 			pool.query(`UPDATE users
 				SET last_login = '${mysqlDatetime(new Date())}',
 					latitude = ${loginCoordinates.latitude},
-					longitude = ${loginCoordinates.longitude}
+					longitude = ${loginCoordinates.longitude},
+					\`online\` = TRUE
 				WHERE id = ${results[0].id};`);
 			return res.json(userData);
 		}
