@@ -80,7 +80,9 @@ export const sendMyProfileData = (firstName, lastName, age, latitude, longitude,
 
 	const request = axios.post(url, reqBody, {headers: getAuthHeader()});
 	request.then(response => {
-		console.log(response.data);
+		if (response.data) {
+			setToken(response.data.token);
+		}
 	})
 }
 

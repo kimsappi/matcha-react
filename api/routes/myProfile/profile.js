@@ -1,8 +1,8 @@
 const mysql = require('mysql');
-const express = require('express');
 
 const {validateMyProfileData, parseTags, validateCoordinates} = require('../../modules/validateUserData');
 const pool = require('../../modules/dbConnect');
+const {generateJWT} = require('../../modules/authentication');
 
 const get = (req, res, next) => {
 	// User is not logged in
@@ -73,12 +73,22 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 	);
 	//console.log(query);
 
+	let newTokenData = {
+		user: req.user.user,
+		id: req.user.id,
+		lat: req.user.lat,
+		lon: req.user.lon
+	};
+
+	if (updatedCoordinates.length) {
+		newTokenData = {...newTokenData, lat: parseFloat(req.body.latitude), lon: parseFloat(req.body.longitude)};
+	};
+
 	pool.query(preparedQuery, (error) => {
 		if (error)
 			return res.json(null);
 		else
-			console.log('query success');
-			return res.json('OK');
+			return res.json({...newTokenData, token: generateJWT(newTokenData)});
 	});
 };
 
