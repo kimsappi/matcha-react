@@ -12,7 +12,9 @@ const baseUrl = 'http://localhost:3001';
 // This function will generate a link to a user image on the server.
 // Can be used with 2 arguments: (id, extension) or 1: (filename)
 export const generateImageUrl = (id, extension) => {
-	const dirUrl = baseUrl + '/img/userPhotos/'
+	if (id === 'placeholder.png')
+		return baseUrl + '/img/' + id;
+	const dirUrl = baseUrl + '/img/userPhotos/';
 	if (typeof extension === 'undefined')
 		return dirUrl + id;
 	else
@@ -38,7 +40,7 @@ export const getThisPage = relativeUrl => {
 
 export const logOut = (state, setState) => {
 	const url = baseUrl + '/logout';
-	const request = axios.post(url, {logout: true}, {headers: getAuthHeader()});
+	const request = axios.post(url, {all: true}, {headers: getAuthHeader()});
 	console.log(getAuthHeader());
 	setState({});
 	setUser(null, null);
