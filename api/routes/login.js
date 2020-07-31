@@ -49,14 +49,15 @@ const post = (req, res, next) => {
 				token: generateJWT({
 					user: results[0].username,
 					id: results[0].id,
-					lat: results[0].latitude,
-					lon: results[0].longitude
+					lat: loginCoordinates.latitude,
+					lon: loginCoordinates.longitude
 				})
 			};
 			pool.query(`UPDATE users
 				SET last_login = '${mysqlDatetime(new Date())}',
 					latitude = ${loginCoordinates.latitude},
-					longitude = ${loginCoordinates.longitude}
+					longitude = ${loginCoordinates.longitude},
+					\`online\` = TRUE
 				WHERE id = ${results[0].id};`);
 			return res.json(userData);
 		}

@@ -48,8 +48,8 @@ router.post('/login', (req, res, next) => {
 });
 
 // logout.js
-router.get('/logout', (req, res, next) => {
-	logout.get(req, res, next);
+router.post('/logout', (req, res, next) => {
+	logout.post(req, res, next);
 });
 
 // confirmEmail.js
