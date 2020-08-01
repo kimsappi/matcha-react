@@ -35,7 +35,22 @@ export const getThisPage = relativeUrl => {
 	console.log(url);
 	console.log(getToken());
 	const request = axios.get(url, {headers: getAuthHeader()});
-	return request.then(response => response.data);
+	return request.then(response => {
+		if (response.data === 'logged out') {
+			console.log('logging out');
+			localLogout(true);
+			return;
+		}
+		else
+			return response.data;
+	});
+}
+
+const localLogout = (reload = false) => {
+	setUser(null, null);
+	setToken(null);
+	if (reload)
+		window.location.href = '/';
 }
 
 export const logOut = (state, setState) => {
@@ -43,8 +58,7 @@ export const logOut = (state, setState) => {
 	const request = axios.post(url, {all: true}, {headers: getAuthHeader()});
 	console.log(getAuthHeader());
 	setState({});
-	setUser(null, null);
-	setToken(null);
+	localLogout();
 	request.then(response => <Redirect to='/' />);
 };
 
@@ -221,13 +235,3 @@ export const parseSearchString = str => {
 	});
 	return ret;
 }
-
-// module.exports = {
-// 	getThisPage,
-// 	submitLogin
-// };
-
-// module.exports = {
-// 	submitLogin,
-// 	logOut
-// };

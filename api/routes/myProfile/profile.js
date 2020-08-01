@@ -43,10 +43,12 @@ const post = (req, res, next) => {
 	if (!req.user)
 		return res.json(null);
 
+	console.log(req.user);
+
 	// Profile is not filled completely/correctly
 	if (!validateMyProfileData(req.body))
 		return res.json(null);
-	//console.log('passed validation');
+	console.log('passed validation');
 
 	// Parse tags from string to array
 	const tags = parseTags(req.body.tags);
@@ -77,7 +79,8 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 		user: req.user.user,
 		id: req.user.id,
 		lat: req.user.lat,
-		lon: req.user.lon
+		lon: req.user.lon,
+		login_id: req.user.login_id
 	};
 
 	if (updatedCoordinates.length) {
