@@ -13,6 +13,8 @@ const Index = ({state, action, setPopupState}) => {
 		setPopupState('resetPassword');
 
 	const generateUserCards = users => {
+		if (!users || !users.length)
+			return '';
 		return users.map(user => <UserCard profile={user} />);
 	};
 

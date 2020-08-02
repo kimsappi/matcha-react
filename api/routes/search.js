@@ -15,7 +15,11 @@ const getGenderQueries = myData => {
 }
 
 const filterProfiles = (profiles, params, user) => {
-	const ret = profiles.map(profile => {
+	const nullAgeFiltered = profiles.filter(profile => profile.age);
+	console.log('nullAgeFiltered: ' + nullAgeFiltered);
+	const ret = nullAgeFiltered.map(profile => {
+		if (!profile.age)
+			return;
 		let distance = calculateDistance(user.lat, user.lon, profile.latitude, profile.longitude);
 		if (isNaN(distance))
 			distance = 'Unknown';

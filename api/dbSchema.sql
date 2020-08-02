@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
 	first_name VARCHAR(32) NOT NULL,
 	last_name VARCHAR(32) NOT NULL,
 	age INT DEFAULT NULL,
-	fame INT DEFAULT NULL,
+	fame INT DEFAULT 0,
 	gender VARCHAR(1) DEFAULT '0',
 	target_genders VARCHAR(2) DEFAULT 'fm',
 	biography VARCHAR(512) DEFAULT '',
@@ -106,15 +106,15 @@ CREATE TABLE IF NOT EXISTS reports (
 -- Passwords are '123'
 
 
-INSERT INTO users (username, `password`, email, first_name, last_name, gender) VALUES
-	('admin1', 'ad9b191cd8d24d4e57710893f9922c11c6aeb8143ec99baf4332f191c6bfba9c', 'admin1@example.com', 'Admin', 'One', 'm'),
-	('admin2', 'b0b46aaf9bab6524f15c40e3c82febe1bbad1f5cb87def29023f3303edd709f1', 'admin2@example.com', 'Admin', 'Two', 'f'),
-	('test', '09d40999b9d76c0de6b1bb578be88f82fe345cb1aa384dffcdecd365bcd0c1e2', 'test@example.com', 'test', 'asd', 'f'),
-	('test2', 'cfeb5fa5031894f731dc34c689dea99358e8809dbedbab027a92c3a509712193', 'test2@example.com', 'test1', 'bsddd', 'f'),
-	('test3', 'fdab214d25d419336ad2ae505dac5443ec3b322df5a412d17c28f8a31294b0d5', 'test3@example.com', 'test3', 'csddd', 'm'),
-	('test4', 'a0287221a39411046400d08d97a56aa47901168dcf5dc7e56047966e3a3a49f7', 'test4@example.com', 'test4', 'dsddd', 'm'),
-	('test5', '588c4b81a8a1042addabeddc9e784fb052108452b5ce943d2c47a30212fc8ad3', 'test5@example.com', 'test5', 'esddd', 'f'),
-	('test6', '01fc82a9449df43ee2c89a97ad22ed2b10226fb78011cfe5b99be2fedec043a0', 'test6@example.com', 'test6', 'fsddd', 'm');
+INSERT INTO users (username, `password`, email, first_name, last_name, gender, age) VALUES
+	('admin1', 'ad9b191cd8d24d4e57710893f9922c11c6aeb8143ec99baf4332f191c6bfba9c', 'admin1@example.com', 'Admin', 'One', 'm', 21),
+	('admin2', 'b0b46aaf9bab6524f15c40e3c82febe1bbad1f5cb87def29023f3303edd709f1', 'admin2@example.com', 'Admin', 'Two', 'f', 23),
+	('test', '09d40999b9d76c0de6b1bb578be88f82fe345cb1aa384dffcdecd365bcd0c1e2', 'test@example.com', 'test', 'asd', 'f', NULL),
+	('test2', 'cfeb5fa5031894f731dc34c689dea99358e8809dbedbab027a92c3a509712193', 'test2@example.com', 'test1', 'bsddd', 'f', 25),
+	('test3', 'fdab214d25d419336ad2ae505dac5443ec3b322df5a412d17c28f8a31294b0d5', 'test3@example.com', 'test3', 'csddd', 'm', 27),
+	('test4', 'a0287221a39411046400d08d97a56aa47901168dcf5dc7e56047966e3a3a49f7', 'test4@example.com', 'test4', 'dsddd', 'm', 29),
+	('test5', '588c4b81a8a1042addabeddc9e784fb052108452b5ce943d2c47a30212fc8ad3', 'test5@example.com', 'test5', 'esddd', 'f', 31),
+	('test6', '01fc82a9449df43ee2c89a97ad22ed2b10226fb78011cfe5b99be2fedec043a0', 'test6@example.com', 'test6', 'fsddd', 'm', 33);
 
 
 INSERT INTO likes (liker, likee) VALUES 

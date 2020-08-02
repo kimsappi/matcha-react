@@ -57,8 +57,7 @@ export const logOut = (setState, all = false) => {
 	const request = axios.post(url, {all: all}, {headers: getAuthHeader()});
 	console.log(getAuthHeader());
 	setState({});
-	localLogout();
-	request.then(response => <Redirect to='/' />);
+	request.then(response => localLogout(true));
 };
 
 export const uploadPhoto = photos => {
