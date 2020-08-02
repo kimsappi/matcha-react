@@ -8,6 +8,7 @@ const UserCard = ({profile}) => {
 		<Link to={'/profile/' + profile.id} distance={profile.distance} key={profile.id}>
 			<img alt='User' src={generateImageUrl(profile.filename)} onError={event => fallbackImageUrl(event)}/>
 			<div key={profile.id}>{profile.username} [{profile.online ? 'online' : 'offline'}]</div>
+			<div>Age: {profile.age}</div>
 		</Link>
 	);
 };

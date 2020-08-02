@@ -46,6 +46,7 @@ const post = (req, res, next) => {
 				username: results[0].username,
 				lat: loginCoordinates.latitude,
 				lon: loginCoordinates.longitude,
+				age: results[0].age || 25,
 				token: generateJWT({
 					user: results[0].username,
 					id: results[0].id,

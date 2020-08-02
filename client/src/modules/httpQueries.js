@@ -154,7 +154,7 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 			else {
 				console.log(response.data);
 				console.log('asddd');
-				setUser(response.data.username, response.data.id, true);
+				setUser(response.data.username, response.data.id, response.data.age, true);
 				setToken(response.data.token);
 				setState({loggedIn: true, username: response.data.username, id: response.data.id});
 				setPopupState(false);

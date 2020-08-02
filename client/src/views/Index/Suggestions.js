@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Suggestions = ({users, distanceFilter}) => {
+const Suggestions = ({users, distanceFilter, minAge, maxAge}) => {
 
 	const suggestionImage = 
 		{
@@ -13,9 +13,12 @@ const Suggestions = ({users, distanceFilter}) => {
 
 	const userCards = users.filter(element => {
 		console.log(element);
-		if (element.props.profile.distance > distanceFilter) {
+		if (element.props.profile.distance > distanceFilter)
 			return false;
-		};
+		if (element.props.profile.age < minAge)
+			return false;
+		if (element.props.profile.age > maxAge)
+			return false;
 		return true;
 	});
 
