@@ -37,7 +37,6 @@ export const getThisPage = relativeUrl => {
 	const request = axios.get(url, {headers: getAuthHeader()});
 	return request.then(response => {
 		if (response.data === 'logged out') {
-			console.log('logging out');
 			localLogout(true);
 			return;
 		}
@@ -53,9 +52,9 @@ const localLogout = (reload = false) => {
 		window.location.href = '/';
 }
 
-export const logOut = (state, setState) => {
+export const logOut = (setState, all = false) => {
 	const url = baseUrl + '/logout';
-	const request = axios.post(url, {all: true}, {headers: getAuthHeader()});
+	const request = axios.post(url, {all: all}, {headers: getAuthHeader()});
 	console.log(getAuthHeader());
 	setState({});
 	localLogout();

@@ -58,7 +58,7 @@ const post = (req, res, next) => {
 				SET last_login = '${mysqlDatetime(new Date())}',
 					latitude = ${loginCoordinates.latitude},
 					longitude = ${loginCoordinates.longitude},
-					\`online\` = TRUE
+					\`online\` = \`online\` + 1
 				WHERE id = ${results[0].id};`);
 			return res.json(userData);
 		}

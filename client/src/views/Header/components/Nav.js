@@ -52,7 +52,8 @@ const Nav = ({state, setState, popupState, setPopupState}) => {
 						<p>{state.username}</p>
 					</li>
 					<li className="nav-item nav-link">
-						<Link to='#' onClick={() => logOut(state, setState)}>Log out</Link>
+						<Link to='#' onClick={() => logOut(setState)}>Log out</Link>
+						<Link to='#' onClick={() => logOut(setState, true)}>Log out all instances</Link>
 					</li>
 				</ul>
 			</>
