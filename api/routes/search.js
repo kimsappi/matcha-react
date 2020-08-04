@@ -16,7 +16,7 @@ const getGenderQueries = myData => {
 
 const filterProfiles = (profiles, params, user) => {
 	const nullAgeFiltered = profiles.filter(profile => profile.age);
-	console.log('nullAgeFiltered: ' + nullAgeFiltered);
+	//console.log('nullAgeFiltered: ' + nullAgeFiltered);
 	const ret = nullAgeFiltered.map(profile => {
 		if (!profile.age)
 			return;
@@ -25,17 +25,17 @@ const filterProfiles = (profiles, params, user) => {
 			distance = 'Unknown';
 		return {...profile, distance: distance};
 	});
-	console.log(ret);
+	//console.log(ret);
 	return ret;
 };
 
 const get = (req, res, next) => {
 	// User is not logged in
-	console.log(req.user);
+	//console.log(req.user);
 	if (!req.user)
 		return res.json(null);
 	const query = mysql.format('SELECT * FROM users WHERE id = ?;', [req.user.id]);
-	console.log(query);
+	//console.log(query);
 	pool.query(query, (error, result) => {
 		if (error || !result)
 			return res.json(null);

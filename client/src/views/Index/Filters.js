@@ -9,7 +9,6 @@ const Filters = ({distance, setDistance,
 	};
 
 	const sortingMethodOptions = sortingMethods.map((method, index) => {
-		console.log(method);
 		return (
 			<option value={index} key={method.name}>{method.display}</option>
 		);

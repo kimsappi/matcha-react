@@ -23,7 +23,7 @@ const Index = ({state, action, setPopupState}) => {
 	const generateUserCards = users => {
 		if (!users || !users.length)
 			return '';
-		return users.map(user => <UserCard profile={user} />);
+		return users.map(user => <UserCard key={user.id} profile={user} />);
 	};
 
 	useEffect(() => {
@@ -56,7 +56,7 @@ const Index = ({state, action, setPopupState}) => {
 						<Suggestions
 							users={users} distanceFilter={distanceFilter}
 							minAge={minAge} maxAge={maxAge}
-							sort={sort}
+							sort={sortingMethods[sort]}
 						/>
 					</div>
 					<div className="col-sm-6 h-25" id="searchContainer">
