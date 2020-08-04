@@ -4,5 +4,26 @@
 		"youLike": "Unlike",
 		"theyLike": "Connect!",
 		"mutualLike": "Disconnect"
-	}
+	},
+
+	"sortingMethods": [
+		{
+			"name": "distance",
+			"display": "Distance",
+			"order": 1
+		},
+		{
+			"name": "fameAsc",
+			"display": "Fame ascending",
+			"key": "fame",
+			"order": 1
+		},
+		{
+			"name": "fameDesc",
+			"display": "Fame descending",
+			"key": "fame",
+			"order": -1
+		}
+	]
 }
+

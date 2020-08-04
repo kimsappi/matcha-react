@@ -141,9 +141,9 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 
 	axios.post(baseUrl + '/login', reqBody)
 		.then(response => {
-			if (!response.data || response.data === 'email') {
+			if (!response.data || response.data === 'email' || response.data === 'Database error') {
 				setState({});
-				setUser(null, null, false);
+				setUser(null, null, false, false);
 				setToken(null);
 				if (response.data === 'email')
 					alert('Make sure to confirm your email address before logging in.');

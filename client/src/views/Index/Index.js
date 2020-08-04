@@ -7,6 +7,8 @@ import PopupTest from './PopupTest';
 import UserCard from './UserCard';
 import {getUser} from '../../modules/userData';
 
+import {sortingMethods} from '../../config.json';
+
 const Index = ({state, action, setPopupState}) => {
 	const userData = getUser();
 
@@ -14,6 +16,7 @@ const Index = ({state, action, setPopupState}) => {
 	const [distanceFilter, setDistanceFilter] = useState(100);
 	const [minAge, setMinAge] = useState(userData.age - 3);
 	const [maxAge, setMaxAge] = useState(userData.age + 3);
+	const [sort, setSort] = useState(0);
 	if (action === 'resetPassword')
 		setPopupState('resetPassword');
 
@@ -53,6 +56,7 @@ const Index = ({state, action, setPopupState}) => {
 						<Suggestions
 							users={users} distanceFilter={distanceFilter}
 							minAge={minAge} maxAge={maxAge}
+							sort={sort}
 						/>
 					</div>
 					<div className="col-sm-6 h-25" id="searchContainer">
@@ -61,6 +65,7 @@ const Index = ({state, action, setPopupState}) => {
 							distance={distanceFilter} setDistance={setDistanceFilter}
 							minAge={minAge} setMinAge={setMinAge}
 							maxAge={maxAge} setMaxAge={setMaxAge}
+							sort={sort} setSort={setSort} sortingMethods={sortingMethods}
 						/>
 					</div>
 					<PopupTest />
