@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Suggestions = ({users, distanceFilter, minAge, maxAge}) => {
+const Suggestions = ({users, distanceFilter, minAge, maxAge, sort}) => {
 
 	const suggestionImage = 
 		{
@@ -25,7 +25,9 @@ const Suggestions = ({users, distanceFilter, minAge, maxAge}) => {
 	if (!userCards.length)
 		return (<div>There are some profiles available for you, but the current filters are too strict!</div>);
 
-	return userCards;
+	return userCards.sort((a, b) => {
+		return a.props.profile[sort.key] * sort.order - b.props.profile[sort.key];
+	});
 };
 
 export default Suggestions;

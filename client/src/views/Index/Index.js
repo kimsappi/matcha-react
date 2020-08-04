@@ -56,7 +56,7 @@ const Index = ({state, action, setPopupState}) => {
 						<Suggestions
 							users={users} distanceFilter={distanceFilter}
 							minAge={minAge} maxAge={maxAge}
-							sort={sort}
+							sort={sortingMethods[sort]}
 						/>
 					</div>
 					<div className="col-sm-6 h-25" id="searchContainer">
