@@ -23,7 +23,7 @@ const Index = ({state, action, setPopupState}) => {
 	const generateUserCards = users => {
 		if (!users || !users.length)
 			return '';
-		return users.map(user => <UserCard profile={user} />);
+		return users.map(user => <UserCard key={user.id} profile={user} />);
 	};
 
 	useEffect(() => {

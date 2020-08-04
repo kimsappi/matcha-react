@@ -3,7 +3,7 @@ const deg2Rad = deg => deg * Math.PI / 180;
 const calculateDistance = (myLat, myLon, otherLat, otherLon) => {
 	const earthRadius = 6371;
 
-	console.log('latitudes: ' + myLat + ', ' + otherLat);
+	//console.log('latitudes: ' + myLat + ', ' + otherLat);
 	myLat = deg2Rad(myLat);
 	myLon = deg2Rad(myLon);
 	otherLat = deg2Rad(otherLat);

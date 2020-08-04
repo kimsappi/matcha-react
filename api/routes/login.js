@@ -41,6 +41,10 @@ const post = (req, res, next) => {
 			// Get login coordinates either from req.body or user's IP
 			const loginCoordinates = getLoginCoordinates(req, results[0]);
 
+			console.log('Reqbody: ');
+			console.log(req.body);
+			console.log('Logincoords:');
+			console.log(loginCoordinates);
 			const userData = {
 				id: results[0].id,
 				username: results[0].username,
