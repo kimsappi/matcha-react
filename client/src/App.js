@@ -10,6 +10,7 @@ import MyProfile from './views/MyProfile/MyProfile';
 import MyLikes from './views/MyProfile/MyLikes';
 import MyVisits from './views/MyProfile/MyVisits';
 import Profile from './views/Profile/Profile';
+import socketIOClient from 'socket.io-client';
 
 import {getUser} from './modules/userData';
 
@@ -18,7 +19,13 @@ function App() {
   console.log(user);
 
   const [state, setState] = useState(user);
-	const [popupState, setPopupState] = useState(false);
+  const [popupState, setPopupState] = useState(false);
+  
+
+  const socket = socketIOClient('http://localhost:3001');
+  socket.on('FromClient', {
+    message: 'asd'
+  })
 
   // useEffect(() => {
   //   getThisPage(window.location.href)
