@@ -40,8 +40,16 @@ var socket = require('socket.io');
 var io = socket(server);
 
 io.on('connection', function(socket) {
+  socket.on('chat', function(jees) {
+    io.emit('chat', jees);
+    console.log("asd");
+    console.log(jees);
+  })
   console.log("jees");
+  console.log(socket.id);
 })
+
+
 
 /**
  * Normalize a port into a number, string, or false.
