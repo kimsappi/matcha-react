@@ -35,20 +35,8 @@ server.on('listening', onListening);
 /**
  * WebSockets
  */
-
-var socket = require('socket.io');
-var io = socket(server);
-
-io.on('connection', function(socket) {
-  socket.on('chat', function(jees) {
-    io.emit('chat', jees);
-    console.log("asd");
-    console.log(jees);
-  })
-  console.log("jees");
-  console.log(socket.id);
-})
-
+const wsServerInit = require('../websocket');
+wsServerInit(server);
 
 
 /**
