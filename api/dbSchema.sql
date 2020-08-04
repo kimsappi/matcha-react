@@ -149,7 +149,9 @@ ON user_photos.user = users.id;
 CREATE VIEW user_and_main_photo AS
 SELECT * FROM users
 LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
-ON user_photos.user = users.id AND user_photos.photo_id = users.main_pic;
+ON user_photos.user = users.id AND user_photos.photo_id = users.main_pic
+LEFT OUTER JOIN (SELECT `user` AS tag_user, GROUP_CONCAT(string SEPARATOR ',') AS tags_string FROM tags GROUP BY tag_user) AS tags
+ON tags.tag_user = users.id;
 
 -- DROP USER 'dbuser'@'%';
 -- CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY '123dbuser';
