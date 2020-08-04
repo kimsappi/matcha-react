@@ -20,6 +20,8 @@ const visits = require('./myProfile/visits');
 
 const profile = require('./profile');
 
+const chat = require('./chat');
+
 const router = express.Router();
 
 // Public routes
@@ -128,6 +130,15 @@ router.get('/myProfile/likes', (req, res, next) => {
 // visits.js
 router.get('/myProfile/visits', (req, res, next) => {
 	visits.get(req, res, next);
+});
+
+// chat.js
+router.get('/chat', (req, res, next) => {
+	chat.get(req, res, next);
+});
+
+router.post('/chat', (req, res, next) => {
+	chat.post(req, res, next);
 });
 
 module.exports = router;

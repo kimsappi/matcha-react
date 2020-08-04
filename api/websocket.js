@@ -8,6 +8,7 @@ const wsServerInit = server => {
 		  io.emit('chat', jees);
 		  console.log("asd");
 		  console.log(jees);
+		  console.log(socket.id + '###');
 		})
 		console.log("jees");
 		console.log(socket.id);
