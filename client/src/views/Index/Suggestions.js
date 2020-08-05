@@ -12,7 +12,7 @@ const Suggestions = ({users, distanceFilter, minAge, maxAge, sort}) => {
 		return <div>There are currently no suggestions available for you!</div>;
 
 	const userCards = users.filter(element => {
-		console.log(element);
+		//console.log(element);
 		if (element.props.profile.distance > distanceFilter)
 			return false;
 		if (element.props.profile.age < minAge)

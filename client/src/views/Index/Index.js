@@ -11,11 +11,13 @@ import {sortingMethods} from '../../config.json';
 
 const Index = ({state, action, setPopupState}) => {
 	const userData = getUser();
+	// Userdata doesn't load instantly, so set a default to prevent errors
+	const age = userData.age ? userData.age : 25;
 
 	const [users, setUsers] = useState([]);
 	const [distanceFilter, setDistanceFilter] = useState(100);
-	const [minAge, setMinAge] = useState(userData.age - 3);
-	const [maxAge, setMaxAge] = useState(userData.age + 3);
+	const [minAge, setMinAge] = useState(age - 3);
+	const [maxAge, setMaxAge] = useState(age + 3);
 	const [sort, setSort] = useState(0);
 	if (action === 'resetPassword')
 		setPopupState('resetPassword');
