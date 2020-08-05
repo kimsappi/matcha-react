@@ -147,6 +147,22 @@ const post = (req, res, next) => {
 	}
 	else
 		return res.json(null);
+
+	if (req.body.action === 'like' || req.body.action === 'unlike')
+	{
+			query = 'UPDATE likes SET is_match=(SELECT * FROM(SELECT COUNT(*)/2 FROM likes WHERE (liker=? AND likee=?) OR (liker=? AND likee=?)) as temp) WHERE (liker=? AND likee=?) OR (likee=? AND liker=?);';
+
+			preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), req.user.id, parseInt(userId), req.user.id, parseInt(userId), parseInt(userId), req.user.id]);
+			console.log(preparedQuery);
+			pool.query(preparedQuery, (error, results) => {
+				if (error)
+					return res.json(null);
+				else
+					return res.json('OK');
+		});
+	}
+
+
 };
 
 module.exports = {

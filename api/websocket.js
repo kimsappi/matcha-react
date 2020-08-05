@@ -4,6 +4,9 @@ const wsServerInit = server => {
 	const io = socket(server);
 
 	io.on('connection', function(socket) {
+
+
+
 		socket.on('chat', function(jees) {
 		  io.emit('chat', jees);
 		  console.log("asd");
