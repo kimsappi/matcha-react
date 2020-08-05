@@ -57,17 +57,17 @@ const getLikeButtonStatus = async (user, other) => {
 	return ret;
 };
 
-const getImages = async id => {
-	const ret = new Promise((resolve, reject) => {
-		pool.query(mysql.format("SELECT * FROM user_photos WHERE user = ?;", [parseInt(id)]), (error, results) => {
-		//pool.query("SELECT * FROM user_photos WHERE user = 1;", (error, results) => {
-			if (error)
-				reject('error');
-			resolve(results);
-		});
-	});
-	return ret;
-};
+// const getImages = async id => {
+// 	const ret = new Promise((resolve, reject) => {
+// 		pool.query(mysql.format("SELECT * FROM user_photos WHERE user = ?;", [parseInt(id)]), (error, results) => {
+// 		//pool.query("SELECT * FROM user_photos WHERE user = 1;", (error, results) => {
+// 			if (error)
+// 				reject('error');
+// 			resolve(results);
+// 		});
+// 	});
+// 	return ret;
+// };
 
 const get = async (req, res, next) => {
 	const userId = req.params.id;
@@ -78,7 +78,7 @@ const get = async (req, res, next) => {
 		return res.json(null);
 
 	// userId is already verified to be an integer so no need to prepare
-	const query = `SELECT * FROM users WHERE id = ${userId} AND ${req.user.id} NOT IN (SELECT blockee FROM blocks WHERE blocker=${userId});`;
+	const query = `SELECT * FROM user_and_main_photo WHERE id = ${userId} AND ${req.user.id} NOT IN (SELECT blockee FROM blocks WHERE blocker=${userId});`;
 
 	pool.query(query, async (error, results) => {
 		if (error || !results || !results[0])
@@ -95,13 +95,13 @@ const get = async (req, res, next) => {
 
 		const blockButtonStatus = getBlockButtonStatus(req.user, results[0]);
 		const likeButtonStatus = getLikeButtonStatus(req.user, results[0]);
-		const images = getImages(req.params.id);
-		Promise.all([likeButtonStatus, blockButtonStatus, images])
+		//const images = getImages(req.params.id);
+		Promise.all([likeButtonStatus, blockButtonStatus])//, images])
 			.then((likeButtonStatus) => {
 				console.log('like button: ' + likeButtonStatus);
 				return res.json({
 					profileData: {...results[0], distance: calculateDistance(req.user.lat, req.user.lon, results[0].latitude, results[0].longitude)},
-					images: likeButtonStatus[2],
+					images: results[0].images.split(','),
 					lookingFor: getGenderEmoji(results[0].target_genders),
 					gender: getGenderEmoji(results[0].gender),
 					title: `${results[0].first_name} ${results[0].last_name[0]}.`,

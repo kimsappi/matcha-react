@@ -153,7 +153,7 @@ const MyLikes = ({state, setState}) => {
                                     <>
                                         {image.id !== previewState.profileData.main_pic ?
                                         <button onClick={() => {modifyPreviewImage(image.id); modifyImagePopupState(true);}} style={imageButton}>
-                                            <img src={generateImageUrl(image.id, image.extension)} style={smallPicStyle}/>
+                                            <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                         </button>
                                         : null}
                                     </>

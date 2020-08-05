@@ -159,7 +159,9 @@ SELECT * FROM users
 LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
 ON user_photos.user = users.id AND user_photos.photo_id = users.main_pic
 LEFT OUTER JOIN (SELECT `user` AS tag_user, GROUP_CONCAT(string SEPARATOR ',') AS tags_string FROM tags GROUP BY tag_user) AS tags
-ON tags.tag_user = users.id;
+ON tags.tag_user = users.id
+LEFT OUTER JOIN (SELECT user, GROUP_CONCAT(id, '.', extension SEPARATOR ',') AS photos_string FROM user_photos GROUP BY `user`) AS photos
+ON photos.user = users.id;
 
 CREATE VIEW chat_and_user AS
 SELECT messages.id AS id, messages.content AS content, s.username AS sender_name, s.id AS sender_id, r.username AS recipient_name, r.id AS recipient_id FROM messages

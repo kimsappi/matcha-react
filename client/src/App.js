@@ -12,6 +12,7 @@ import MyVisits from './views/MyProfile/MyVisits';
 import Profile from './views/Profile/Profile';
 import io from 'socket.io-client';
 import Chat from './views/Chat';
+import CHATTEST from './CHATTEST';
 
 import {getUser} from './modules/userData';
 
@@ -69,6 +70,10 @@ function App() {
 
           <Route path='/resetPassword'>
             <Index state={state} action='resetPassword' setPopupState={setPopupState} />
+          </Route>
+
+          <Route path='/CHATTEST'>
+            <CHATTEST />
           </Route>
 
           <Route path='/'>
