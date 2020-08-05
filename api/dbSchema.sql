@@ -141,6 +141,14 @@ INSERT INTO visits (visitor, visitee, time) VALUES
 (6, 1, CURRENT_TIMESTAMP),
 (3, 1, CURRENT_TIMESTAMP);
 
+INSERT INTO messages (sender, recipient, content) VALUES
+(1, 2, "hello world"),
+(2, 1, "ping"),
+(1, 2, "pong"),
+(1, 3, "asd"),
+(1, 4, "123"),
+(1, 5, "wow");
+
 CREATE VIEW user_and_photos AS
 SELECT * FROM users
 LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
@@ -152,6 +160,11 @@ LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `fil
 ON user_photos.user = users.id AND user_photos.photo_id = users.main_pic
 LEFT OUTER JOIN (SELECT `user` AS tag_user, GROUP_CONCAT(string SEPARATOR ',') AS tags_string FROM tags GROUP BY tag_user) AS tags
 ON tags.tag_user = users.id;
+
+CREATE VIEW chat_and_user AS
+SELECT messages.id AS id, messages.content AS content, s.username AS sender, r.username AS recipient FROM messages
+JOIN users AS s ON s.id = messages.sender
+JOIN users AS r ON r.id = messages.recipient;
 
 -- DROP USER 'dbuser'@'%';
 -- CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY '123dbuser';
