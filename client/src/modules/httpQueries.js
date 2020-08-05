@@ -233,3 +233,17 @@ export const parseSearchString = str => {
 	});
 	return ret;
 }
+
+export const getConnections = () => {
+	const request = axios.get(baseUrl + '/getConnections', {headers: getAuthHeader()})
+		return request.then(response => {
+			console.log(response);
+			if (!response.data)
+				alert('Something went wrong');
+			else
+			{
+				console.log("jees");
+				return "asd";
+			}
+		});
+};

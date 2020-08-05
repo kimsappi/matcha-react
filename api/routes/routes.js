@@ -17,6 +17,7 @@ const myPics = require('./myProfile/pics');
 const photoActions = require('./myProfile/photoActions');
 const likes = require('./myProfile/likes');
 const visits = require('./myProfile/visits');
+const matches = require('./myProfile/matches');
 
 const profile = require('./profile');
 
@@ -139,6 +140,11 @@ router.get('/chat', (req, res, next) => {
 
 router.post('/chat', (req, res, next) => {
 	chat.post(req, res, next);
+});
+
+//matches.js getConnections
+router.get('/getConnections', (req, res, next) => {
+	matches.get(req, res, next);
 });
 
 module.exports = router;
