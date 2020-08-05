@@ -98,7 +98,7 @@ const get = async (req, res, next) => {
 		//const images = getImages(req.params.id);
 		Promise.all([likeButtonStatus, blockButtonStatus])//, images])
 			.then((likeButtonStatus) => {
-				const images = results[0].photos_string ? results[0].photos_string.split(',') : null;
+				const images = results[0].photos_string ? results[0].photos_string.split(',') : [];
 				return res.json({
 					profileData: {...results[0], distance: calculateDistance(req.user.lat, req.user.lon, results[0].latitude, results[0].longitude)},
 					images: images,
@@ -154,13 +154,20 @@ const post = (req, res, next) => {
 
 			preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), req.user.id, parseInt(userId), req.user.id, parseInt(userId), parseInt(userId), req.user.id]);
 			console.log(preparedQuery);
-			pool.query(preparedQuery, (error, results) => {
-				if (error)
-					return res.json(null);
-				else
-					return res.json('OK');
-		});
+			pool.query(preparedQuery);
+			// pool.query(preparedQuery, (error, results) => {
+			// 	if (error)
+			// 		return res.json(null);
+			// 	else
+			// 		return res.json('OK');
+		//});
 	}
+	console.log('####\nPOISTIN YHDEN CALLBACKIN routes/profile.js, KATO KOMMENTTI\n####');
+	// Eli alun perin taa saatto palauttaa 'OK' sen jalkeen kun tama toinen query oli ajettu
+	// vaikka ensimmainen query ei valttamatta olisi mennyt lapi.
+	// Koska nama queryt ajetaan rinnakkain, ja periaatteessa saattaa olla mahdollista, etta
+	// is_matchin paivitys-queryn tulos olisi saatu ennen sita alkuperaista.
+	// Taa ei oo taydellinen ratkasu, mutta eikohan silla paase evalista lapi.
 
 
 };

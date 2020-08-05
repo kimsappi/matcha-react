@@ -80,7 +80,8 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 		id: req.user.id,
 		lat: req.user.lat,
 		lon: req.user.lon,
-		login_id: req.user.login_id
+		login_id: req.user.login_id,
+		tags: tags
 	};
 
 	if (updatedCoordinates.length) {

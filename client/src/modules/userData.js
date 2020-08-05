@@ -6,12 +6,13 @@ const getUser = () => {
 
 };
 
-const setUser = (username, id, age, loggedIn = false) => {
+const setUser = (username, id, age, tags = null, loggedIn = false) => {
 	localStorage.setItem('user', JSON.stringify({
 		'username': username,
 		'id': id,
 		'age': age,
-		'loggedIn': loggedIn
+		'loggedIn': loggedIn,
+		'tags': tags
 	}));
 };
 

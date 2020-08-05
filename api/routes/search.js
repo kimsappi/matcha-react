@@ -20,10 +20,18 @@ const filterProfiles = (profiles, params, user) => {
 	const ret = nullAgeFiltered.map(profile => {
 		if (!profile.age)
 			return;
+
 		let distance = calculateDistance(user.lat, user.lon, profile.latitude, profile.longitude);
 		if (isNaN(distance))
 			distance = 'Unknown';
-		return {...profile, distance: distance};
+
+		let commonTags = 0;
+		if (profile.tags_string && user.tags)
+			profile.tags_string.split(',').forEach(tag => {
+				if (user.tags.includes(tag))
+					commonTags += 1;
+			});
+		return {...profile, distance: distance, commonTags: commonTags};
 	});
 	//console.log(ret);
 	return ret;

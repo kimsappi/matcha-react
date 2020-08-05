@@ -143,7 +143,7 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 		.then(response => {
 			if (!response.data || response.data === 'email' || response.data === 'Database error') {
 				setState({});
-				setUser(null, null, false, false);
+				setUser(null, null, false, null, false);
 				setToken(null);
 				if (response.data === 'email')
 					alert('Make sure to confirm your email address before logging in.');
@@ -154,7 +154,7 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 			else {
 				console.log(response.data);
 				console.log('asddd');
-				setUser(response.data.username, response.data.id, response.data.age, true);
+				setUser(response.data.username, response.data.id, response.data.age, response.data.tags, true);
 				setToken(response.data.token);
 				setState({loggedIn: true, username: response.data.username, id: response.data.id});
 				setPopupState(false);
@@ -239,7 +239,7 @@ export const getConnections = () => {
 		return request.then(response => {
 			console.log(response);
 			if (!response.data)
-				alert('Something went wrong');
+				alert('Something went wrong (getConnections) (probably trying to get connections without being logged in)');
 			else
 			{
 				console.log("jees");

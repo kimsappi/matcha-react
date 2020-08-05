@@ -27,7 +27,7 @@ const post = (req, res, next) => {
 		return res.json(null);
 	
 	const hashedPassword = hashPassword(req.body.username, req.body.password);
-	const query = 'SELECT * FROM `users` WHERE username = ? AND password = ?;';
+	const query = 'SELECT * FROM user_and_main_photo WHERE username = ? AND password = ?;';
 	const preparedQuery = mysql.format(query, [req.body.username, hashedPassword]);
 
 	pool.query(preparedQuery, (error, results) => {
@@ -45,17 +45,20 @@ const post = (req, res, next) => {
 			console.log(req.body);
 			console.log('Logincoords:');
 			console.log(loginCoordinates);
+			const tags = results[0].tags_string ? results[0].tags_string.split(',') : null;
 			const userData = {
 				id: results[0].id,
 				username: results[0].username,
 				lat: loginCoordinates.latitude,
 				lon: loginCoordinates.longitude,
 				age: results[0].age || 25,
+				tags: tags,
 				token: generateJWT({
 					user: results[0].username,
 					id: results[0].id,
 					lat: loginCoordinates.latitude,
 					lon: loginCoordinates.longitude,
+					tags: tags,
 					login_id: results[0].login_id
 				})
 			};
