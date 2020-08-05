@@ -162,7 +162,7 @@ LEFT OUTER JOIN (SELECT `user` AS tag_user, GROUP_CONCAT(string SEPARATOR ',') A
 ON tags.tag_user = users.id;
 
 CREATE VIEW chat_and_user AS
-SELECT messages.id AS id, messages.content AS content, s.username AS sender, r.username AS recipient FROM messages
+SELECT messages.id AS id, messages.content AS content, s.username AS sender_name, s.id AS sender_id, r.username AS recipient_name, r.id AS recipient_id FROM messages
 JOIN users AS s ON s.id = messages.sender
 JOIN users AS r ON r.id = messages.recipient;
 
