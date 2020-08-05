@@ -98,10 +98,10 @@ const get = async (req, res, next) => {
 		//const images = getImages(req.params.id);
 		Promise.all([likeButtonStatus, blockButtonStatus])//, images])
 			.then((likeButtonStatus) => {
-				console.log('like button: ' + likeButtonStatus);
+				const images = results[0].photos_string ? results[0].photos_string.split(',') : null;
 				return res.json({
 					profileData: {...results[0], distance: calculateDistance(req.user.lat, req.user.lon, results[0].latitude, results[0].longitude)},
-					images: results[0].images.split(','),
+					images: images,
 					lookingFor: getGenderEmoji(results[0].target_genders),
 					gender: getGenderEmoji(results[0].gender),
 					title: `${results[0].first_name} ${results[0].last_name[0]}.`,

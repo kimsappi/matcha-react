@@ -16,7 +16,8 @@ const Profile = ({match}) => {
 				if (!response)
 					window.location.pathname = '/';
 				setProfileState(response);
-			});
+			})
+			.catch(error => console.log(error));
 	}, [rerenderTrick, window.location.href]);
 	// window.location.href is necessary, because all /profile/:id URLs are
 	// considered the same route, but this will take care of it
