@@ -237,13 +237,13 @@ export const parseSearchString = str => {
 export const getConnections = () => {
 	const request = axios.get(baseUrl + '/getConnections', {headers: getAuthHeader()})
 		return request.then(response => {
-			console.log(response);
+			// console.log(response);
 			if (!response.data)
 				alert('Something went wrong (getConnections) (probably trying to get connections without being logged in)');
 			else
 			{
 				console.log("jees");
-				return "asd";
+				return(response.data);
 			}
 		});
 };

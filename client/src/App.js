@@ -10,8 +10,8 @@ import MyProfile from './views/MyProfile/MyProfile';
 import MyLikes from './views/MyProfile/MyLikes';
 import MyVisits from './views/MyProfile/MyVisits';
 import Profile from './views/Profile/Profile';
-import io from 'socket.io-client';
-import Chat from './views/Chat';
+
+import Chat from './views/Chat/Chat';
 import CHATTEST from './CHATTEST';
 
 import {getUser} from './modules/userData';
@@ -25,10 +25,7 @@ function App() {
   
 
   
-  const socket = io.connect('http://localhost:3001');
-  socket.on('FromClient', {
-    message: 'asd'
-  })
+ 
 
   // useEffect(() => {
   //   getThisPage(window.location.href)
@@ -43,7 +40,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
-        <Chat socket={socket}/>
+        <Chat/>
         <Switch>
 
           <Route path='/myProfile/profile'>

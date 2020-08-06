@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
 
-import {getConnections} from '../modules/httpQueries';
+import {getConnections} from '../../modules/httpQueries';
+
+import Connection from './Connection';
+import Chatwindow from './Chatwindow';
 
 
 
-const Chat= ({socket}) => {
+const Chat= () => {
 
 
     const connectionsWindow =
@@ -39,6 +42,8 @@ const Chat= ({socket}) => {
 
     const [connections, setConnections] = useState(null);
     const [refresh, setRefresh] = useState(true);
+    const [chat, setChat] = useState(null);
+    const [chatWindowOpen, setChatWindow] = useState(false);
 
     useEffect(() => {
         console.log("USE");
@@ -47,39 +52,39 @@ const Chat= ({socket}) => {
 				//console.log('myProfiles/likes response:');
                 //console.log(response);
                 setConnections(response);
-                console.log(connections);
+                // console.log(connections);
             });
 
-    }, [refresh]);
+    }, [refresh, chat]);
 
     console.log(connections);
-    console.log("connecitn");
+    console.log(chat);
 
-    socket.on('chat', function(data) {
-        console.log(data);
-    })
-    function message()
+
+
+
+    if (connections)
     {
-        var message = document.getElementById('message').value;
-        console.log(socket);
-        // socket.on('test', () => {
-            socket.emit('chat', {
-                msg: message
-            }, response => console.log(response))
+        return(
+        <>
+            
+            <div style={connectionsWindow} id="connections">
+                    <Connection connections={connections} chat={chat} setChat={setChat} setChatWindow={setChatWindow} chatWindow={chatWindowOpen}/> 
+            </div>
+            {chatWindowOpen ?
+                <div style={chatWindow}>
+                    <Chatwindow chat={chat}/>
+                </div>
+            : ''}
+            <div onClick={() => {openConnections(); setRefresh(!refresh);}} style={connectionButton}>Connections</div>
 
-        // })
+        </>)
+    }
+    else
+    {
+        return(<h1>Loading</h1>)
     }
 
-    return(
-    <>
-        <div style={connectionsWindow} id="connections">
-            <h1>asd</h1>
-        </div>
-        <div style={chatWindow}>Chat</div>
-        <div onClick={() => {openConnections(); setRefresh(!refresh);}} style={connectionButton}>Connections</div>
-        <input type="text" name="msg" id="message"/>
-        <button onClick={() => message()}>Send</button>
-    </>)
 
 
 function openConnections()
