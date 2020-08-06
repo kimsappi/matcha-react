@@ -41,7 +41,7 @@ console.log(profile);
         <input type='file' name='photoUpload' onChange={event => uploadPhotos(event)} multiple />
         <p>Printed from MyProfileImages-component</p>
         {profile.images.length ?
-            profile.images.map(photo => <MyProfileImage photo={photo} key={photo.id} previewImage={modifyPreviewImage} popupState={modifyImagePopupState}/>) :
+            profile.images.map(photo => <MyProfileImage photo={photo} key={photo.id} previewImage={modifyPreviewImage} popupState={modifyImagePopupState} main_pic={profile.userData.main_pic} />) :
             <p>You haven't uploaded any images!</p>}
             const [previewImage, modifyPreviewImage] = useState(null);
         {imagePopupState === true ?
