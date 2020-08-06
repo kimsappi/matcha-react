@@ -33,20 +33,20 @@ Hive webdev project: dating site
 * - [x] Biography
 * - [x] Interests with hashtags ('\#cycling')
 * - [x] Max 5 pictures
-- [ ] All information above must be modifiable (as well as first and last name and email)
-- [ ] User must be able to see who has checked their profile and who 'liked' them
-- [ ] Users must have a public 'fame rating'
+- [x] All information above must be modifiable (as well as first and last name and email)
+- [x] User must be able to see who has checked their profile and who 'liked' them
+- [x] Users must have a public 'fame rating'
 - [ ] User's location must be established either through GPS/similar or IP
-- [ ] Location must be modifiable
-- [ ] History of visited profiles
+- [x] Location must be modifiable
+- [x] History of visited profiles
 
 ## Suggesting matches
-- [ ] User must be suggested other relevant profiles
-- [ ] Only show profiles the user is interested in (sexual preference)
+- [x] User must be suggested other relevant profiles
+- [x] Only show profiles the user is interested in (sexual preference)
 - [ ] Clever matching (location, tags, fame rating)
-- [ ] People must be prioritised based on location
-- [ ] List must be sortable by age, location, fame rating, common tags
-- [ ] List must be filterable by age, location, fame rating, common tags
+- [x] People must be prioritised based on location
+- [x] List must be sortable by age, location, fame rating, common tags
+- [x] List must be filterable by age, location, fame rating, common tags
 
 ## Searching for matches
 - [ ] Other profiles must be searchable by features like age gap, fame rating gap, location, tags

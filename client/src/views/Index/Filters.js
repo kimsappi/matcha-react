@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 const Filters = ({distance, setDistance,
 	minAge, setMinAge, maxAge, setMaxAge,
+	minCommonTags, setMinCommonTags,
 	sort, setSort, sortingMethods,
 	tagSearch, setTagSearch}) => {
 
@@ -40,7 +41,11 @@ const Filters = ({distance, setDistance,
 			<input type='number' name='maxAge' value={maxAge} max='99' onChange={event => eventHandler(event, setMaxAge)} />
 		</div>
 		<div>
-			<label htmlFor='minAge'>Tag search</label>
+			<label htmlFor='minCommonTags'>Minimum common tags</label>
+			<input type='number' name='minCommonTags' value={minCommonTags} min='0' max='16' onChange={event => eventHandler(event, setMinCommonTags)} />
+		</div>
+		<div>
+			<label htmlFor='tagSearch'>Tag search</label>
 			<input type='text' name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
 			<button onClick={() => setTagSearch(tagSearchInput)}>Search</button>
 			<button onClick={() => {setTagSearch(''); setTagSearchInput('');}}>Reset</button>

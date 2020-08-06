@@ -18,6 +18,7 @@ const Index = ({state, action, setPopupState}) => {
 	const [distanceFilter, setDistanceFilter] = useState(100);
 	const [minAge, setMinAge] = useState(age - 3);
 	const [maxAge, setMaxAge] = useState(age + 3);
+	const [minCommonTags, setMinCommonTags] = useState(0);
 	const [sort, setSort] = useState(0);
 	const [tagSearch, setTagSearch] = useState('');
 
@@ -60,6 +61,7 @@ const Index = ({state, action, setPopupState}) => {
 						<Suggestions
 							users={users} distanceFilter={distanceFilter}
 							minAge={minAge} maxAge={maxAge}
+							minCommonTags={minCommonTags}
 							sort={sortingMethods[sort]}
 							tagSearch={tagSearch}
 						/>
@@ -70,6 +72,7 @@ const Index = ({state, action, setPopupState}) => {
 							distance={distanceFilter} setDistance={setDistanceFilter}
 							minAge={minAge} setMinAge={setMinAge}
 							maxAge={maxAge} setMaxAge={setMaxAge}
+							minCommonTags={minCommonTags} setMinCommonTags={setMinCommonTags}
 							sort={sort} setSort={setSort} sortingMethods={sortingMethods}
 							tagSearch={tagSearch} setTagSearch={setTagSearch}
 						/>

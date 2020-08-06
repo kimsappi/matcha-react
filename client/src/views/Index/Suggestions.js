@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Suggestions = ({users, distanceFilter, minAge, maxAge, sort, tagSearch}) => {
+const Suggestions = ({users, distanceFilter, minAge, maxAge, minCommonTags,
+	sort, tagSearch}) => {
 
 	const suggestionImage = 
 		{
@@ -19,11 +20,11 @@ const Suggestions = ({users, distanceFilter, minAge, maxAge, sort, tagSearch}) =
 			return false;
 		if (element.props.profile.age > maxAge)
 			return false;
+		if (element.props.profile.commonTags < minCommonTags)
+			return false;
 		
 		// This filter must be just before the final `return true;`
 		// as it can also return true
-		console.log(element.props.profile.tags);
-		console.log(tagSearch);
 		if (tagSearch.length)
 			return element.props.profile.tags.includes(tagSearch);
 		return true;
