@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Suggestions = ({users, distanceFilter, minAge, maxAge, sort}) => {
+const Suggestions = ({users, distanceFilter, minAge, maxAge, sort, tagSearch}) => {
 
 	const suggestionImage = 
 		{
@@ -19,6 +19,13 @@ const Suggestions = ({users, distanceFilter, minAge, maxAge, sort}) => {
 			return false;
 		if (element.props.profile.age > maxAge)
 			return false;
+		
+		// This filter must be just before the final `return true;`
+		// as it can also return true
+		console.log(element.props.profile.tags);
+		console.log(tagSearch);
+		if (tagSearch.length)
+			return element.props.profile.tags.includes(tagSearch);
 		return true;
 	});
 
@@ -26,7 +33,7 @@ const Suggestions = ({users, distanceFilter, minAge, maxAge, sort}) => {
 		return (<div>There are some profiles available for you, but the current filters are too strict!</div>);
 
 	return userCards.sort((a, b) => {
-		return a.props.profile[sort.key] * sort.order - b.props.profile[sort.key];
+		return (a.props.profile[sort.key] - b.props.profile[sort.key]) * sort.order;
 	});
 };
 

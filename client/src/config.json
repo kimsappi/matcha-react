@@ -36,6 +36,12 @@
 			"display": "Age descending",
 			"key": "age",
 			"order": -1
+		},
+		{
+			"name": "tags",
+			"display": "Common tags",
+			"key": "commonTags",
+			"order": -1
 		}
 	]
 }

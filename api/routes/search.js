@@ -26,12 +26,16 @@ const filterProfiles = (profiles, params, user) => {
 			distance = 'Unknown';
 
 		let commonTags = 0;
-		if (profile.tags_string && user.tags)
-			profile.tags_string.split(',').forEach(tag => {
-				if (user.tags.includes(tag))
-					commonTags += 1;
-			});
-		return {...profile, distance: distance, commonTags: commonTags};
+		let tags = [];
+		if (profile.tags_string) {
+			tags = profile.tags_string.split(',');
+			if (user.tags)
+				tags.forEach(tag => {
+					if (user.tags.includes(tag))
+						commonTags += 1;
+				});
+		}
+		return {...profile, distance: distance, commonTags: commonTags, tags: tags};
 	});
 	//console.log(ret);
 	return ret;

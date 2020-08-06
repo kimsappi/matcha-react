@@ -19,6 +19,8 @@ const Index = ({state, action, setPopupState}) => {
 	const [minAge, setMinAge] = useState(age - 3);
 	const [maxAge, setMaxAge] = useState(age + 3);
 	const [sort, setSort] = useState(0);
+	const [tagSearch, setTagSearch] = useState('');
+
 	if (action === 'resetPassword')
 		setPopupState('resetPassword');
 
@@ -59,6 +61,7 @@ const Index = ({state, action, setPopupState}) => {
 							users={users} distanceFilter={distanceFilter}
 							minAge={minAge} maxAge={maxAge}
 							sort={sortingMethods[sort]}
+							tagSearch={tagSearch}
 						/>
 					</div>
 					<div className="col-sm-6 h-25" id="searchContainer">
@@ -68,6 +71,7 @@ const Index = ({state, action, setPopupState}) => {
 							minAge={minAge} setMinAge={setMinAge}
 							maxAge={maxAge} setMaxAge={setMaxAge}
 							sort={sort} setSort={setSort} sortingMethods={sortingMethods}
+							tagSearch={tagSearch} setTagSearch={setTagSearch}
 						/>
 					</div>
 					<PopupTest />

@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const Filters = ({distance, setDistance,
 	minAge, setMinAge, maxAge, setMaxAge,
-	sort, setSort, sortingMethods}) => {
+	sort, setSort, sortingMethods,
+	tagSearch, setTagSearch}) => {
+
+	const [tagSearchInput, setTagSearchInput] = useState('');
 
 	const eventHandler = (event, setFunction) => {
 		setFunction(event.target.value);
@@ -13,8 +16,6 @@ const Filters = ({distance, setDistance,
 			<option value={index} key={method.name}>{method.display}</option>
 		);
 	});
-
-
 
 	return (
 		<>
@@ -37,6 +38,12 @@ const Filters = ({distance, setDistance,
 		<div>
 			<label htmlFor='minAge'>Maximum age</label>
 			<input type='number' name='maxAge' value={maxAge} max='99' onChange={event => eventHandler(event, setMaxAge)} />
+		</div>
+		<div>
+			<label htmlFor='minAge'>Tag search</label>
+			<input type='text' name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
+			<button onClick={() => setTagSearch(tagSearchInput)}>Search</button>
+			<button onClick={() => {setTagSearch(''); setTagSearchInput('');}}>Reset</button>
 		</div>
 		</>
 	);

@@ -11,6 +11,7 @@ const UserCard = ({profile}) => {
 			<div>Age: {profile.age}</div>
 			<div>Tags: {profile.tags_string}</div>
 			<div>Common tags: {profile.commonTags}</div>
+			<div>Distance: {profile.distance}</div>
 		</Link>
 	);
 };
