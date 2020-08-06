@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 
+import {Range} from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
 const Filters = ({distance, setDistance,
 	minAge, setMinAge, maxAge, setMaxAge,
 	minCommonTags, setMinCommonTags,
@@ -10,6 +13,11 @@ const Filters = ({distance, setDistance,
 
 	const eventHandler = (event, setFunction) => {
 		setFunction(event.target.value);
+	};
+
+	const rangeEventHandler = (values, setMin, setMax) => {
+		setMin(values[0]);
+		setMax(values[1]);
 	};
 
 	const sortingMethodOptions = sortingMethods.map((method, index) => {
@@ -32,6 +40,13 @@ const Filters = ({distance, setDistance,
 			<input type='range' name='distance' value={distance} max='9000' onChange={event => eventHandler(event, setDistance)} />
 			<input type='number' name='distance' value={distance} max='9000' onChange={event => eventHandler(event, setDistance)} />
 		</div>
+		<Range
+			step={1}
+			value={[minAge, maxAge]}
+			min={16}
+			max={99}
+			onChange={values => rangeEventHandler(values, setMinAge, setMaxAge)}
+		/>
 		<div>
 			<label htmlFor='minAge'>Minimum age</label>
 			<input type='number' name='minAge' value={minAge} min='16' onChange={event => eventHandler(event, setMinAge)} />
