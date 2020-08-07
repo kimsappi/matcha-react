@@ -44,8 +44,7 @@ export const getThisPage = relativeUrl => {
 }
 
 const localLogout = (reload = false) => {
-	setUser(null, null);
-	setToken(null);
+	localStorage.clear();
 	if (reload)
 		window.location.href = '/';
 }
