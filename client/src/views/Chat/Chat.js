@@ -7,7 +7,7 @@ import Chatwindow from './Chatwindow';
 
 
 
-const Chat= () => {
+const Chat= ({socket}) => {
 
 
     const connectionsWindow =
@@ -73,7 +73,7 @@ const Chat= () => {
             </div>
             {chatWindowOpen ?
                 <div style={chatWindow}>
-                    <Chatwindow chat={chat}/>
+                    <Chatwindow socket={socket} chat={chat}/>
                 </div>
             : ''}
             <div onClick={() => {openConnections(); setRefresh(!refresh);}} style={connectionButton}>Connections</div>
