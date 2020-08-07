@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
-
+import io from 'socket.io-client';
 import './App.css';
 import Header from './views/Header/Header';
 import Index from './views/Index/Index';
@@ -15,6 +15,8 @@ import CHATTEST from './CHATTEST';
 
 import {getUser} from './modules/userData';
 
+import {getToken} from './modules/userData';
+
 function App() {
   let user = getUser();
   console.log(user);
@@ -22,10 +24,16 @@ function App() {
   const [state, setState] = useState(user);
   const [popupState, setPopupState] = useState(false);
   
+  // Logging in to the web socket thing..
 
-  
- 
+  console.log(getToken() );
+  let socket = null;
+  if (getToken() != "null")
+  {
+    socket = io.connect('http://localhost:3001');
+    socket.emit('logIn', {token: getToken()});
 
+  }
   // useEffect(() => {
   //   getThisPage(window.location.href)
   //     .then(data => {
@@ -39,7 +47,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
-        <Chat/>
+        {getToken() != "null" ? <Chat socket={socket} /> : ''}
         <Switch>
 
           <Route path='/myProfile/profile'>

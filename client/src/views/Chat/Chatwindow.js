@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import io from 'socket.io-client';
+
 import {getToken} from '../../modules/userData';
 
 import {getThisPage} from '../../modules/httpQueries';
 
-const Chatwindow = (({chat}) => {
+const Chatwindow = (({socket, chat}) => {
 
     const [chatMessages, setChatMessages] = useState(<p>Loading...</p>);
 
-    const socket = io.connect('http://localhost:3001');
     const myToken = getToken();
     socket.emit('privateChat', {user: chat, me: myToken})
 
