@@ -8,6 +8,7 @@ import {getThisPage} from '../../modules/httpQueries';
 
 
 const MyProfile = ({state, setState}) => {	
+    const [rerenderTrick, setRerenderTrick] = useState(false);
 	const [profileState, setProfileState] = useState(null);
 	
 	
@@ -18,17 +19,17 @@ const MyProfile = ({state, setState}) => {
 				console.log(response);
 				setProfileState(response);
 			});
-	}, []);
+	}, [rerenderTrick]);
 
 	if (profileState)
 		return (<>
 		<ProfileNav />
 		<div className="row">
 			<div className="col-sm-6">
-				<MyProfileInfo profile={profileState} />
+				<MyProfileInfo profile={profileState}/>
 			</div>
 			<div className="col-sm-6">
-				<MyProfileImages profile={profileState} />
+				<MyProfileImages profile={profileState} rerenderTrick={rerenderTrick} setRerenderTrick={setRerenderTrick} />
 			</div>
 		</div>
 		
