@@ -95,8 +95,14 @@ CREATE TABLE IF NOT EXISTS notifications (
 	FOREIGN KEY (causer) REFERENCES users(id)
 );
 
---CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW
---INSERT INTO notifications (user, reason, causer)
+CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW
+INSERT INTO notifications (user, reason, causer) VALUES (new.likee, 'like', new.liker);
+
+CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW
+INSERT INTO notifications (user, reason, causer) VALUES (new.likee, 'unlike', new.liker);
+
+CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW
+INSERT INTO notifications (user, reason, causer) VALUES (new.visitee, 'visit', new.visitor);
 
 -- CREATE TABLE IF NOT EXISTS chats (
 -- 	id INT UNSIGNED AUTO_INCREMENT,

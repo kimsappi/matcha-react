@@ -3,7 +3,6 @@ const multer = require('multer');
 const upload = multer({dest: 'tmp/'});
 
 // Routes
-const index = require('./index');
 const register = require('./register');
 const login = require('./login');
 const logout = require('./logout');
@@ -18,6 +17,7 @@ const photoActions = require('./myProfile/photoActions');
 const likes = require('./myProfile/likes');
 const visits = require('./myProfile/visits');
 const matches = require('./myProfile/matches');
+const notifications = require('./myProfile/notifications')
 
 const profile = require('./profile');
 
@@ -103,6 +103,11 @@ router.post('/myProfile/pics', upload.array('photos', 5), (req, res, next) => {
 // myProfile/photoActions.js
 router.post('/myProfile/photoActions', (req, res, next) => {
 	photoActions.post(req, res, next);
+});
+
+// myProfile/notifications.js
+router.get('/myProfile/notifications', (req, res, next) => {
+	notifications.get(req, res, next);
 });
 
 // profile.js
