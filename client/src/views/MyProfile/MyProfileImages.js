@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 
 import MyProfileImage from './MyProfileImage';
 import {Popup} from '../../components/Popup';
 
 import {uploadPhoto} from '../../modules/httpQueries';
-import {generateImageUrl, photoActions} from '../../modules/httpQueries';
+import {generateImageUrl} from '../../modules/httpQueries';
 
 const MyProfileImages = ({profile}) => {	
     
@@ -34,18 +34,26 @@ const MyProfileImages = ({profile}) => {
                 // MITEN RES:sta SAADAAN PROMISE VALUE ULOS?
                 //window.location.reload(false);
     }
-console.log(profile);
+
+    /* eslint-disable eqeqeq */
+    const uploadedImages = profile.images.length ?
+        profile.images.map(photo => <MyProfileImage photo={photo} key={photo.id} previewImage={modifyPreviewImage} popupState={modifyImagePopupState} main_pic={profile.userData.main_pic} />)
+            .sort((a, b) => {
+                if (a.key == a.props.main_pic || b.key == b.props.main_pic)
+                    return (b.key == b.props.main_pic) - (a.key == a.props.main_pic);
+                else
+                    return a.key - b.key;
+            }) :
+        <p>You haven't uploaded any images!</p>;
+
     return (
         <>
         <label htmlFor='photoUpload'>Upload a photo</label>
         <input type='file' name='photoUpload' onChange={event => uploadPhotos(event)} multiple />
         <p>Printed from MyProfileImages-component</p>
-        {profile.images.length ?
-            profile.images.map(photo => <MyProfileImage photo={photo} key={photo.id} previewImage={modifyPreviewImage} popupState={modifyImagePopupState} main_pic={profile.userData.main_pic} />) :
-            <p>You haven't uploaded any images!</p>}
-            const [previewImage, modifyPreviewImage] = useState(null);
+        {uploadedImages}
         {imagePopupState === true ?
-            <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage}/></Popup>
+            <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage} alt='Enlarged profile' /></Popup>
         : ''}
 
         </>

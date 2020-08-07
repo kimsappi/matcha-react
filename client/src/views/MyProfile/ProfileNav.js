@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
-import {getThisPage} from '../../modules/httpQueries';
 import {Link} from 'react-router-dom';
 
 
-const ProfileNav = ({state, setState}) => {	
+const ProfileNav = () => {	
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">

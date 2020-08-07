@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Row, Col, Container} from 'react-bootstrap';
+import {Button, Row, Container} from 'react-bootstrap';
 
 import {generateImageUrl, photoActions} from '../../modules/httpQueries';
 

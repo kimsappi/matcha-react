@@ -8,6 +8,7 @@ const Profile = ({match}) => {
 	// rerenderTrick is my attempt to get the page to rerender when you click the
 	// like/unlike button, but doesn't quite seem to work
 
+	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		getThisPage(window.location.pathname)
 			.then(response => {

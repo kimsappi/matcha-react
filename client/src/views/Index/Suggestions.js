@@ -3,12 +3,6 @@ import React from 'react';
 const Suggestions = ({users, distanceFilter, minAge, maxAge, minCommonTags,
 	sort, tagSearch}) => {
 
-	const suggestionImage = 
-		{
-			maxHeight: '20px',
-			maxWidth: '20px'
-		}
-
 	if (!users.length)
 		return <div>There are currently no suggestions available for you!</div>;
 

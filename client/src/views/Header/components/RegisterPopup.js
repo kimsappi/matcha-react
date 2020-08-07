@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import {Popup} from '../../../components/Popup';
 import InputWithLabel from '../../../components/InputWithLabel';
 
 import {submitRegister} from '../../../modules/httpQueries';
 
-export const RegisterPopup = ({state, setState, setPopupState}) => {
+export const RegisterPopup = ({setPopupState}) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');

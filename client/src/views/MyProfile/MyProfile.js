@@ -41,7 +41,7 @@ const MyProfile = ({state, setState}) => {
 		return (
 			<>
 			<ProfileNav />
-			<h1></h1>
+			<h1>My profile</h1>
 			</>
 		);
 };

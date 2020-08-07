@@ -50,7 +50,7 @@ const Index = ({state, action, setPopupState}) => {
 					response = response || [];
 					setUsers(generateUserCards(response));
 				});
-	}, []);
+	}, [action, setPopupState]);
 
 	if (state.loggedIn)
 		return (
