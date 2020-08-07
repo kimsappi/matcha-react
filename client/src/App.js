@@ -28,7 +28,7 @@ function App() {
 
   console.log(getToken() );
   let socket = null;
-  if (getToken() != "null")
+  if (getToken())
   {
     socket = io.connect('http://localhost:3001');
     socket.emit('logIn', {token: getToken()});
@@ -47,7 +47,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
-        {getToken() != "null" ? <Chat socket={socket} /> : ''}
+        {getToken() ? <Chat socket={socket} /> : ''}
         <Switch>
 
           <Route path='/myProfile/profile'>

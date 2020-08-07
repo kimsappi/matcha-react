@@ -37,6 +37,28 @@ const { startWatchingDataUpdate } = require('geoip-lite');
 // 	}
 // }
 
+// preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), mysqlDatetime()]);
+// 		console.log(preparedQuery);
+// 		pool.query(preparedQuery, (error, results) => {
+// 			if (error)
+// 				return res.json(null);
+// 			else
+// 				return res.json('OK');
+
+
+
+function addMessageToDatabase(myId, otherId, message)
+{
+	const query= "INSERT INTO messages (sender, recipient, content) VALUES (?, ?, ?)";
+	const prepareSql = mysql.format(query, [myId, otherId, message]);
+	pool.query(prepareSql, (error, results) => {
+		if (error)
+			return false;
+		else
+			return true;
+	})
+}
+
 const wsServerInit = server => {
 
 	const io = socket(server);
@@ -62,8 +84,25 @@ const wsServerInit = server => {
 
 			// function runs when a message is sent in an open chat window.
 		socket.on('chat', function(jees) {
+			var temp;
+			jwt.verify(jees.me, tokenSecret, (err, user) => {
+				if (err)
+				{
+					console.log("ERRRRORRRR");
+					return;
+				}
+				else
+					temp = user;
+			});
 
-			io.sockets.in(keys[jees.id]).emit('chat', {message: jees.msg});
+			if (addMessageToDatabase(temp.id, jees.id, jees.msg))
+			{
+				io.sockets.in(keys[jees.id]).emit('chat', {message: jees.msg});
+			}
+
+
+
+			
 
 			//io.emit('chat', {okei: 'jees'});
 
@@ -90,6 +129,10 @@ const wsServerInit = server => {
 			});
 			keys[temp.id] = socket.id;
 			console.log("ARRAY: " + keys);
+		})
+
+		socket.on('logOut', function(data) {
+
 		})
 
 

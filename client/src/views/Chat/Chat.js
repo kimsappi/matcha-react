@@ -43,7 +43,9 @@ const Chat= ({socket}) => {
     const [connections, setConnections] = useState(null);
     const [refresh, setRefresh] = useState(true);
     const [chat, setChat] = useState(null);
+    const [chatUsername, setChatUsername] = useState(null);
     const [chatWindowOpen, setChatWindow] = useState(false);
+
 
     useEffect(() => {
         console.log("USE");
@@ -69,11 +71,11 @@ const Chat= ({socket}) => {
         <>
             
             <div style={connectionsWindow} id="connections">
-                    <Connection connections={connections} chat={chat} setChat={setChat} setChatWindow={setChatWindow} chatWindow={chatWindowOpen}/> 
+                    <Connection connections={connections} chat={chat} setChat={setChat} setChatWindow={setChatWindow} chatWindow={chatWindowOpen} chatUsername={chatUsername} setChatUsername={setChatUsername}/> 
             </div>
             {chatWindowOpen ?
                 <div style={chatWindow}>
-                    <Chatwindow socket={socket} chat={chat}/>
+                    <Chatwindow socket={socket} chat={chat} chatWindow={chatWindowOpen} chatUsername={chatUsername}/>
                 </div>
             : ''}
             <div onClick={() => {openConnections(); setRefresh(!refresh);}} style={connectionButton}>Connections</div>

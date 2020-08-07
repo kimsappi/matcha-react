@@ -1,4 +1,5 @@
 import axios from 'axios';
+import io from 'socket.io-client';
 
 import {setUser, setToken} from './userData';
 import {getToken} from './userData';
@@ -55,6 +56,7 @@ export const logOut = (setState, all = false) => {
 	console.log(getAuthHeader());
 	setState({});
 	request.then(response => localLogout(true));
+
 };
 
 export const uploadPhoto = photos => {

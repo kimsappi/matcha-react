@@ -4,9 +4,11 @@ import {getToken} from '../../modules/userData';
 
 import {getThisPage} from '../../modules/httpQueries';
 
-const Chatwindow = (({socket, chat}) => {
+import ChatMessages from './Chatmessages';
 
-    const [chatMessages, setChatMessages] = useState(<p>Loading...</p>);
+const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
+
+    const [chatMessages, setChatMessages] = useState(<p>No messages</p>);
 
     const myToken = getToken();
     socket.emit('privateChat', {user: chat, me: myToken})
@@ -14,9 +16,14 @@ const Chatwindow = (({socket, chat}) => {
     useEffect(() => {
         getThisPage(`/chat?id=${chat}`)
             .then(results => {
-                setChatMessages(results.map(msg => <p>{msg.content}</p>))
+                if (results)
+                {
+                    console.log(results);
+                    console.log("results chat");
+                    setChatMessages(results)
+                }
             })
-    }, []);
+    }, [chatWindow, chat]);
 
     function message()
     {
@@ -44,8 +51,8 @@ const Chatwindow = (({socket, chat}) => {
 
     return (
         <>
-            <h4>Chat with {chat}</h4>
-            {chatMessages}
+            <h4>Chat with {chatUsername}</h4>
+            <ChatMessages messages={chatMessages} />
             <input type="text" name="msg" id="message"/>
             <button onClick={() => message()}>Send</button>
         </>
