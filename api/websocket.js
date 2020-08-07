@@ -53,7 +53,10 @@ function addMessageToDatabase(myId, otherId, message)
 	const prepareSql = mysql.format(query, [myId, otherId, message]);
 	pool.query(prepareSql, (error, results) => {
 		if (error)
+		{
+			console.log("cb errori sisalla");
 			return false;
+		}
 		else
 			return true;
 	})
@@ -74,8 +77,11 @@ const wsServerInit = server => {
 				if (err)
 					console.log("ERRRRORRRR");
 				else
-					console.log("Chat window opened succesfully")
+					console.log("Chat window opened succesfully");
+					temp = user;   // VALIAIKAINEN!
 			});
+			keys[temp.id] = socket.id;  // VALIAIKAINEN!
+
 			console.log("ARRAY: " + keys);
 
 			socket.join(keys[data.user]);
@@ -94,11 +100,14 @@ const wsServerInit = server => {
 				else
 					temp = user;
 			});
+			console.log("KOKEILUUUU ennen");
+			addMessageToDatabase(temp.id, jees.id, jees.msg); // Tasta puuttuu errorcheck.
+			
+				console.log("KOKEILUUUU jalkeen");
 
-			if (addMessageToDatabase(temp.id, jees.id, jees.msg))
-			{
-				io.sockets.in(keys[jees.id]).emit('chat', {message: jees.msg});
-			}
+				io.sockets.in(keys[jees.id]).emit('chat', {message: jees.msg, sender: temp.id});
+				io.sockets.in(keys[temp.id]).emit('chat', {message: jees.msg, sender: temp.id});
+			
 
 
 
@@ -132,7 +141,7 @@ const wsServerInit = server => {
 		})
 
 		socket.on('logOut', function(data) {
-
+				// JOTENKIN pidaa saada tahan lahetettya tokeni websocketin kautta samalla, kun logouttaa reactissa.....
 		})
 
 

@@ -29,7 +29,7 @@ function App() {
 
   console.log(getToken() );
   let socket = null;
-  if (getToken())
+  if (getToken() != "null" && getToken())
   {
     socket = io.connect('http://localhost:3001');
     socket.emit('logIn', {token: getToken()});
@@ -48,7 +48,7 @@ function App() {
     <>
       <BrowserRouter>
         <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
-        {getToken() != "null" ?
+        {getToken() != "null" && getToken() ?
         <>
           <Chat socket={socket} /> 
           <Notifications />

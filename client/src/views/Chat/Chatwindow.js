@@ -8,7 +8,8 @@ import ChatMessages from './Chatmessages';
 
 const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
 
-    const [chatMessages, setChatMessages] = useState(<p>No messages</p>);
+    const [chatMessages, setChatMessages] = useState(null);
+    const [mostRecentMessage, setMostRecentMessage] = useState(null);
 
     const myToken = getToken();
     socket.emit('privateChat', {user: chat, me: myToken})
@@ -23,7 +24,7 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
                     setChatMessages(results)
                 }
             })
-    }, [chatWindow, chat]);
+    }, [chatWindow, chat, mostRecentMessage]);
 
     function message()
     {
@@ -43,16 +44,20 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
     socket.on('FromClient', {
       message: 'asd'
     })
-
+    
     socket.on('chat', function(data) {
+
+    
         console.log(data);
+        console.log("testttt");
+        setMostRecentMessage(data);
     })
 
 
     return (
         <>
             <h4>Chat with {chatUsername}</h4>
-            <ChatMessages messages={chatMessages} />
+            <ChatMessages messages={chatMessages} otherUser={chatUsername} mostRecentMessage={mostRecentMessage}/>
             <input type="text" name="msg" id="message"/>
             <button onClick={() => message()}>Send</button>
         </>

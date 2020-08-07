@@ -18,13 +18,13 @@ const Notifications = () => {
 			});
 	}, []);
 
-	const notificationCards = !notifications.length ?
+	const notificationCards = !notifications ?
 	<p>Empty!</p> :
 	notifications.map(item => <NotificationCard notification={item} key={item.id} />);
 
 	return (
 		<>
-			<p onClick={() => setNotificationsDispay(!notificationsDisplay)}>Notifications: {notifications.length} (click)</p>
+			<p onClick={() => setNotificationsDispay(!notificationsDisplay)}>Notifications: {notifications} (click)</p>
 			<div style={ { display: notificationsDisplay ? 'block' : 'none' } }>
 				{notificationCards}
 			</div>
@@ -33,3 +33,5 @@ const Notifications = () => {
 };
 
 export default Notifications;
+
+// 7.8. muokattu rivi 21 ja 27 notifications.length --> notifications. Ei voinut logata sisaan niiden kanssa.
