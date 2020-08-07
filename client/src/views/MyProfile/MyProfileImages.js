@@ -6,8 +6,7 @@ import {Popup} from '../../components/Popup';
 import {uploadPhoto} from '../../modules/httpQueries';
 import {generateImageUrl} from '../../modules/httpQueries';
 
-const MyProfileImages = ({profile}) => {	
-    
+const MyProfileImages = ({profile, rerenderTrick, setRerenderTrick}) => {	
     const [previewImage, modifyPreviewImage] = useState(null);
     const [imagePopupState, modifyImagePopupState] = useState(false);
 
@@ -17,7 +16,7 @@ const MyProfileImages = ({profile}) => {
         maxHeight: '100%',
     }
 
-    const uploadPhotos = event => {
+    const uploadPhotos = (event, rerenderTrick, setRerenderTrick) => {
         const element = event.target;
         console.log(element.files);
         // Array.prototype.forEach.call(element.files, file => {
@@ -29,7 +28,7 @@ const MyProfileImages = ({profile}) => {
         //         alert('File ' + file.name + ' is not an image or is too large.');
         // })
                 const res = uploadPhoto(element.files);
-                res.then(r => console.log(r));
+                res.then(r => setRerenderTrick(!rerenderTrick));
                 
                 // MITEN RES:sta SAADAAN PROMISE VALUE ULOS?
                 //window.location.reload(false);
@@ -37,7 +36,7 @@ const MyProfileImages = ({profile}) => {
 
     /* eslint-disable eqeqeq */
     const uploadedImages = profile.images.length ?
-        profile.images.map(photo => <MyProfileImage photo={photo} key={photo.id} previewImage={modifyPreviewImage} popupState={modifyImagePopupState} main_pic={profile.userData.main_pic} />)
+        profile.images.map(photo => <MyProfileImage photo={photo} key={photo.id} previewImage={modifyPreviewImage} popupState={modifyImagePopupState} main_pic={profile.userData.main_pic} rerenderTrick={rerenderTrick} setRerenderTrick={setRerenderTrick} />)
             .sort((a, b) => {
                 if (a.key == a.props.main_pic || b.key == b.props.main_pic)
                     return (b.key == b.props.main_pic) - (a.key == a.props.main_pic);
@@ -49,7 +48,7 @@ const MyProfileImages = ({profile}) => {
     return (
         <>
         <label htmlFor='photoUpload'>Upload a photo</label>
-        <input type='file' name='photoUpload' onChange={event => uploadPhotos(event)} multiple />
+        <input type='file' name='photoUpload' onChange={event => uploadPhotos(event, rerenderTrick, setRerenderTrick)} multiple />
         <p>Printed from MyProfileImages-component</p>
         {uploadedImages}
         {imagePopupState === true ?

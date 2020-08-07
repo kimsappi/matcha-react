@@ -44,8 +44,7 @@ export const getThisPage = relativeUrl => {
 }
 
 const localLogout = (reload = false) => {
-	setUser(null, null);
-	setToken(null);
+	localStorage.clear();
 	if (reload)
 		window.location.href = '/';
 }
@@ -70,13 +69,16 @@ export const uploadPhoto = photos => {
 	
 }
 
-export const photoActions = (action, id) => {
+export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
 	const request = axios.post(baseUrl + '/myProfile/photoActions',
 		{action: action, id: id},
 		{headers: getAuthHeader()});
 	if (action === 'delete')
 		window.location.reload(false);
-	return request.then(response => response.data);
+	return request.then(response => {
+		setRerenderTrick(!rerenderTrick);
+		return response.data;
+	});
 	
 };
 

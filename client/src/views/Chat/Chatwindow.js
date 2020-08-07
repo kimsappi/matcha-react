@@ -2,13 +2,21 @@ import React, {useEffect, useState} from 'react';
 
 import {getToken} from '../../modules/userData';
 
+import {getThisPage} from '../../modules/httpQueries';
 
 const Chatwindow = (({socket, chat}) => {
 
-    
+    const [chatMessages, setChatMessages] = useState(<p>Loading...</p>);
+
     const myToken = getToken();
     socket.emit('privateChat', {user: chat, me: myToken})
 
+    useEffect(() => {
+        getThisPage(`/chat?id=${chat}`)
+            .then(results => {
+                setChatMessages(results.map(msg => <p>{msg.content}</p>))
+            })
+    }, []);
 
     function message()
     {
@@ -25,7 +33,6 @@ const Chatwindow = (({socket, chat}) => {
     }
 
 
-
     socket.on('FromClient', {
       message: 'asd'
     })
@@ -38,6 +45,7 @@ const Chatwindow = (({socket, chat}) => {
     return (
         <>
             <h4>Chat with {chat}</h4>
+            {chatMessages}
             <input type="text" name="msg" id="message"/>
             <button onClick={() => message()}>Send</button>
         </>
