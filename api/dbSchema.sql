@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS messages (
 	recipient INT UNSIGNED NOT NULL,
 	content VARCHAR(512) NOT NULL,
 	FOREIGN KEY (sender) REFERENCES users(id),
- 	FOREIGN KEY (recipient) REFERENCES users(id)
+	FOREIGN KEY (recipient) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS blocks (
@@ -117,17 +117,17 @@ INSERT INTO users (username, `password`, email, first_name, last_name, gender, a
 	('test6', '01fc82a9449df43ee2c89a97ad22ed2b10226fb78011cfe5b99be2fedec043a0', 'test6@example.com', 'test6', 'fsddd', 'm', 33);
 
 
-INSERT INTO likes (liker, likee) VALUES 
-	(1, 2),
-	(1, 3),
-	(1, 4),
-	(2, 1),
-	(3, 1),
-	(5, 1),
-	(3, 2),
-	(3, 4),
-	(6, 2),
-	(4, 1);
+INSERT INTO likes (liker, likee, is_match) VALUES 
+	(1, 2, 1),
+	(2, 1, 0),
+	(1, 3, 1),
+	(3, 1, 1),
+	(1, 4, 1),
+	(4, 1, 1),
+	(5, 1, 0),
+	(3, 2, 0),
+	(3, 4, 0),
+	(6, 2, 0);
 
 INSERT INTO visits (visitor, visitee, time) VALUES
 (4, 1, CURRENT_TIMESTAMP),
