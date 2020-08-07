@@ -11,6 +11,7 @@ import MyVisits from './views/MyProfile/MyVisits';
 import Profile from './views/Profile/Profile';
 
 import Chat from './views/Chat/Chat';
+import Notifications from './views/Notifications/Notifications.js';
 import CHATTEST from './CHATTEST';
 
 import {getUser} from './modules/userData';
@@ -47,7 +48,11 @@ function App() {
     <>
       <BrowserRouter>
         <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
-        {getToken() != "null" ? <Chat socket={socket} /> : ''}
+        {getToken() != "null" ?
+        <>
+          <Chat socket={socket} /> 
+          <Notifications />
+        </> : ''}
         <Switch>
 
           <Route path='/myProfile/profile'>
