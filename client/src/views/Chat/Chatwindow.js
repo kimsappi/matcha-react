@@ -36,6 +36,8 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
                 id: chat,
                 me: myToken
             }, response => console.log(response))
+        
+            document.getElementById('message').value = '';
 
         // })
     }
@@ -56,10 +58,12 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
 
     return (
         <>
-            <h4>Chat with {chatUsername}</h4>
-            <ChatMessages messages={chatMessages} otherUser={chatUsername} mostRecentMessage={mostRecentMessage}/>
-            <input type="text" name="msg" id="message"/>
+            
             <button onClick={() => message()}>Send</button>
+            <input type="text" name="msg" id="message"/>
+            <ChatMessages messages={chatMessages} otherUser={chatUsername} mostRecentMessage={mostRecentMessage}/>
+            
+            
         </>
     )
 })

@@ -14,14 +14,13 @@ if(messages)
             <> 
             {otherUser == message.sender_name ?
                 <>
-                    <h5 style={{textAlign: 'right'}}>{otherUser}</h5>
                     <p style={{textAlign: 'right'}}>{message.content}</p>
+                    <h5 style={{textAlign: 'right'}}>{otherUser}</h5>
                 </>
                 :
                 <>
-                    <h5 style={{textAlign: 'left'}}>{message.sender_name}</h5>
                     <p style={{textAlign: 'left'}}>{message.content}</p>
-                    
+                    <h5 style={{textAlign: 'left'}}>{message.sender_name}</h5>
                 </>
                 }
                 
