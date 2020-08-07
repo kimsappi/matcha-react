@@ -145,8 +145,7 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 		.then(response => {
 			if (!response.data || response.data === 'email' || response.data === 'Database error') {
 				setState({});
-				setUser(null, null, false, null, false);
-				setToken(null);
+				localStorage.clear();
 				if (response.data === 'email')
 					alert('Make sure to confirm your email address before logging in.');
 				else
