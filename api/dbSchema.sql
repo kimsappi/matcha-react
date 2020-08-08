@@ -99,7 +99,7 @@ CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW
 INSERT INTO notifications (user, reason, causer) VALUES (new.likee, 'like', new.liker);
 
 CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW
-INSERT INTO notifications (user, reason, causer) VALUES (new.likee, 'unlike', new.liker);
+INSERT INTO notifications (user, reason, causer) VALUES (old.likee, 'unlike', old.liker);
 
 CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW
 INSERT INTO notifications (user, reason, causer) VALUES (new.visitee, 'visit', new.visitor);

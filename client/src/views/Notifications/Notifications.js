@@ -14,17 +14,17 @@ const Notifications = () => {
 	useEffect(() => {
 		getThisPage('/myProfile/notifications')
 			.then(results => {
-				setNotifications(results);
+				setNotifications(notifications.push(results));
 			});
 	}, []);
 
-	const notificationCards = !notifications ?
+	const notificationCards = !notifications.length ?
 	<p>Empty!</p> :
 	notifications.map(item => <NotificationCard notification={item} key={item.id} />);
 
 	return (
 		<>
-			<p onClick={() => setNotificationsDispay(!notificationsDisplay)}>Notifications: {notifications} (click)</p>
+			<p onClick={() => setNotificationsDispay(!notificationsDisplay)}>Notifications: {notifications.length} (click)</p>
 			<div style={ { display: notificationsDisplay ? 'block' : 'none' } }>
 				{notificationCards}
 			</div>

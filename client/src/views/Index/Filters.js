@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {Range} from 'rc-slider';
+import Rcslider, {Range} from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 const Filters = ({distance, setDistance,
@@ -10,6 +10,7 @@ const Filters = ({distance, setDistance,
 	tagSearch, setTagSearch}) => {
 
 	const [tagSearchInput, setTagSearchInput] = useState('');
+	const [distanceDisplay, setDistanceDisplay] = useState(distance);
 
 	const eventHandler = (event, setFunction) => {
 		setFunction(event.target.value);
@@ -18,6 +19,15 @@ const Filters = ({distance, setDistance,
 	const rangeEventHandler = (values, setMin, setMax) => {
 		setMin(values[0]);
 		setMax(values[1]);
+	};
+
+	const distanceHandler = (value, setDistance) => {
+		setDistance(value);
+		setDistanceDisplay(value);
+		if (value === 501) {
+			setDistance(99999);
+			setDistanceDisplay('500+');
+		}
 	};
 
 	const sortingMethodOptions = sortingMethods.map((method, index) => {
@@ -35,11 +45,17 @@ const Filters = ({distance, setDistance,
 			</select>
 		</div>
 		<h2>Filters</h2>
-		<div>
-			<label htmlFor='distance'>Maximum distance</label>
-			<input type='range' name='distance' value={distance} max='9000' onChange={event => eventHandler(event, setDistance)} />
-			<input type='number' name='distance' value={distance} max='9000' onChange={event => eventHandler(event, setDistance)} />
-		</div>
+		<label htmlFor='distance'>Maximum distance: {distanceDisplay} km</label>
+		<Rcslider
+			step={1}
+			value={distance}
+			min={0}
+			max={501}
+			onChange={value => distanceHandler(value, setDistance)}
+		/>
+		{/* <input type='range' name='distance' value={distance} max='9000' onChange={event => eventHandler(event, setDistance)} /> */}
+
+		<div>Age range: {minAge} - {maxAge}</div>
 		<Range
 			step={1}
 			value={[minAge, maxAge]}
@@ -47,14 +63,14 @@ const Filters = ({distance, setDistance,
 			max={99}
 			onChange={values => rangeEventHandler(values, setMinAge, setMaxAge)}
 		/>
-		<div>
+		{/* <div>
 			<label htmlFor='minAge'>Minimum age</label>
 			<input type='number' name='minAge' value={minAge} min='16' onChange={event => eventHandler(event, setMinAge)} />
 		</div>
 		<div>
 			<label htmlFor='minAge'>Maximum age</label>
 			<input type='number' name='maxAge' value={maxAge} max='99' onChange={event => eventHandler(event, setMaxAge)} />
-		</div>
+		</div> */}
 		<div>
 			<label htmlFor='minCommonTags'>Minimum common tags</label>
 			<input type='number' name='minCommonTags' value={minCommonTags} min='0' max='16' onChange={event => eventHandler(event, setMinCommonTags)} />
