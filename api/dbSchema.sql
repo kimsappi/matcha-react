@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 	reason VARCHAR(6) NOT NULL,
 	causer INT UNSIGNED NOT NULL,
 	`read` BOOLEAN DEFAULT FALSE,
+	`sent` BOOLEAN DEFAULT FALSE,
 	FOREIGN KEY (user) REFERENCES users(id),
 	FOREIGN KEY (causer) REFERENCES users(id)
 );

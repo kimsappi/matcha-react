@@ -19,12 +19,27 @@ const Notifications = () => {
 		const url = baseUrl + (markRead ? '?read=1' : '');
 		getThisPage(url)
 			.then(results => {
-				setNotifications(results);
+				if (results)
+					setNotifications(results);
 			});
 	}
 
+	const getNotificationsViaLongPolling = () => {
+		console.error('Initiating long polling');
+		getThisPage('/myProfile/longNotifications')
+			.then(results => {
+				if (results)
+					setNotifications(notifications.concat(results));
+				getNotificationsViaLongPolling();
+			});
+	};
+
 	useEffect(() => {
 		getNotifications(false);
+		
+		//getNotificationsViaLongPolling();
+		// This alone would work for getting notifications with short polling
+		setInterval(() => getNotifications(false), 5000);
 	}, []);
 
 	const displayNotifications = (setNotificationsDisplay, notificationsDisplay) => {
@@ -50,3 +65,4 @@ const Notifications = () => {
 export default Notifications;
 
 // 7.8. muokattu rivi 21 ja 27 notifications.length --> notifications. Ei voinut logata sisaan niiden kanssa.
+// 8.8. muokattu takas, koska nimenomaan ei tuon muokkauksen jalkeen toiminut mun mielesta :)

@@ -110,6 +110,10 @@ router.get('/myProfile/notifications', (req, res, next) => {
 	notifications.get(req, res, next);
 });
 
+router.get('/myProfile/longNotifications', (req, res, next) => {
+	notifications.longGet(req, res, next);
+});
+
 // profile.js
 router.get('/profile/:id', (req, res, next) => {
 	profile.get(req, res, next);
