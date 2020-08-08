@@ -3,28 +3,43 @@ import { getThisPage } from '../../modules/httpQueries';
 
 const NotificationCard = ({notification}) => {
 	return (
-		<p>User: {notification.causer} Action: {notification.reason}</p>
+		<p>
+			User: {notification.causer} Action: {notification.reason}
+			New: {notification.read ? 'no' : 'yes'}
+		</p>
 	);
 }
 
 const Notifications = () => {
 	const [notifications, setNotifications] = useState([]);
-	const [notificationsDisplay, setNotificationsDispay] = useState(false);
+	const [notificationsDisplay, setNotificationsDisplay] = useState(false);
+
+	const getNotifications = (markRead = false) => {
+		const baseUrl = '/myProfile/notifications';
+		const url = baseUrl + (markRead ? '?read=1' : '');
+		getThisPage(url)
+			.then(results => {
+				setNotifications(results);
+			});
+	}
 
 	useEffect(() => {
-		getThisPage('/myProfile/notifications')
-			.then(results => {
-				setNotifications(notifications.push(results));
-			});
+		getNotifications(false);
 	}, []);
+
+	const displayNotifications = (setNotificationsDisplay, notificationsDisplay) => {
+		if (!notificationsDisplay)
+			getNotifications(true);
+		setNotificationsDisplay(!notificationsDisplay);
+	};
 
 	const notificationCards = !notifications.length ?
 	<p>Empty!</p> :
-	notifications.map(item => <NotificationCard notification={item} key={item.id} />);
+	notifications.map(item => <NotificationCard notification={item} key={item.id} new={!item.read} />);
 
 	return (
 		<>
-			<p onClick={() => setNotificationsDispay(!notificationsDisplay)}>Notifications: {notifications.length} (click)</p>
+			<p onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications: {notifications.filter(i => !i.read).length} (click)</p>
 			<div style={ { display: notificationsDisplay ? 'block' : 'none' } }>
 				{notificationCards}
 			</div>

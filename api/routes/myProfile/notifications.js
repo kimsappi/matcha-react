@@ -9,9 +9,11 @@ const get = (req, res, next) => {
 		if (error)
 			return res.json(null);
 		else {
-			const readQuery = 'UPDATE notifications SET `read` = 1 WHERE user = ?;';
-			// Don't need callback as this is not critical
-			pool.query(mysql.format(readQuery, [req.user.id]));
+			if (req.query.read) {
+				const readQuery = 'UPDATE notifications SET `read` = 1 WHERE user = ?;';
+				// Don't need callback as this is not critical
+				pool.query(mysql.format(readQuery, [req.user.id]));
+			};
 			return res.json(results);
 		}
 	});
