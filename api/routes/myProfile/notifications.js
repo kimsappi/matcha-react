@@ -14,7 +14,6 @@ const get = (req, res, next) => {
 				markRead = ', `read` = 1 ';
 			const readQuery = 'UPDATE notifications SET `sent` = 1 ' + markRead + 'WHERE user = ?;';
 			// Don't need callback as this is not critical
-			console.log(mysql.format(readQuery, [req.user.id]));
 			pool.query(mysql.format(readQuery, [req.user.id]));
 			return res.json(results);
 		}
