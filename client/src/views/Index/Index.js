@@ -56,7 +56,21 @@ const Index = ({state, action, setPopupState}) => {
 		return (
 			<div>
 				<div className="row">
-					<div className="col-sm-6 h-25" id="suggestionContainer">
+					<div className="col-md-6 h-25 order-md-2" id="searchContainer">
+						<h1 class='d-md-none' data-toggle="collapse" data-target="#filtersCollapse">Filters</h1>
+						<h1 class='d-none d-md-block'>Filters</h1>
+						<div class='collapse d-md-block' id='filtersCollapse'>
+							<Filters
+								distance={distanceFilter} setDistance={setDistanceFilter}
+								minAge={minAge} setMinAge={setMinAge}
+								maxAge={maxAge} setMaxAge={setMaxAge}
+								minCommonTags={minCommonTags} setMinCommonTags={setMinCommonTags}
+								sort={sort} setSort={setSort} sortingMethods={sortingMethods}
+								tagSearch={tagSearch} setTagSearch={setTagSearch}
+							/>
+						</div>
+					</div>
+					<div className="col-md-6 h-25 order-md-1" id="suggestionContainer">
 						<h1>Suggestions</h1>
 						<Suggestions
 							users={users} distanceFilter={distanceFilter}
@@ -66,18 +80,6 @@ const Index = ({state, action, setPopupState}) => {
 							tagSearch={tagSearch}
 						/>
 					</div>
-					<div className="col-sm-6 h-25" id="searchContainer">
-						<h1>User search</h1>
-						<Filters
-							distance={distanceFilter} setDistance={setDistanceFilter}
-							minAge={minAge} setMinAge={setMinAge}
-							maxAge={maxAge} setMaxAge={setMaxAge}
-							minCommonTags={minCommonTags} setMinCommonTags={setMinCommonTags}
-							sort={sort} setSort={setSort} sortingMethods={sortingMethods}
-							tagSearch={tagSearch} setTagSearch={setTagSearch}
-						/>
-					</div>
-					<PopupTest />
 				</div>
 				
 			</div>

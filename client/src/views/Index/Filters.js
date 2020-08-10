@@ -44,7 +44,6 @@ const Filters = ({distance, setDistance,
 				{sortingMethodOptions}
 			</select>
 		</div>
-		<h2>Filters</h2>
 		<label htmlFor='distance'>Maximum distance: {distanceDisplay} km</label>
 		<Rcslider
 			step={1}
