@@ -57,9 +57,9 @@ const Index = ({state, action, setPopupState}) => {
 			<div>
 				<div className="row">
 					<div className="col-md-6 h-25 order-md-2" id="searchContainer">
-						<h1 class='d-md-none' data-toggle="collapse" data-target="#filtersCollapse">Filters</h1>
-						<h1 class='d-none d-md-block'>Filters</h1>
-						<div class='collapse d-md-block' id='filtersCollapse'>
+						<h1 className='d-md-none' data-toggle="collapse" data-target="#filtersCollapse">Filters</h1>
+						<h1 className='d-none d-md-block'>Filters</h1>
+						<div className='collapse d-md-block' id='filtersCollapse'>
 							<Filters
 								distance={distanceFilter} setDistance={setDistanceFilter}
 								minAge={minAge} setMinAge={setMinAge}
