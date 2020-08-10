@@ -52,7 +52,7 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	<p>Empty!</p> :
 	notifications.map(item => <NotificationCard notification={item} key={item.id} new={!item.read} />);
 	const unreadCount = notifications.filter(i => !i.read).length;
-	setUnreadNotificationsCount = unreadCount;
+	setUnreadNotificationsCount(unreadCount);
 
 	return (
 		<>
