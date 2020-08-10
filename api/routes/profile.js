@@ -142,26 +142,29 @@ const post = (req, res, next) => {
 			if (error)
 				return res.json(null);
 			else
-				return res.json('OK');
+			{
+				if (req.body.action === 'like' || req.body.action === 'unlike')
+				{
+					query = 'UPDATE likes SET is_match=(SELECT * FROM(SELECT FLOOR(COUNT(*)/2) FROM likes WHERE (liker=? AND likee=?) OR (liker=? AND likee=?)) as temp) WHERE (liker=? AND likee=?) OR (liker=? AND likee=?);';
+
+					preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), parseInt(userId), req.user.id, req.user.id, parseInt(userId), parseInt(userId), req.user.id]);
+					console.log(preparedQuery);
+					pool.query(preparedQuery);
+					// pool.query(preparedQuery, (error, results) => {
+					// 	if (error)
+					// 		return res.json(null);
+					// 	else
+					// 		return res.json('OK');
+					//});
+					return res.json('OK');
+				}
+			}
 		});
 	}
 	else
 		return res.json(null);
 
-	if (req.body.action === 'like' || req.body.action === 'unlike')
-	{
-			query = 'UPDATE likes SET is_match=(SELECT * FROM(SELECT COUNT(*)/2 FROM likes WHERE (liker=? AND likee=?) OR (liker=? AND likee=?)) as temp) WHERE (liker=? AND likee=?) OR (likee=? AND liker=?);';
 
-			preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), req.user.id, parseInt(userId), req.user.id, parseInt(userId), parseInt(userId), req.user.id]);
-			console.log(preparedQuery);
-			pool.query(preparedQuery);
-			// pool.query(preparedQuery, (error, results) => {
-			// 	if (error)
-			// 		return res.json(null);
-			// 	else
-			// 		return res.json('OK');
-		//});
-	}
 	console.log('####\nPOISTIN YHDEN CALLBACKIN routes/profile.js, KATO KOMMENTTI\n####');
 	// Eli alun perin taa saatto palauttaa 'OK' sen jalkeen kun tama toinen query oli ajettu
 	// vaikka ensimmainen query ei valttamatta olisi mennyt lapi.

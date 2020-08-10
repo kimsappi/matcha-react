@@ -36,6 +36,7 @@ const Header = props => {
 					<Nav state={props.state} setState={props.setState}
 					popupState={props.popupState} setPopupState={props.setPopupState}
 					unreadNotificationsCount={unreadNotificationsCount} setUnreadNotificationsCount={setUnreadNotificationsCount}
+					socketState={props.socketState}
 					/>
 			</div>
 		</nav>

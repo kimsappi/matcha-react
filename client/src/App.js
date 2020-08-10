@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
 import io from 'socket.io-client';
@@ -23,33 +23,29 @@ function App() {
 
   const [state, setState] = useState(user);
   const [popupState, setPopupState] = useState(false);
+  const [socketState, setSocketState] = useState(null);
   
   // Logging in to the web socket thing..
 
   console.log(getToken() );
   let socket = null;
-  if (getToken() != "null" && getToken())
-  {
-    socket = io.connect('http://localhost:3001');
-    socket.emit('logIn', {token: getToken()});
 
-  }
-  // useEffect(() => {
-  //   getThisPage(window.location.href)
-  //     .then(data => {
-  //       if (data.loggedIn && data.loggedIn !== state.loggedIn)
-  //         setState({...state, loggedIn: data.loggedIn});
-  //         localStorage.setItem('loggedIn', data.loggedIn);
-  //     });
-  // });
+  useEffect(() => {
+    if (getToken() != "null" && getToken())
+    {
+      socket = io.connect('http://localhost:3001');
+      socket.emit('logIn', {token: getToken()});
+      setSocketState(socket);
+    }
+  }, [state]);
 
   return (
     <>
       <BrowserRouter>
-        <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} />
+        <Header state={state} setState={setState} popupState={popupState} setPopupState={setPopupState} socketState={socketState}/>
         {getToken() != "null" && getToken() ?
         <>
-          <Chat socket={socket} /> 
+          <Chat socket={socketState} /> 
         </> : ''}
         <Switch>
 

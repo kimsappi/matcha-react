@@ -9,7 +9,7 @@ import {ResetPopup} from './ResetPopup';
 import {logOut} from '../../../modules/httpQueries';
 import Notifications from './Notifications';
 
-const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount}) => {
+const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount, socketState}) => {
 	if (!state.loggedIn)
 		return (
 			<>
@@ -56,10 +56,10 @@ const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCou
 						<Notifications unreadNotificationsCount={unreadNotificationsCount} setUnreadNotificationsCount={setUnreadNotificationsCount} />
 					</li>
 					<li className="nav-item nav-link">
-						<Link to='#' onClick={() => logOut(setState)}>Log out</Link>
+						<Link to='#' onClick={() => logOut(setState, socketState)}>Log out</Link>
 					</li>
 					<li className="nav-item nav-link">
-						<Link to='#' onClick={() => logOut(setState, true)}>Log out all instances</Link>
+						<Link to='#' onClick={() => logOut(setState, socketState, true)}>Log out all instances</Link>
 					</li>
 				</ul>
 			</>
