@@ -11,7 +11,6 @@ import MyVisits from './views/MyProfile/MyVisits';
 import Profile from './views/Profile/Profile';
 
 import Chat from './views/Chat/Chat';
-import Notifications from './views/Notifications/Notifications.js';
 import CHATTEST from './CHATTEST';
 
 import {getUser} from './modules/userData';
@@ -51,7 +50,6 @@ function App() {
         {getToken() != "null" && getToken() ?
         <>
           <Chat socket={socket} /> 
-          <Notifications />
         </> : ''}
         <Switch>
 

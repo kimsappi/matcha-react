@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { getThisPage } from '../../modules/httpQueries';
+import { getThisPage } from '../../../modules/httpQueries';
 
 const NotificationCard = ({notification}) => {
 	return (

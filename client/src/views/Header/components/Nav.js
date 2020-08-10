@@ -7,6 +7,7 @@ import {ForgotPopup} from './ForgotPopup';
 import {ResetPopup} from './ResetPopup';
 
 import {logOut} from '../../../modules/httpQueries';
+import Notifications from './Notifications';
 
 const Nav = ({state, setState, popupState, setPopupState}) => {
 	if (!state.loggedIn)
@@ -52,7 +53,12 @@ const Nav = ({state, setState, popupState, setPopupState}) => {
 						<p>{state.username}</p>
 					</li>
 					<li className="nav-item nav-link">
+						<Notifications />
+					</li>
+					<li className="nav-item nav-link">
 						<Link to='#' onClick={() => logOut(setState)}>Log out</Link>
+					</li>
+					<li className="nav-item nav-link">
 						<Link to='#' onClick={() => logOut(setState, true)}>Log out all instances</Link>
 					</li>
 				</ul>
