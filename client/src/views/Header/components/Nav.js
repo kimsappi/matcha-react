@@ -9,7 +9,7 @@ import {ResetPopup} from './ResetPopup';
 import {logOut} from '../../../modules/httpQueries';
 import Notifications from './Notifications';
 
-const Nav = ({state, setState, popupState, setPopupState}) => {
+const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount}) => {
 	if (!state.loggedIn)
 		return (
 			<>
@@ -50,10 +50,10 @@ const Nav = ({state, setState, popupState, setPopupState}) => {
 				</ul>
 				<ul className="navbar-nav ml-auto">
 					<li className="nav-item nav-link">
-						<p>{state.username}</p>
+						{state.username}
 					</li>
 					<li className="nav-item nav-link">
-						<Notifications />
+						<Notifications unreadNotificationsCount={unreadNotificationsCount} setUnreadNotificationsCount={setUnreadNotificationsCount} />
 					</li>
 					<li className="nav-item nav-link">
 						<Link to='#' onClick={() => logOut(setState)}>Log out</Link>

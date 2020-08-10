@@ -10,7 +10,7 @@ const NotificationCard = ({notification}) => {
 	);
 }
 
-const Notifications = () => {
+const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) => {
 	const [notifications, setNotifications] = useState([]);
 	const [notificationsDisplay, setNotificationsDisplay] = useState(false);
 
@@ -51,10 +51,12 @@ const Notifications = () => {
 	const notificationCards = !notifications.length ?
 	<p>Empty!</p> :
 	notifications.map(item => <NotificationCard notification={item} key={item.id} new={!item.read} />);
+	const unreadCount = notifications.filter(i => !i.read).length;
+	setUnreadNotificationsCount = unreadCount;
 
 	return (
 		<>
-			<p onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications: {notifications.filter(i => !i.read).length} (click)</p>
+			<span onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications: {unreadCount} (click)</span>
 			<div style={ { display: notificationsDisplay ? 'block' : 'none' } }>
 				{notificationCards}
 			</div>
