@@ -1,3 +1,6 @@
+-- We do this to synchronise Node time to database time, there might be a better way
+SET @@global.time_zone = '+00:00';
+
 DROP DATABASE IF EXISTS matcha;
 
 CREATE DATABASE IF NOT EXISTS matcha;
@@ -91,7 +94,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 	reason VARCHAR(6) NOT NULL,
 	causer INT UNSIGNED NOT NULL,
 	`read` BOOLEAN DEFAULT FALSE,
-	`sent` BOOLEAN DEFAULT FALSE,
+	`time` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (user) REFERENCES users(id),
 	FOREIGN KEY (causer) REFERENCES users(id)
 );

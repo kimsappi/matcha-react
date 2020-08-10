@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const pool = require('../../modules/dbConnect');
+const mysqlDatetime = require('../../modules/mysqlDatetime');
 
 const get = (req, res, next) => {
 	if (!req.user)
@@ -9,22 +10,22 @@ const get = (req, res, next) => {
 		if (error)
 			return res.json(null);
 		else {
-			let markRead = '';
-			if (req.query.read)
-				markRead = ', `read` = 1 ';
-			const readQuery = 'UPDATE notifications SET `sent` = 1 ' + markRead + 'WHERE user = ?;';
-			// Don't need callback as this is not critical
-			pool.query(mysql.format(readQuery, [req.user.id]));
+			if (req.query.read) {
+				console.log('###################################');
+				const readQuery = 'UPDATE notifications SET `read` = 1 WHERE user = ?;';
+				// Don't need callback as this is not critical
+				pool.query(mysql.format(readQuery, [req.user.id]));
+			}
 			return res.json(results);
 		}
 	});
 };
 
-const intervalQuery = id => {
-	const query = 'SELECT * FROM notifications WHERE user = ? AND `sent` = FALSE ORDER BY id ASC;';
-	
+const intervalQuery = (id, time) => {
+	const query = 'SELECT * FROM notifications WHERE user = ? AND ? < `time` ORDER BY id ASC;';
+	console.log(mysql.format(query, [id, time]));
 	return new Promise((resolve, reject) => {
-		pool.query(mysql.format(query, [id]), (error, results) => {
+		pool.query(mysql.format(query, [id, time]), (error, results) => {
 			if (error)
 				resolve([]);
 			else
@@ -36,16 +37,21 @@ const intervalQuery = id => {
 const longGet = (req, res, next) => {
 	if (!req.user)
 		return res.json(null);
+	const currentTime = mysqlDatetime();
 	let i = 0;
 	const longInterval = setInterval(() => {
 		++i;
-		const results = intervalQuery(req.user.id);
+		const results = intervalQuery(req.user.id, currentTime);
 		results.then(result => {
-			console.log('long resolved ' + i);
-			if (result.length || i == 30) {
-				//console.log(result);
-				pool.query(mysql.format('UPDATE notifications SET `sent` = 1 WHERE user = ?;'), [req.user.id]);
+			//console.log('long resolved ' + i);
+			if (result.length || i == 5) {
 				clearInterval(longInterval);
+				if (!result.length) {
+
+					console.log('######################TYHJAAAAAA####################')
+					return res.json([]);
+				}
+				console.log(result);
 				return res.json(result);
 			}
 		});
