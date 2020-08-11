@@ -20,19 +20,19 @@ const containerStyle = {
 };
 
 const UserMap = () => {
-	const [map, setMap] = useState(null)
+	//const [map, setMap] = useState(null)
 	const [userLocations, setUserLocations] = useState([]);
 	const [mapCentre, setMapCentre] = useState({lat: 0, lng: 0});
 
-	const onLoad = React.useCallback(function callback(map) {
-		const bounds = new window.google.maps.LatLngBounds();
-		map.fitBounds(bounds);
-		setMap(map);
-	}, []);
+	// const onLoad = React.useCallback(function callback(map) {
+	// 	const bounds = new window.google.maps.LatLngBounds();
+	// 	map.fitBounds(bounds);
+	// 	setMap(map);
+	// }, []);
 
-	const onUnmount = React.useCallback(function callback(map) {
-		setMap(null)
-	}, []);
+	// const onUnmount = React.useCallback(function callback(map) {
+	// 	setMap(null)
+	// }, []);
 
 	useEffect(() => {
 		getThisPage('/map')
@@ -59,9 +59,9 @@ const UserMap = () => {
 			<GoogleMap
 				mapContainerStyle={containerStyle}
 				center={mapCentre} // This seems to have absolutely no effect
-				zoom={10}
-				onLoad={onLoad}
-				onUnmount={onUnmount}
+				zoom={6}
+				//onLoad={onLoad}
+				//onUnmount={onUnmount}
 			>
 				{generatedMarkers}
 			</GoogleMap>
