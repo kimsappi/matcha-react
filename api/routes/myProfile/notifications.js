@@ -22,6 +22,7 @@ const get = (req, res, next) => {
 
 const intervalQuery = (id, time) => {
 	const query = 'SELECT * FROM notifications WHERE user = ? AND ? < `time` ORDER BY id ASC;';
+	// console.log(mysql.format(query, [id, time]));
 	return new Promise((resolve, reject) => {
 		pool.query(mysql.format(query, [id, time]), (error, results) => {
 			if (error)
@@ -41,7 +42,7 @@ const longGet = (req, res, next) => {
 		++i;
 		const results = intervalQuery(req.user.id, currentTime);
 		results.then(result => {
-			//console.log('long resolved ' + i);
+			// console.log('long resolved ' + i);
 			if (result.length || i == 30) {
 				clearInterval(longInterval);
 				if (!result.length) {

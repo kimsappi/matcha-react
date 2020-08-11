@@ -13,6 +13,7 @@ const NotificationCard = ({notification}) => {
 const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) => {
 	const [notificationsDisplay, setNotificationsDisplay] = useState(false);
 	const [notifications, setNotifications] = useState([]);
+	const [longPollState, setLongPollState] = useState(false);
 
 	const getNotifications = (markRead = false) => {
 		const baseUrl = '/myProfile/notifications';
@@ -52,8 +53,9 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 					setNotifications(notifications => [...notifications, ...results]);
 				}
 				//getNotificationsViaLongPolling(notifications);
+				setLongPollState(!longPollState);
 			});
-	}, [notifications]);
+	}, [longPollState]);
 
 	const displayNotifications = (setNotificationsDisplay, notificationsDisplay) => {
 		if (!notificationsDisplay)
