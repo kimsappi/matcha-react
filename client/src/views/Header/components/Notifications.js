@@ -11,8 +11,8 @@ const NotificationCard = ({notification}) => {
 }
 
 const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) => {
-	const [notifications, setNotifications] = useState([]);
 	const [notificationsDisplay, setNotificationsDisplay] = useState(false);
+	const [notifications, setNotifications] = useState([]);
 
 	const getNotifications = (markRead = false) => {
 		const baseUrl = '/myProfile/notifications';
@@ -25,22 +25,35 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	}
 
 	const getNotificationsViaLongPolling = () => {
-		console.error('Initiating long polling');
+		//console.log(notifications)
 		getThisPage('/myProfile/longNotifications')
 			.then(results => {
-				if (results)
+				console.warn(notifications.length)
+				if (results) {
 					setNotifications(notifications.concat(results));
-				getNotificationsViaLongPolling();
+				}
+				//getNotificationsViaLongPolling(notifications);
 			});
 	};
 
 	useEffect(() => {
 		getNotifications(false);
-		
-		//getNotificationsViaLongPolling();
 		// This alone would work for getting notifications with short polling
-		setInterval(() => getNotifications(false), 5000);
+		//setInterval(() => getNotifications(false), 5000);
 	}, []);
+
+
+	useEffect(() => {
+		//getNotificationsViaLongPolling();
+		getThisPage('/myProfile/longNotifications')
+			.then(results => {
+				console.warn(notifications.length)
+				if (results) {
+					setNotifications(notifications => [...notifications, ...results]);
+				}
+				//getNotificationsViaLongPolling(notifications);
+			});
+	}, [notifications]);
 
 	const displayNotifications = (setNotificationsDisplay, notificationsDisplay) => {
 		if (!notificationsDisplay)
@@ -60,6 +73,13 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 			<div style={ { display: notificationsDisplay ? 'block' : 'none' } }>
 				{notificationCards}
 			</div>
+			{/* <div>{notifications.map(item=> {
+				if (!item.read)
+					return <NotificationCard notification={item} new={!item.read} />;
+				else
+					return '';
+			})}</div>
+			<div>{notifications.length}</div> */}
 		</>
 	);
 };
