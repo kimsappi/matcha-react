@@ -7,7 +7,10 @@ const GeneratedMarker = ({lat, lon}) => {
 	const position = {lat: lat, lng: lon};
 
 	return (
-		<Marker position={position} />
+		<Marker
+			position={position}
+			clickable={false}	
+		/>
 	);
 }
 
@@ -16,20 +19,15 @@ const containerStyle = {
 	height: '400px'
 };
 
-const center = {
-	lat: 0,
-	lng: 0
-};
-
 const UserMap = () => {
 	const [map, setMap] = useState(null)
 	const [userLocations, setUserLocations] = useState([]);
+	const [mapCentre, setMapCentre] = useState({lat: 0, lng: 0});
 
 	const onLoad = React.useCallback(function callback(map) {
 		const bounds = new window.google.maps.LatLngBounds();
 		map.fitBounds(bounds);
-		setMap(map)
-		console.warn('CREATING MAP');
+		setMap(map);
 	}, []);
 
 	const onUnmount = React.useCallback(function callback(map) {
@@ -39,8 +37,10 @@ const UserMap = () => {
 	useEffect(() => {
 		getThisPage('/map')
 			.then(response => {
-				console.error(response);
-				setUserLocations(response);
+				if (response) {
+					setMapCentre({lat: response.lat, lng: response.lon});
+					setUserLocations(response.locations);
+				}
 			});
 	}, []);
 
@@ -50,15 +50,15 @@ const UserMap = () => {
 		)
 	})
 
-	//if (!userLocations.length)
-	//	return "Couldn't load user locations!";
+	if (!userLocations.length)
+		return "Couldn't load user locations!";
 	return (
 		<LoadScript
 			googleMapsApiKey={apiKey}
 		>
 			<GoogleMap
 				mapContainerStyle={containerStyle}
-				center={center}
+				center={mapCentre} // This seems to have absolutely no effect
 				zoom={10}
 				onLoad={onLoad}
 				onUnmount={onUnmount}
