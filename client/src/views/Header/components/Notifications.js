@@ -11,8 +11,8 @@ const NotificationCard = ({notification}) => {
 }
 
 const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) => {
-	const [notifications, setNotifications] = useState([]);
 	const [notificationsDisplay, setNotificationsDisplay] = useState(false);
+	const [notifications, setNotifications] = useState([]);
 
 	const getNotifications = (markRead = false) => {
 		const baseUrl = '/myProfile/notifications';
@@ -24,33 +24,35 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 			});
 	}
 
-	const getNotificationsViaLongPolling = (notifications) => {
-		console.error('Initiating long polling');
+	const getNotificationsViaLongPolling = () => {
 		//console.log(notifications)
 		getThisPage('/myProfile/longNotifications')
 			.then(results => {
 				console.warn(notifications.length)
 				if (results) {
-					console.log(results);
 					setNotifications(notifications.concat(results));
 				}
 				//getNotificationsViaLongPolling(notifications);
 			});
 	};
 
-	// useEffect(() => {
-	// 	getNotifications(false);
-	// 	// This alone would work for getting notifications with short polling
-	// 	//setInterval(() => getNotifications(false), 5000);
-	// }, []);
+	useEffect(() => {
+		getNotifications(false);
+		// This alone would work for getting notifications with short polling
+		//setInterval(() => getNotifications(false), 5000);
+	}, []);
 
-
-	console.log('NOtifications length before anything: ' + notifications.length)
 
 	useEffect(() => {
-		console.log('NOtifications length before tama: ' + notifications.length)
-		getNotificationsViaLongPolling(notifications);
-		console.log('NOtifications length AFTER: ' + notifications.length)
+		//getNotificationsViaLongPolling();
+		getThisPage('/myProfile/longNotifications')
+			.then(results => {
+				console.warn(notifications.length)
+				if (results) {
+					setNotifications(notifications => [...notifications, ...results]);
+				}
+				//getNotificationsViaLongPolling(notifications);
+			});
 	}, [notifications]);
 
 	const displayNotifications = (setNotificationsDisplay, notificationsDisplay) => {
@@ -71,13 +73,13 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 			<div style={ { display: notificationsDisplay ? 'block' : 'none' } }>
 				{notificationCards}
 			</div>
-			<div>{notifications.map(item=> {
+			{/* <div>{notifications.map(item=> {
 				if (!item.read)
 					return <NotificationCard notification={item} new={!item.read} />;
 				else
 					return '';
 			})}</div>
-			<div>{notifications.length}</div>
+			<div>{notifications.length}</div> */}
 		</>
 	);
 };

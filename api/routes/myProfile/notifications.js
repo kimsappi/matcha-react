@@ -11,7 +11,6 @@ const get = (req, res, next) => {
 			return res.json(null);
 		else {
 			if (req.query.read) {
-				console.log('###################################');
 				const readQuery = 'UPDATE notifications SET `read` = 1 WHERE user = ?;';
 				// Don't need callback as this is not critical
 				pool.query(mysql.format(readQuery, [req.user.id]));
@@ -23,7 +22,6 @@ const get = (req, res, next) => {
 
 const intervalQuery = (id, time) => {
 	const query = 'SELECT * FROM notifications WHERE user = ? AND ? < `time` ORDER BY id ASC;';
-	console.log(mysql.format(query, [id, time]));
 	return new Promise((resolve, reject) => {
 		pool.query(mysql.format(query, [id, time]), (error, results) => {
 			if (error)
@@ -44,14 +42,11 @@ const longGet = (req, res, next) => {
 		const results = intervalQuery(req.user.id, currentTime);
 		results.then(result => {
 			//console.log('long resolved ' + i);
-			if (result.length || i == 5) {
+			if (result.length || i == 30) {
 				clearInterval(longInterval);
 				if (!result.length) {
-
-					console.log('######################TYHJAAAAAA####################')
 					return res.json([]);
 				}
-				console.log(result);
 				return res.json(result);
 			}
 		});

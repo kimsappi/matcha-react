@@ -1,5 +1,5 @@
 -- We do this to synchronise Node time to database time, there might be a better way
-SET @@global.time_zone = '+00:00';
+SET @@global.time_zone = '+03:00';
 
 DROP DATABASE IF EXISTS matcha;
 
@@ -100,13 +100,13 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW
-INSERT INTO notifications (user, reason, causer) VALUES (new.likee, 'like', new.liker);
+INSERT INTO notifications (user, reason, causer, `time`) VALUES (new.likee, 'like', new.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
 
 CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW
-INSERT INTO notifications (user, reason, causer) VALUES (old.likee, 'unlike', old.liker);
+INSERT INTO notifications (user, reason, causer, `time`) VALUES (old.likee, 'unlike', old.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
 
 CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW
-INSERT INTO notifications (user, reason, causer) VALUES (new.visitee, 'visit', new.visitor);
+INSERT INTO notifications (user, reason, causer, `time`) VALUES (new.visitee, 'visit', new.visitor, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
 
 -- CREATE TABLE IF NOT EXISTS chats (
 -- 	id INT UNSIGNED AUTO_INCREMENT,

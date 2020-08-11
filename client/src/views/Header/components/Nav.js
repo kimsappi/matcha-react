@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 
 import {LoginPopup} from './LoginPopup';
@@ -9,7 +9,7 @@ import {ResetPopup} from './ResetPopup';
 import {logOut} from '../../../modules/httpQueries';
 import Notifications from './Notifications';
 
-const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount}) => {
+const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount, notifications, setNotifications}) => {
 	if (!state.loggedIn)
 		return (
 			<>
