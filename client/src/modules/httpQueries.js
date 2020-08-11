@@ -50,13 +50,15 @@ const localLogout = (reload = false) => {
 		window.location.href = '/';
 }
 
-export const logOut = (setState, all = false) => {
+export const logOut = (setState, socketState, all = false) => {
 	const url = baseUrl + '/logout';
 	const request = axios.post(url, {all: all}, {headers: getAuthHeader()});
 	console.log(getAuthHeader());
 	setState({});
+	socketState.emit('logOut', {user: getToken()});
+	localStorage.clear();
 	request.then(response => localLogout(true));
-
+	
 };
 
 export const uploadPhoto = photos => {

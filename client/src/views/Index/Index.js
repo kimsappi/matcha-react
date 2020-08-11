@@ -5,6 +5,7 @@ import Filters from './Filters';
 import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString} from '../../modules/httpQueries';
 import PopupTest from './PopupTest';
 import UserCard from './UserCard';
+import ProfilePreview from './ProfilePreview';
 import {getUser} from '../../modules/userData';
 
 import {sortingMethods} from '../../config.json';
@@ -21,6 +22,11 @@ const Index = ({state, action, setPopupState}) => {
 	const [minCommonTags, setMinCommonTags] = useState(0);
 	const [sort, setSort] = useState(0);
 	const [tagSearch, setTagSearch] = useState('');
+	const [previewId, setPreviewId] = useState(null);
+	const [previewProfile, setPreviewProfile] = useState(null);
+
+	if (previewProfile)
+		console.log("EKA CONSOLE"+previewProfile.profileData.id);
 
 	if (action === 'resetPassword')
 		setPopupState('resetPassword');
@@ -28,7 +34,7 @@ const Index = ({state, action, setPopupState}) => {
 	const generateUserCards = users => {
 		if (!users || !users.length)
 			return '';
-		return users.map(user => <UserCard key={user.id} profile={user} />);
+		return users.map(user => <UserCard key={user.id} profile={user} preview={setPreviewId}/>);
 	};
 
 	useEffect(() => {
@@ -50,7 +56,15 @@ const Index = ({state, action, setPopupState}) => {
 					response = response || [];
 					setUsers(generateUserCards(response));
 				});
-	}, [action, setPopupState]);
+		if (previewId)
+		{
+			getThisPage('/profile/'+previewId)
+				.then(response => {
+					console.log(response);
+					setPreviewProfile(response);
+				});
+		}
+	}, [action, setPopupState, previewId]);
 
 	if (state.loggedIn)
 		return (
@@ -68,6 +82,12 @@ const Index = ({state, action, setPopupState}) => {
 								sort={sort} setSort={setSort} sortingMethods={sortingMethods}
 								tagSearch={tagSearch} setTagSearch={setTagSearch}
 							/>
+							
+						</div>
+						<div>
+							<h1>Profile preview here</h1>
+							<ProfilePreview user={previewProfile}/>
+							<br />
 						</div>
 					</div>
 					<div className="col-md-6 h-25 order-md-1" id="suggestionContainer">
@@ -80,6 +100,7 @@ const Index = ({state, action, setPopupState}) => {
 							tagSearch={tagSearch}
 						/>
 					</div>
+					
 				</div>
 				
 			</div>

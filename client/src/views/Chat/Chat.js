@@ -68,7 +68,7 @@ const Chat= ({socket}) => {
 
     console.log(connections);
     console.log(chat);
-
+    console.log("CHAT WINDOW STATUS::" + chatWindowOpen);
 
 
 
@@ -87,7 +87,7 @@ const Chat= ({socket}) => {
                     <h4>Chat with {chatUsername}</h4>
                 </div>
             : ''}
-            <div onClick={() => {openConnections(); setRefresh(!refresh);}} style={connectionButton}>Connections ({connections.length})</div>
+            <div onClick={() => {openConnections(); setRefresh(!refresh); {chatWindowOpen === true ? setChatWindow(false) : setChatWindow(chatWindowOpen)}}} style={connectionButton}>Connections ({connections.length})</div>
 
         </>)
     }

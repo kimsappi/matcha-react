@@ -138,10 +138,27 @@ const wsServerInit = server => {
 			});
 			keys[temp.id] = socket.id;
 			console.log("ARRAY: " + keys);
+			console.log('LOGGING IN');
 		})
-
+			// function run when user logs out
 		socket.on('logOut', function(data) {
-				// JOTENKIN pidaa saada tahan lahetettya tokeni websocketin kautta samalla, kun logouttaa reactissa.....
+			console.log("LOG OUT WEBSOCKET");
+			var temp;
+			jwt.verify(data.user, tokenSecret, (err, user) => {
+				if (err)
+				{
+					console.log("ERRRRORRRR");
+					return;
+				}
+				else
+				{
+					temp = user;
+					console.log(user);
+				}
+			});
+			console.log(temp);
+			keys[temp.id] = '';
+			console.log("ARRAY: " + keys);
 		})
 
 
