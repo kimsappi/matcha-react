@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {getThisPage} from '../../modules/httpQueries';
+import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
 
 // Databasen 'likes' tableen lisattava id columni, jotta key helpompi saada uniikiksi.
 
-
+// USERS THAT HAVE LIKED ME
 const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
 
+    const smallPic = 
+    {
+        height: '30px'
+    }
     function changePreview(profile)
     {
         if (profile.liker)
@@ -35,15 +39,19 @@ const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
     }
     else
     {
+        
         return (
         likes.map( (like) =>
         <>
+            <>
             <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(2);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
+            {like.visitorPic ? <img src={generateImageUrl(like.visitorPic, 'png')} style={smallPic} /> : <img src={generateImageUrl(like.likerPic, 'png')} style={smallPic} /> }
                 <b>{like.likerUsername ? like.likerUsername : like.visitorUsername}</b>
-                {like.likerPic}
+                
                 
             </button>
             <br />
+            </>
         </>))
     }
 }

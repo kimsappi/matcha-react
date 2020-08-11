@@ -90,37 +90,44 @@ const ProfilePreview = ({user}) => {
                     modifyPreviewState(response);
                 });
         }
-    }, [user]);
+    }, [user, rerenderTrick]);
 
-        if (user)
+        if (previewState)
             return (
                 <>
                 <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px'}}>x
-                {user && user.profileData ?
+                {previewState && previewState.profileData ?
                     <>
                     
-                        <h1>{user.profileData.username}, {user.profileData.age}</h1>
-                        <h3>{user.gender}</h3>
+                        <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
+                        <h3>{previewState.gender}</h3>
+                        
+                        {previewState ? 
+                                previewState.blockStatus === true ? 
+                                <h1 style={{position: 'relative', top: '14px', textAlign: 'center', fontWeight: 'bolder', fontSize: '60px', color: 'red'}}>BLOCKED</h1> : ""
+                                    
+                                    : ''}
+
                         <div style={{width: '100%'}}>
-                            <button onClick={() => {modifyPreviewImage(user.profileData.main_pic); modifyImagePopupState(true);}}  style={imageButton}>
-                                <img src={generateImageUrl(user.profileData.main_pic, 'png')} style={mainPicStyle}/>
+                            <button onClick={() => {modifyPreviewImage(previewState.profileData.main_pic); modifyImagePopupState(true);}}  style={imageButton}>
+                                <img src={generateImageUrl(previewState.profileData.main_pic, 'png')} style={mainPicStyle}/>
                             </button>
                         </div>
-                        {user.images.map( (image) => 
+                        {previewState.images.map( (image) => 
                             <>
-                                {image.id !== user.profileData.main_pic ?
+                                {image.id !== previewState.profileData.main_pic ?
                                 <button onClick={() => {modifyPreviewImage(image.id); modifyImagePopupState(true);}} style={imageButton}>
                                     <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                 </button>
                                 : null}
                             </>
                         )};
-                        <p>{user.profileData.biography}</p>
-                        {user && user.blockStatus === false ? 
-                        <button onClick={() => submitLike('/profile/'+user.profileData.id, user.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{user.likeButton}</button>
+                        <p>{previewState.profileData.biography}</p>
+                        {previewState && previewState.blockStatus === false ? 
+                        <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
                         : ''}
-                        {user && user.blockStatus === false ? 
-                        <button onClick={() => submitLike('/profile/'+user.profileData.id, user.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick)} className="btn btn-danger">{user.blockStatus === true ? "Unblock user" : "Block user"}</button>
+                        {previewState ? 
+                        <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick)} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
                         : ''} 
                        
                     </>

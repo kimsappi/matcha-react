@@ -81,11 +81,13 @@ const Chat= ({socket}) => {
                     <Connection connections={connections} chat={chat} setChat={setChat} setChatWindow={setChatWindow} chatWindow={chatWindowOpen} chatUsername={chatUsername} setChatUsername={setChatUsername}/> 
             </div>
             {chatWindowOpen ?
-                <div style={chatWindow}>
-                
-                    <Chatwindow socket={socket} chat={chat} chatWindow={chatWindowOpen} chatUsername={chatUsername}/>
-                    <h4>Chat with {chatUsername}</h4>
-                </div>
+                <>
+                    <div style={chatWindow}>
+                    
+                        <Chatwindow socket={socket} chat={chat} chatWindow={chatWindowOpen} chatUsername={chatUsername}/>
+                        <h4>Chat with {chatUsername}</h4>
+                    </div>
+                </>
             : ''}
             <div onClick={() => {openConnections(); setRefresh(!refresh); {chatWindowOpen === true ? setChatWindow(false) : setChatWindow(chatWindowOpen)}}} style={connectionButton}>Connections ({connections.length})</div>
 

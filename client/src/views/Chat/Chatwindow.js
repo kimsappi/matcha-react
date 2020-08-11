@@ -49,10 +49,12 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
     
     socket.on('chat', function(data) {
 
-    
         console.log(data);
         console.log("testttt");
-        setMostRecentMessage(data);
+        if (data.error == "block")
+            setMostRecentMessage("blocked");
+        else
+            setMostRecentMessage(data);
     })
 
 
@@ -62,7 +64,6 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
             <button onClick={() => message()}>Send</button>
             <input type="text" name="msg" id="message"/>
             <ChatMessages messages={chatMessages} otherUser={chatUsername} mostRecentMessage={mostRecentMessage}/>
-            
             
         </>
     )

@@ -6,10 +6,13 @@ import {getThisPage} from '../../modules/httpQueries';
 
 const ChatMessages = (({messages, otherUser, mostRecentMessage}) => {
 
-
-if(messages)
+    if (mostRecentMessage == 'blocked')
+        alert("You have been blocked by the user you're trying to message");
+if (messages)
 {
+    
     return (
+        
         messages.map((message) =>
             <> 
             {otherUser == message.sender_name ?

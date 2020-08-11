@@ -122,19 +122,7 @@ const MyVisits = ({state, setState}) => {
                     </div>
                 <div className="col-sm-5" style={{margin: '20px', justifyContent: 'center', textAlign: 'center'}}>
 
-                {previewState ? 
-                previewState.blockStatus === true ? 
-                <h1 style={{position: 'relative', top: '300px', textAlign: 'center', transform: 'translate(-50%, -50%)', fontWeight: 'bolder', fontSize: '90px', transform: 'rotate(45deg)', color: 'red'}}>BLOCKED</h1> : ""
-                    
-                    : ''}
-
-                    {previewState && previewState.blockStatus ? 
-                        <button onClick={() => 
-                        submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ?
-                         "unblock" : "block", rerenderTrick, setRerenderTrick)}
-                          className="btn btn-danger">Unblock user</button>
-                        : ''}
-                    <div className="blockFilter" style={blockFilter}></div>
+                
 
 
 
@@ -142,31 +130,38 @@ const MyVisits = ({state, setState}) => {
                             <>
                                 <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
                                 <h3>{previewState.gender}</h3>
+
+                                {previewState ? 
+                                previewState.blockStatus === true ? 
+                                <h1 style={{position: 'relative', top: '14px', textAlign: 'center', fontWeight: 'bolder', fontSize: '60px', color: 'red'}}>BLOCKED</h1> : ""
+                                    
+                                    : ''}
+
                                 <div style={{width: '100%'}}>
-                                    <button onClick={() => {modifyPreviewImage(previewState.profileData.main_pic); modifyImagePopupState(true);}}  style={imageButton}>
+                                    <button onClick={() => {modifyPreviewImage(previewState.profileData.main_pic+".png"); modifyImagePopupState(true);}}  style={imageButton}>
                                         <img src={generateImageUrl(previewState.profileData.main_pic, 'png')} style={mainPicStyle}/>
                                     </button>
                                 </div>
                                 {previewState.images.map( (image) => 
                                     <>
-                                        {image.id !== previewState.profileData.main_pic ?
-                                        <button onClick={() => {modifyPreviewImage(image.id); modifyImagePopupState(true);}} style={imageButton}>
-                                            <img src={generateImageUrl(image.id, image.extension)} style={smallPicStyle}/>
+                                        {image !== previewState.profileData.main_pic+".png" ?
+                                        <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
+                                            <img src={generateImageUrl(image)} style={smallPicStyle}/>{image.extension}
                                         </button>
                                         : null}
                                     </>
-                                )};
+                                )}
                                 <p>{previewState.profileData.biography}</p>
                                 {previewState && previewState.blockStatus === false ? 
                                 <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
                                 : ''}
-                                {previewState && previewState.blockStatus === false ? 
+                                {previewState ? 
                                 <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick)} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
                                 : ''} 
                             </>
                         : null}
                         {imagePopupState === true ?
-                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage}/></Popup>
+                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage)} style={popUpImage}/></Popup>
                         : ''}
                   
                 </div>
