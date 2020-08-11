@@ -15,29 +15,34 @@ const getGenderQueries = myData => {
 }
 
 const filterProfiles = (profiles, params, user) => {
+	// Discarding users who haven't set an age (profile not completed)
 	const nullAgeFiltered = profiles.filter(profile => profile.age);
-	//console.log('nullAgeFiltered: ' + nullAgeFiltered);
-	const ret = nullAgeFiltered.map(profile => {
-		if (!profile.age)
-			return;
 
-		let distance = calculateDistance(user.lat, user.lon, profile.latitude, profile.longitude);
+	const ret = nullAgeFiltered.map(profile => {
+		// Calculating distance for everyone
+		let distance = calculateDistance(user.latitude, user.longitude, profile.latitude, profile.longitude);
 		if (isNaN(distance))
 			distance = 'Unknown';
 
+		// Calculating number of tags in common
+		const userTags = user.tags_string ? user.tags_string.split(',') : null;
 		let commonTags = 0;
 		let tags = [];
-		if (profile.tags_string) {
+		if (profile.tags_string && userTags) {
 			tags = profile.tags_string.split(',');
-			if (user.tags)
-				tags.forEach(tag => {
-					if (user.tags.includes(tag))
-						commonTags += 1;
-				});
+			tags.forEach(tag => {
+				if (userTags.includes(tag))
+					commonTags += 1;
+			});
 		}
-		return {...profile, distance: distance, commonTags: commonTags, tags: tags};
+
+		const distanceNumber = typeof distance === 'number' ? distance : 1000;
+		// Machine-learning powered matching algorithm result
+		const matchRating = distanceNumber * distanceNumber -
+			commonTags * commonTags * 1000 +
+			Math.pow(profile.age - user.age, 4);
+		return {...profile, distance: distance, commonTags: commonTags, tags: tags, matchRating: matchRating};
 	});
-	//console.log(ret);
 	return ret;
 };
 
@@ -46,7 +51,7 @@ const get = (req, res, next) => {
 	//console.log(req.user);
 	if (!req.user)
 		return res.json(null);
-	const query = mysql.format('SELECT * FROM users WHERE id = ?;', [req.user.id]);
+	const query = mysql.format('SELECT * FROM user_and_main_photo WHERE id = ?;', [req.user.id]);
 	//console.log(query);
 	pool.query(query, (error, result) => {
 		if (error || !result)
@@ -61,7 +66,7 @@ const get = (req, res, next) => {
 		pool.query(usersQuery, (error, results) => {
 			if (error)
 				return res.json(null);
-			return res.json(filterProfiles(results, req.params, req.user));
+			return res.json(filterProfiles(results, req.params, result[0]));
 		});
 	});
 };

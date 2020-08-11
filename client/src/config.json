@@ -8,6 +8,12 @@
 
 	"sortingMethods": [
 		{
+			"name": "matchRating",
+			"display": "Best match",
+			"key": "matchRating",
+			"order": 1
+		},
+		{
 			"name": "distance",
 			"display": "Distance",
 			"key": "distance",

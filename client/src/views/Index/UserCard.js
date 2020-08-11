@@ -20,6 +20,7 @@ const UserCard = ({profile, preview}) => {
 			<div>Tags: {profile.tags_string}</div>
 			<div>Common tags: {profile.commonTags}</div>
 			<div>Distance: {profile.distance}</div>
+			<div>matchRating: {profile.matchRating}</div>
 		</button>
 		<br />
 		</>
