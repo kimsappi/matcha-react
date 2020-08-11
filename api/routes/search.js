@@ -28,11 +28,14 @@ const filterProfiles = (profiles, params, user) => {
 		const userTags = user.tags_string ? user.tags_string.split(',') : null;
 		let commonTags = 0;
 		let tags = [];
+		const commonTagsList = [];
 		if (profile.tags_string && userTags) {
 			tags = profile.tags_string.split(',');
 			tags.forEach(tag => {
-				if (userTags.includes(tag))
+				if (userTags.includes(tag)) {
 					commonTags += 1;
+					commonTagsList.push(tag);
+				}
 			});
 		}
 
@@ -41,7 +44,7 @@ const filterProfiles = (profiles, params, user) => {
 		const matchRating = distanceNumber * distanceNumber -
 			commonTags * commonTags * 1000 +
 			Math.pow(profile.age - user.age, 4);
-		return {...profile, distance: distance, commonTags: commonTags, tags: tags, matchRating: matchRating};
+		return {...profile, distance: distance, commonTags: commonTags, commonTagsList: commonTagsList, tags: tags, matchRating: matchRating};
 	});
 	return ret;
 };

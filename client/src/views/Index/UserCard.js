@@ -19,6 +19,7 @@ const UserCard = ({profile, preview}) => {
 			<div>Age: {profile.age}</div>
 			<div>Tags: {profile.tags_string}</div>
 			<div>Common tags: {profile.commonTags}</div>
+			<div>Tags in common: {profile.commonTagsList.map((tag, index) => !index ? tag : ', ' + tag)}</div>
 			<div>Distance: {profile.distance}</div>
 			<div>matchRating: {profile.matchRating}</div>
 		</button>
