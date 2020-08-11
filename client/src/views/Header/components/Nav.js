@@ -46,6 +46,9 @@ const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCou
 					<li className="nav-item nav-link">
 						<Link to='/myProfile/profile'>Profile</Link>
 					</li>
+					<li className="nav-item nav-link">
+						<Link to='/map'>Map</Link>
+					</li>
 					
 				</ul>
 				<ul className="navbar-nav ml-auto">

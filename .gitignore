@@ -6,6 +6,7 @@ api/public/img/userPhotos/
 
 # Email details and other secrets
 mailConfig.json
+apiKey.json
 
 # dependencies
 /node_modules

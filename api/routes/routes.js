@@ -22,6 +22,7 @@ const notifications = require('./myProfile/notifications')
 const profile = require('./profile');
 
 const chat = require('./chat');
+const map = require('./map');
 
 const router = express.Router();
 
@@ -81,6 +82,11 @@ router.post('/resetPassword', (req, res, next) => {
 
 // Private routes
 // From here on in, everything probably requires the user to be logged in
+
+// map.js
+router.get('/map', (req, res, next) => {
+	map.get(req, res, next);
+});
 
 // myProfile/profile.js
 router.get('/myProfile/profile', (req, res, next) => {

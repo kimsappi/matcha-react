@@ -9,6 +9,7 @@ import MyProfile from './views/MyProfile/MyProfile';
 import MyLikes from './views/MyProfile/MyLikes';
 import MyVisits from './views/MyProfile/MyVisits';
 import Profile from './views/Profile/Profile';
+import Map from './views/Map/Map';
 
 import Chat from './views/Chat/Chat';
 import CHATTEST from './CHATTEST';
@@ -38,6 +39,8 @@ function App() {
       setSocketState(socket);
     }
   }, [state]);
+
+  //console.error = () => {};
 
   return (
     <>
@@ -73,6 +76,10 @@ function App() {
 
           <Route path='/CHATTEST'>
             <CHATTEST />
+          </Route>
+
+          <Route path='/map'>
+            <Map />
           </Route>
 
           <Route path='/'>
