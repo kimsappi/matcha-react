@@ -47,19 +47,46 @@ const { startWatchingDataUpdate } = require('geoip-lite');
 
 
 
-function addMessageToDatabase(myId, otherId, message)
+function addMessageToDatabase(myId, otherId, message, io, keys)
 {
-	const query= "INSERT INTO messages (sender, recipient, content) VALUES (?, ?, ?)";
-	const prepareSql = mysql.format(query, [myId, otherId, message]);
+	const query = "SELECT * FROM blocks WHERE ((blocker = ? AND blockee = ?) OR (blocker = ? AND blockee = ?))";
+	const prepareSql = mysql.format(query, [myId, otherId, otherId, myId]);
 	pool.query(prepareSql, (error, results) => {
-		if (error)
+		if (results.length || error)
 		{
-			console.log("cb errori sisalla");
+			io.sockets.in(keys[myId]).emit('chat', {message: "empty", error: 'block', sender: myId});
 			return false;
 		}
 		else
-			return true;
+		{
+			console.log("RESULTTI COUNTTI::" + results.length);
+			const query= "INSERT INTO messages (sender, recipient, content) VALUES (?, ?, ?)";
+			const prepareSql = mysql.format(query, [myId, otherId, message]);
+			pool.query(prepareSql, (error, results) => {
+				if (error)
+				{
+					io.sockets.in(keys[myId]).emit('chat', {message: 'empty', error: 'database', sender: myId});
+					console.log("cb errori sisalla");
+					return false;
+				}
+				else
+				{
+					console.log("PAASI LOPPUUN ASTI")
+
+			
+
+						io.sockets.in(keys[otherId]).emit('chat', {msg: message, sender: myId});
+						io.sockets.in(keys[myId]).emit('chat', {msg: message, sender: myId});
+
+					return true;
+				}
+			})
+		}
 	})
+
+
+
+
 }
 
 const wsServerInit = server => {
@@ -89,7 +116,7 @@ const wsServerInit = server => {
 		})
 
 			// function runs when a message is sent in an open chat window.
-		socket.on('chat', function(jees) {
+		socket.on('chat', async function(jees) {
 			var temp;
 			jwt.verify(jees.me, tokenSecret, (err, user) => {
 				if (err)
@@ -101,12 +128,9 @@ const wsServerInit = server => {
 					temp = user;
 			});
 			console.log("KOKEILUUUU ennen");
-			addMessageToDatabase(temp.id, jees.id, jees.msg); // Tasta puuttuu errorcheck.
-			
-				console.log("KOKEILUUUU jalkeen");
 
-				io.sockets.in(keys[jees.id]).emit('chat', {message: jees.msg, sender: temp.id});
-				io.sockets.in(keys[temp.id]).emit('chat', {message: jees.msg, sender: temp.id});
+			addMessageToDatabase(temp.id, jees.id, jees.msg, io, keys);
+			
 			
 
 

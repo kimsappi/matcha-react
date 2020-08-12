@@ -10,25 +10,31 @@ const ChatMessages = (({messages, otherUser, mostRecentMessage}) => {
         alert("You have been blocked by the user you're trying to message");
 if (messages)
 {
-    
+    {var asd = 0}
+    {var asd2 = 0}
     return (
         
-        messages.map((message) =>
-            <> 
-            {otherUser == message.sender_name ?
-                <>
-                    <p style={{textAlign: 'right'}}>{message.content}</p>
-                    <h5 style={{textAlign: 'right'}}>{otherUser}</h5>
-                </>
-                :
-                <>
-                    <p style={{textAlign: 'left'}}>{message.content}</p>
-                    <h5 style={{textAlign: 'left'}}>{message.sender_name}</h5>
-                </>
-                }
+        messages.map((message) => {
+            asd2 = asd;
+            asd = otherUser == message.sender_name ? 1 : 2
+            return (
+                <> 
                 
-            </>
+                {asd === 1 ?
+                    <>
+                        {asd !== asd2 ? <h5 style={{textAlign: 'left'}}>{otherUser}</h5> : ''}
+                        <p style={{textAlign: 'left'}}>{message.content}</p>
+                    </>
+                    :
+                    <>
+                        {asd !== asd2 ? <h5 style={{textAlign: 'right'}}>{message.sender_name}</h5> : ''}
+                        <p style={{textAlign: 'right'}}>{message.content}</p>
+                    </>
+                    }
+                    
+                </>
             )
+        })
     )
 }
 else

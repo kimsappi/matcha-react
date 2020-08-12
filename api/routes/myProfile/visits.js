@@ -22,7 +22,7 @@ const get = (req, res, next) => {
 		res.json(null);
 
 	const selectvisitor = 'visitor.username AS visitorUsername, visitor.fame AS visitorFame, visitor.id AS visitor, visitor.first_name as visitorFName, visitor.last_name as visitorLName, \
-	visitor.latitude as visitorLat, visitor.longitude as visitorLon';
+	visitor.latitude as visitorLat, visitor.longitude as visitorLon, visitor.main_pic AS visitorPic';
 	const selectvisitee = selectvisitor.split("visitor").join("visitee");
 	const select = selectvisitor + ', ' + selectvisitee;
 
