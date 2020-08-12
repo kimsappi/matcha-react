@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import Suggestions from './Suggestions';
 import Filters from './Filters';
-import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString} from '../../modules/httpQueries';
+import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString, submit42Code} from '../../modules/httpQueries';
 import PopupTest from './PopupTest';
 import UserCard from './UserCard';
 import ProfilePreview from './ProfilePreview';
@@ -48,6 +48,10 @@ const Index = ({state, action, setPopupState}) => {
 				window.location.href = '/';
 			}
 		}
+		else if (action === 'apiLogin' && window.location.search) {
+			console.log('wow');
+			submit42Code(window.location.search.substr(6));
+		}
 		else if (!action)
 			getThisPage(window.location.pathname)
 				.then(response => {
@@ -56,6 +60,9 @@ const Index = ({state, action, setPopupState}) => {
 					response = response || [];
 					setUsers(generateUserCards(response));
 				});
+
+		
+
 		if (previewId)
 		{
 			getThisPage('/profile/'+previewId)

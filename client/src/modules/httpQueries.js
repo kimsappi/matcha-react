@@ -50,6 +50,12 @@ const localLogout = (reload = false) => {
 		window.location.href = '/';
 }
 
+export const submit42Code = code => {
+	const url = baseUrl + '/apiLogin';
+	const request = axios.post(url, {code: code});
+	request.then(response => console.log(response.data));
+};
+
 export const logOut = (setState, socketState, all = false) => {
 	const url = baseUrl + '/logout';
 	const request = axios.post(url, {all: all}, {headers: getAuthHeader()});
