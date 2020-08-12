@@ -6,6 +6,8 @@ const NotificationCard = ({notification}) => {
 		backgroundColor: 'lightgrey',
 		padding: '0.5em',
 		borderRadius: '1em',
+		marginTop: '4px',
+		marginBottom: '4px'
 	};
 	return (
 		<p style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>

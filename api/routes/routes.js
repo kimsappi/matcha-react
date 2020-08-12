@@ -5,6 +5,7 @@ const upload = multer({dest: 'tmp/'});
 // Routes
 const register = require('./register');
 const login = require('./login');
+const apiLogin = require('./apiLogin');
 const logout = require('./logout');
 const confirmEmail = require('./confirmEmail');
 const forgotPassword = require('./forgotPassword');
@@ -49,6 +50,10 @@ router.post('/register', (req, res, next) => {
 
 router.post('/login', (req, res, next) => {
 	login.post(req, res, next);
+});
+
+router.post('/apiLogin', (req, res, next) => {
+	apiLogin.post(req, res, next);
 });
 
 // logout.js

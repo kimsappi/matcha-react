@@ -5,10 +5,19 @@
 	"auth": {
 		"user": "email@example.com",
 		"pass": "password"
-	}
+	},
+
+	"apiKey": "Google API key here",
+
+	"42clientId": "42 Client ID here",
+	"42clientSecret": "42 Client Secret",
+	"42redirectUri": "http://localhost:3000/apiLogin"
 }
+
 
 // This file needs to be included as api/mailConfig.json
 //
 // If "user" and "pass" belong to a valid Gmail account,
 // nodemailer will be able to send confirmation emails correctly
+
+// Delete these comments
