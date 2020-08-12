@@ -27,7 +27,8 @@ export const Popup = ({children, setPopupState}) => {
 		textAlign: 'center',
 		top: '50%',
 		left: '50%',
-		transform: 'translate(-50%, -50%)'
+		transform: 'translate(-50%, -50%)',
+		zIndex: 998
 	};
 
 	const closeButton =
@@ -41,7 +42,8 @@ export const Popup = ({children, setPopupState}) => {
 		borderRadius: '15px',
 		border: '1px solid gray',
 		boxShadow: '6px 6px 29px -1px rgba(0, 0, 0, 1)',
-		cursor: 'pointer'
+		cursor: 'pointer',
+		zIndex: 999
 	}
 
 	const button = 
