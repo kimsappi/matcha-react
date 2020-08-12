@@ -96,7 +96,7 @@ const ProfilePreview = ({user}) => {
         if (previewState)
             return (
                 <>
-                <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px'}}>x
+                <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px', zIndex: '-1'}}>x
                 {previewState && previewState.profileData ?
                     <>
                     
@@ -117,10 +117,11 @@ const ProfilePreview = ({user}) => {
                         {previewState.images.map( (image) => 
                             <>
                                 {image.id !== previewState.profileData.main_pic ?
-                                <button onClick={() => {modifyPreviewImage(image.id + '.' . image.extension); modifyImagePopupState(true);}} style={imageButton}>
+                                <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
                                     <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                 </button>
                                 : null}
+                                {console.log(image)}
                             </>
                         )};
                         <p>{previewState.profileData.biography}</p>

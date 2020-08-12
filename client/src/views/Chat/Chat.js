@@ -16,9 +16,10 @@ const Chat= ({socket}) => {
         bottom: '40px',
         right: '0px',
         width: '200px',
-        backgroundColor: 'white',
 
-        display: 'none'
+
+        display: 'none',
+        zIndex: '33'
     }
 
     const chatWindow = 
@@ -29,7 +30,7 @@ const Chat= ({socket}) => {
         bottom: '40px',
         right: '200px',
         width: '200px',
-        backgroundColor: 'lightGray',
+        backgroundColor: 'gray',
         height: '400px',
         maxHeight: '400px',
         
@@ -41,11 +42,12 @@ const Chat= ({socket}) => {
     {
         width: '200px',
         height: '40px',
-        backgroundColor: 'lightGray',
+        backgroundColor: 'gray',
         position: 'fixed',
         bottom: '0px',
         right: '0px',
-        textAlign: 'center'
+        textAlign: 'center',
+        zIndex: '32'
     }
 
     const [connections, setConnections] = useState(null);

@@ -92,7 +92,7 @@ const Index = ({state, action, setPopupState}) => {
 							
 						</div>
 						<div>
-							<h1>Profile preview here</h1>
+
 							<ProfilePreview user={previewProfile}/>
 							<br />
 						</div>
