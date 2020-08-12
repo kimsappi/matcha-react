@@ -10,7 +10,8 @@ export const Popup = ({children, setPopupState}) => {
 		top: '0',
 		left: '0',
 		justifyContent: 'center',
-		alignItems: 'center'
+		alignItems: 'center',
+		zIndex: '22',
 	}
 	const box =
 	{
@@ -19,7 +20,7 @@ export const Popup = ({children, setPopupState}) => {
 		height: 'fit-content',
 		maxHeight: '93%',
 		maxWidth: '93%',
-		
+		zIndex: '23',
 		backgroundColor: 'white',
 		position: 'fixed',
 		borderRadius: '10px',
@@ -41,7 +42,11 @@ export const Popup = ({children, setPopupState}) => {
 		borderRadius: '15px',
 		border: '1px solid gray',
 		boxShadow: '6px 6px 29px -1px rgba(0, 0, 0, 1)',
-		cursor: 'pointer'
+		cursor: 'pointer',
+
+		"&:hover": {
+			backgroundColor: 'black'
+		}
 	}
 
 	const button = 

@@ -14,6 +14,7 @@ export const generateImageUrl = (id, extension) => {
 	if (id === 'placeholder.png' || !id || id === 'null')
 		return baseUrl + '/img/' + 'placeholder.png';
 	const dirUrl = baseUrl + '/img/userPhotos/';
+	console.log("GENERATED PHOTO AS ::: " + id + "." + extension);
 	if (typeof extension === 'undefined')
 		return dirUrl + id;
 	else

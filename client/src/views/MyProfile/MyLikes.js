@@ -151,13 +151,13 @@ const MyLikes = ({state, setState}) => {
                                     : ''}
 
                                 <div style={{width: '100%'}}>
-                                    <button onClick={() => {modifyPreviewImage(previewState.profileData.main_pic + '.png'); modifyImagePopupState(true);}}  style={imageButton}>
-                                        <img src={generateImageUrl(previewState.profileData.main_pic, 'png')} style={mainPicStyle}/>
+                                    <button onClick={() => {modifyPreviewImage(previewState.profileData.filename); modifyImagePopupState(true);}}  style={imageButton}>
+                                        <img src={generateImageUrl(previewState.profileData.filename)} style={mainPicStyle}/>
                                     </button>
                                 </div>
                                 {previewState.images.map( (image) => 
                                     <>
-                                        {image !== previewState.profileData.main_pic+".png" ?
+                                        {image !== previewState.profileData.filename ?
                                         <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
                                             <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                         </button>

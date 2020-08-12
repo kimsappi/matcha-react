@@ -32,7 +32,7 @@ const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
         }
     }
 
-
+console.log(likes)
     if (!likes)
     {
         return(<h1>Loading</h1>);
@@ -45,10 +45,8 @@ const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
         <>
             <>
             <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(2);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
-            {like.visitorPic ? <img src={generateImageUrl(like.visitorPic, 'png')} style={smallPic} /> : <img src={generateImageUrl(like.likerPic, 'png')} style={smallPic} /> }
-                <b>{like.likerUsername ? like.likerUsername : like.visitorUsername}</b>
-                
-                
+            {like.visitorPic ? <img src={generateImageUrl(like.visitorPic, like.visitorPhoto)} style={smallPic} /> : <img src={generateImageUrl(like.likerPic, like.likerPhoto)} style={smallPic} /> }
+                <b>  {like.likerUsername ? like.likerUsername : like.visitorUsername}</b>
             </button>
             <br />
             </>

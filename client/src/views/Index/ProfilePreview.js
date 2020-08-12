@@ -71,6 +71,7 @@ const ProfilePreview = ({user}) => {
     {
         maxWidth: '100%',
         maxHeight: '100%',
+        Zindex: '23'
     }
 
     const [previewImage, modifyPreviewImage] = useState(null);

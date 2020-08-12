@@ -35,7 +35,7 @@ const MyLikesLikes = ({likes, modifyPreview, modifyWho, rerenderTrick}) => {
     }
 
 
-
+console.log(likes);
 
     if (!likes)
     {
@@ -47,8 +47,8 @@ const MyLikesLikes = ({likes, modifyPreview, modifyWho, rerenderTrick}) => {
             likes.map( (like) =>
             <>
                 <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(1);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
-                    {like.visiteePic ? <img src={generateImageUrl(like.visiteePic, 'png')} style={smallPic} /> : <img src={generateImageUrl(like.likeePic, 'png')} style={smallPic} /> }
-                    <b>{like.likeeUsername ? like.likeeUsername : like.visiteeUsername}</b>
+                    {like.visiteePic ? <img src={generateImageUrl(like.visiteePic, like.visiteePhoto)} style={smallPic} /> : <img src={generateImageUrl(like.likeePic, like.likeePhoto)} style={smallPic} /> }
+                    <b>  {like.likeeUsername ? like.likeeUsername : like.visiteeUsername}</b>
                 </button>
                 <br />
             </>)
