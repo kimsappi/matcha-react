@@ -2,12 +2,33 @@ import React, {useState, useEffect} from 'react';
 import { getThisPage } from '../../../modules/httpQueries';
 
 const NotificationCard = ({notification}) => {
+	const style = {
+		backgroundColor: 'lightgrey',
+		padding: '0.5em',
+		borderRadius: '1em',
+	};
 	return (
-		<p>
+		<p style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>
 			User: {notification.causer} Action: {notification.reason}
 			New: {notification.read ? 'no' : 'yes'}
 		</p>
 	);
+}
+
+const notificationsWindowStyle = {
+	display: 'flex',
+	backgroundColor: 'slategrey',
+	flexFlow: 'column-reverse nowrap',
+	padding: '0.5em',
+	borderRadius: '1em',
+};
+
+const notificationWindowContainerStyle = {
+	maxHeight: '300px',
+	flexFlow: 'column nowrap',
+	overflow: 'auto',
+	zIndex: 9,
+	position: 'fixed'
 }
 
 const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) => {
@@ -72,8 +93,11 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	return (
 		<>
 			<span onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications: {unreadCount} (click)</span>
-			<div style={ { display: notificationsDisplay ? 'block' : 'none' } }>
-				{notificationCards}
+			{/* An outer container is required to get the scroll direction right */}
+			<div style={{...notificationWindowContainerStyle, display: notificationsDisplay ? 'flex' : 'none' }}>
+				<div style={notificationsWindowStyle}>
+					{notificationCards}
+				</div>
 			</div>
 			{/* <div>{notifications.map(item=> {
 				if (!item.read)
