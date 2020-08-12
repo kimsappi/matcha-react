@@ -16,7 +16,8 @@ const Chat= ({socket}) => {
         bottom: '40px',
         right: '0px',
         width: '200px',
-        backgroundColor: 'gray',
+        backgroundColor: 'white',
+
         display: 'none'
     }
 
@@ -28,11 +29,11 @@ const Chat= ({socket}) => {
         bottom: '40px',
         right: '200px',
         width: '200px',
-        backgroundColor: 'coral',
+        backgroundColor: 'lightGray',
         height: '400px',
         maxHeight: '400px',
-        overflowY: 'scroll',
-        overflowWrap: 'break-word',
+        
+
         zIndex: '33'
     }
 
@@ -82,11 +83,14 @@ const Chat= ({socket}) => {
             </div>
             {chatWindowOpen ?
                 <>
+
                     <div style={chatWindow}>
+                        {/* <div style={{backgroundColor: "light-blue", textAlign: 'center', height: '23px', position: 'relative', bottom: '-10px'}}><p>{chatUsername}</p></div> */}
                     
                         <Chatwindow socket={socket} chat={chat} chatWindow={chatWindowOpen} chatUsername={chatUsername}/>
-                        <h4>Chat with {chatUsername}</h4>
+                        
                     </div>
+                    
                 </>
             : ''}
             <div onClick={() => {openConnections(); setRefresh(!refresh); {chatWindowOpen === true ? setChatWindow(false) : setChatWindow(chatWindowOpen)}}} style={connectionButton}>Connections ({connections.length})</div>

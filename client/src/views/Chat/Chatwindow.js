@@ -31,6 +31,8 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
         var message = document.getElementById('message').value;
         console.log(socket);
         // socket.on('test', () => {
+        if (message)
+        {
             socket.emit('chat', {
                 msg: message,
                 id: chat,
@@ -38,7 +40,7 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
             }, response => console.log(response))
         
             document.getElementById('message').value = '';
-
+        }
         // })
     }
 
@@ -57,14 +59,23 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
             setMostRecentMessage(data);
     })
 
+    function enterPressed(event)
+    {
+        var code = event.keyCode || event.which;
+        if (code === 13)
+            message();
+    }
 
     return (
         <>
             
-            <button onClick={() => message()}>Send</button>
-            <input type="text" name="msg" id="message"/>
-            <ChatMessages messages={chatMessages} otherUser={chatUsername} mostRecentMessage={mostRecentMessage}/>
-            
+            <button className="btn btn-primary" onClick={() => message()}>Send</button>
+            <input type="text" name="msg" id="message" autocomplete="off" onKeyPress={enterPressed.bind(this)}/>
+            <div style={{display: 'flex', flexDirection: 'column-reverse', overflowY: 'scroll'}}>
+                <div style={{display: 'flex', flexDirection: 'column', overflowWrap: 'break-word'}}>
+                    <ChatMessages messages={chatMessages} otherUser={chatUsername} mostRecentMessage={mostRecentMessage}/>
+                </div>
+            </div>
         </>
     )
 })
