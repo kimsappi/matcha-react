@@ -102,9 +102,8 @@ const validateMyProfileData = user => {
 	);
 };
 
-const parseTags = tagsString => {
-	const arr = tagsString.split(/[#\s,]/);
-	const ret = arr.filter(element => element.length);
+const parseTags = arr => {
+	const ret = arr.filter((element, index, arr) => element.length && arr.indexOf(element) === index);
 	ret.forEach((element, index) => this[index] = mysql.escape(element));
 	return ret;
 };

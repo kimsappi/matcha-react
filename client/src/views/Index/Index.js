@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import Suggestions from './Suggestions';
 import Filters from './Filters';
-import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString, submit42Code} from '../../modules/httpQueries';
+import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString, submit42Code, loginResponseHandler} from '../../modules/httpQueries';
 import PopupTest from './PopupTest';
 import UserCard from './UserCard';
 import ProfilePreview from './ProfilePreview';
@@ -11,8 +11,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import {sortingMethods} from '../../config.json';
+import { Redirect } from 'react-router-dom';
 
-const Index = ({state, action, setPopupState}) => {
+const Index = ({state, action, setPopupState, setState}) => {
 	const userData = getUser();
 	// Userdata doesn't load instantly, so set a default to prevent errors
 	const age = userData.age ? userData.age : 25;
@@ -50,9 +51,17 @@ const Index = ({state, action, setPopupState}) => {
 				window.location.href = '/';
 			}
 		}
-		else if (action === 'apiLogin' && window.location.search) {
-			console.log('wow');
-			submit42Code(window.location.search.substr(6));
+		else if ((action === 'apiLogin' || action === 'apiRegister') && window.location.search) {
+			const req = submit42Code(window.location.search.substr(6), action)
+			req.then(data => {
+				if (data.action === 'register') {
+					localStorage.setItem('registerPrefill', JSON.stringify(data));
+					setPopupState('register');
+				}
+				else {
+					loginResponseHandler(data, setState, setPopupState);
+				}
+			});
 		}
 		else if (!action)
 			getThisPage(window.location.pathname)

@@ -29,11 +29,11 @@ const get = (req, res, next) => {
 				return res.json({
 					userData: results[0],
 					biography: escape(results[0].biography),
-					tags: stringifyTags(tagsResults),
+					tags: tagsResults.map(tag => tag.string),
 					images: imagesResults
 				});
 			});
-		});		
+		});
 	});
 };
 
@@ -50,7 +50,7 @@ const post = (req, res, next) => {
 		return res.json(null);
 	console.log('passed validation');
 
-	// Parse tags from string to array
+	// Remove duplicate and empty tags
 	const tags = parseTags(req.body.tags);
 
 	// Check if input coordinates are valid and update them if necessary
@@ -104,14 +104,6 @@ const generateTagsQuery = (tags, id) => {
 	const insertStringsJoined = insertStrings.join(',');
 
 	return `INSERT INTO tags(string, user) VALUES ` + insertStringsJoined + ';';
-};
-
-const stringifyTags = tags => {
-	if (!tags.length)
-		return '';
-	
-	const ret = tags.map(element => '#' + element.string);
-	return ret.join(', ');
 };
 
 module.exports = {

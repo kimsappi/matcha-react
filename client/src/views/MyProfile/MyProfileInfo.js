@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioWithLabel from '../../components/RadioWithLabel';
+import TagsInput from './TagsInput';
 
 import {sendMyProfileData} from '../../modules/httpQueries';
 
@@ -20,7 +21,6 @@ const MyProfileInfo = ({profile}) => {
 
     return (
         <>
-        Printed from MyProfileInfo-component:
         <InputWithLabel
             type='text'
             name='firstName'
@@ -94,13 +94,8 @@ const MyProfileInfo = ({profile}) => {
             state={biography}
             setState={setBiography}
         />
-        <InputWithLabel
-            type='textarea'
-            name='tags'
-            label='Tags PLACEHOLDER'
-            state={tags}
-            setState={setTags}
-        />
+
+        <TagsInput tags={tags} setTags={setTags} />
 
         <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags)}>OK</Button>
         </>

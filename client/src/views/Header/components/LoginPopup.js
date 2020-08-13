@@ -29,7 +29,7 @@ export const LoginPopup = ({state, setState, setPopupState}) => {
 
 	return (
 		<Popup setPopupState={setPopupState}>
-			<form id='loginForm' onSubmit={event => submitLogin(event, state, setState, setPopupState, username, password)}>
+			<form id='loginForm' onSubmit={event => submitLogin(event, setState, setPopupState, username, password)}>
 				<InputWithLabel
 					type='text'
 					name='username' 

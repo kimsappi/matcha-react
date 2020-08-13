@@ -57,6 +57,10 @@ router.post('/apiLogin', (req, res, next) => {
 	apiAuth.login(req, res, next);
 });
 
+router.post('/apiRegister', (req, res, next) => {
+	apiAuth.register(req, res, next);
+});
+
 // logout.js
 router.post('/logout', (req, res, next) => {
 	logout.post(req, res, next);

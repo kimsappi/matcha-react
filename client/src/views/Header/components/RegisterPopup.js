@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect, useEffect} from 'react';
 
 import {Popup} from '../../../components/Popup';
 import InputWithLabel from '../../../components/InputWithLabel';
@@ -12,6 +12,22 @@ export const RegisterPopup = ({setPopupState}) => {
 	const [email, setEmail] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
+
+	useEffect(() => {
+		const jsonData = localStorage.getItem('registerPrefill')
+		if (jsonData) {
+			const data = JSON.parse(jsonData);
+			if (data.uname)
+				setUsername(data.username);
+			if (data.first_name)
+				setFirstName(data.first_name);
+			if (data.last_name)
+				setLastName(data.last_name);
+			if (data.email)
+				setEmail(data.email);
+			localStorage.removeItem('registerPrefill');
+		}
+	}, []);
 
 	return (
 		<Popup setPopupState={setPopupState}>
@@ -66,6 +82,9 @@ export const RegisterPopup = ({setPopupState}) => {
 				/>
 				<input type='submit' name='submit' value='OK' />
 			</form>
+			<div>
+				<a href='https://api.intra.42.fr/oauth/authorize?client_id=932fc007009ee06ec98cba8f6d4842c092a26a18aef1875d5b7bc91d9308a7a0&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FapiRegister&response_type=code'>Register with 42</a>
+			</div>
 		</Popup>
 	);
 };

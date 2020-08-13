@@ -51,16 +51,17 @@ const localLogout = (reload = false) => {
 		window.location.href = '/';
 }
 
-export const submit42Code = code => {
-	const url = baseUrl + '/apiLogin';
+export const submit42Code = (code, action) => {
+	const url = baseUrl + '/' + action;
 	const request = axios.post(url, {code: code});
-	request.then(response => console.log(response.data));
+	return new Promise((resolve, reject) => {
+		request.then(response => resolve(response.data));
+	});
 };
 
 export const logOut = (setState, socketState, all = false) => {
 	const url = baseUrl + '/logout';
 	const request = axios.post(url, {all: all}, {headers: getAuthHeader()});
-	console.log(getAuthHeader());
 	setState({});
 	socketState.emit('logOut', {user: getToken()});
 	localStorage.clear();
@@ -76,8 +77,14 @@ export const uploadPhoto = photos => {
 	});
 	console.log(formData.getAll('photos'));
 	const request = axios.post(baseUrl + '/myProfile/pics', formData, {headers: getAuthHeader()});
-	return request.then(response => response.data);
-	
+	return request.then(response => {
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
+		}
+		else
+			return response.data;
+	});	
 }
 
 export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
@@ -87,10 +94,15 @@ export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
 	if (action === 'delete')
 		window.location.reload(false);
 	return request.then(response => {
-		setRerenderTrick(!rerenderTrick);
-		return response.data;
-	});
-	
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
+		}
+		else {
+			setRerenderTrick(!rerenderTrick);
+			return response.data;
+		}
+	});	
 };
 
 export const sendMyProfileData = (firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags) => {
@@ -109,11 +121,14 @@ export const sendMyProfileData = (firstName, lastName, age, latitude, longitude,
 	};
 
 	const request = axios.post(url, reqBody, {headers: getAuthHeader()});
-	request.then(response => {
-		if (response.data) {
-			setToken(response.data.token);
+	return request.then(response => {
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
 		}
-	})
+		else
+			setToken(response.data.token);
+	});
 }
 
 export const submitLike = (path, action, state, setState) => {
@@ -132,11 +147,39 @@ export const submitLike = (path, action, state, setState) => {
 	console.error(url);
 	const request = axios.post(url, {action: likeAction},
 		{headers: getAuthHeader()});
-	request.then(response => console.log(response.data));
-	setState(!state);
+	request.then(response => {
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
+		}
+		else
+			setState(!state);;
+	});
 };
 
-export const submitLogin = (event, state, setState, setPopupState, username, password) => {
+export const loginResponseHandler = (data, setState, setPopupState) => {
+	if (!data || data === 'email' || data === 'Database error') {
+		setState({});
+		localStorage.clear();
+		if (data === 'email')
+			alert('Make sure to confirm your email address before logging in.');
+		else
+			alert('Login failed.');
+		return false;
+	}
+	else {
+		console.log(data);
+		console.log('asddd');
+		setUser(data.username, data.id, data.age, data.tags, true);
+		setToken(data.token);
+		setState({loggedIn: true, username: data.username, id: data.id});
+		setPopupState(false);
+		window.location.href = '/';
+		return true;
+	}
+}
+
+export const submitLogin = (event, setState, setPopupState, username, password) => {
 	event.preventDefault();
 
 	let reqBody = {
@@ -152,25 +195,7 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 
 	axios.post(baseUrl + '/login', reqBody)
 		.then(response => {
-			if (!response.data || response.data === 'email' || response.data === 'Database error') {
-				setState({});
-				localStorage.clear();
-				if (response.data === 'email')
-					alert('Make sure to confirm your email address before logging in.');
-				else
-					alert('Login failed.');
-				return false;
-			}
-			else {
-				console.log(response.data);
-				console.log('asddd');
-				setUser(response.data.username, response.data.id, response.data.age, response.data.tags, true);
-				setToken(response.data.token);
-				setState({loggedIn: true, username: response.data.username, id: response.data.id});
-				setPopupState(false);
-				window.location.href = '/';
-				return true;
-			}
+			loginResponseHandler(response.data, setState, setPopupState);
 		});
 };
 
@@ -248,7 +273,7 @@ export const getConnections = () => {
 	const request = axios.get(baseUrl + '/getConnections', {headers: getAuthHeader()})
 		return request.then(response => {
 			// console.log(response);
-			if (!response.data)
+			if (!response.data || response.data === 'logged out')
 				alert('Something went wrong (getConnections) (probably trying to get connections without being logged in)');
 			else
 			{
