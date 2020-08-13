@@ -9,6 +9,7 @@ import ProfilePreview from './ProfilePreview';
 import {getUser} from '../../modules/userData';
 
 import {sortingMethods} from '../../config.json';
+import { Redirect } from 'react-router-dom';
 
 const Index = ({state, action, setPopupState}) => {
 	const userData = getUser();
@@ -50,7 +51,12 @@ const Index = ({state, action, setPopupState}) => {
 		}
 		else if ((action === 'apiLogin' || action === 'apiRegister') && window.location.search) {
 			const req = submit42Code(window.location.search.substr(6), action)
-			req.then(data => console.log(data));
+			req.then(data => {
+				if (data.action === 'register') {
+					localStorage.setItem('registerPrefill', JSON.stringify(data));
+					setPopupState('register');
+				}
+			});
 		}
 		else if (!action)
 			getThisPage(window.location.pathname)

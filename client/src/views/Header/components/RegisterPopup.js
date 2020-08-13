@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useLayoutEffect, useEffect} from 'react';
 
 import {Popup} from '../../../components/Popup';
 import InputWithLabel from '../../../components/InputWithLabel';
@@ -12,6 +12,22 @@ export const RegisterPopup = ({setPopupState}) => {
 	const [email, setEmail] = useState('');
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
+
+	useEffect(() => {
+		const jsonData = localStorage.getItem('registerPrefill')
+		if (jsonData) {
+			const data = JSON.parse(jsonData);
+			if (data.uname)
+				setUsername(data.username);
+			if (data.first_name)
+				setFirstName(data.first_name);
+			if (data.last_name)
+				setLastName(data.last_name);
+			if (data.email)
+				setEmail(data.email);
+			localStorage.removeItem('registerPrefill');
+		}
+	}, []);
 
 	return (
 		<Popup setPopupState={setPopupState}>

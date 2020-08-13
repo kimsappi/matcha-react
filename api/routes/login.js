@@ -5,17 +5,9 @@ const mysqlDatetime = require('../modules/mysqlDatetime');
 const {getLoginCoordinates} = require('../modules/getLoginCoordinates');
 const {generateJWT} = require('../modules/authentication');
 
-// const get = (req, res, next) => {
-// 	// User is already logged in
-// 	return res.json({
-// 		loggedIn: true,
-// 		username: 'admin'
-// 	});
-// 	if (req.session.user)
-// 		return res.status(301).redirect('/');
-
-// 	res.render('login');
-// };
+const loginFunction = (req, res, preparedQuery) => {
+	
+};
 
 const post = (req, res, next) => {
 	// User is already logged in
