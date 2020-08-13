@@ -78,6 +78,10 @@ function App() {
             <Index state={state} action='apiLogin' setPopupState={setPopupState} />
           </Route>
 
+          <Route path='/apiRegister'>
+            <Index state={state} action='apiRegister' setPopupState={setPopupState} />
+          </Route>
+
           <Route path='/CHATTEST'>
             <CHATTEST />
           </Route>

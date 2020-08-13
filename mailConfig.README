@@ -11,7 +11,8 @@
 
 	"42clientId": "42 Client ID here",
 	"42clientSecret": "42 Client Secret",
-	"42redirectUri": "http://localhost:3000/apiLogin"
+	"42redirectUriLogin": "http://localhost:3000/apiLogin",
+	"42redirectUriRegister": "http://localhost:3000/apiRegister"
 }
 
 

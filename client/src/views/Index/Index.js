@@ -48,9 +48,9 @@ const Index = ({state, action, setPopupState}) => {
 				window.location.href = '/';
 			}
 		}
-		else if (action === 'apiLogin' && window.location.search) {
-			console.log('wow');
-			submit42Code(window.location.search.substr(6));
+		else if ((action === 'apiLogin' || action === 'apiRegister') && window.location.search) {
+			const req = submit42Code(window.location.search.substr(6), action)
+			req.then(data => console.log(data));
 		}
 		else if (!action)
 			getThisPage(window.location.pathname)

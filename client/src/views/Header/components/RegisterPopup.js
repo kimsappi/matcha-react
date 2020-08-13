@@ -66,6 +66,9 @@ export const RegisterPopup = ({setPopupState}) => {
 				/>
 				<input type='submit' name='submit' value='OK' />
 			</form>
+			<div>
+				<a href='https://api.intra.42.fr/oauth/authorize?client_id=932fc007009ee06ec98cba8f6d4842c092a26a18aef1875d5b7bc91d9308a7a0&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2FapiRegister&response_type=code'>Register with 42</a>
+			</div>
 		</Popup>
 	);
 };

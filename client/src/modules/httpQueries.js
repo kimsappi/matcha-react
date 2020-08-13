@@ -51,10 +51,12 @@ const localLogout = (reload = false) => {
 		window.location.href = '/';
 }
 
-export const submit42Code = code => {
-	const url = baseUrl + '/apiLogin';
+export const submit42Code = (code, action) => {
+	const url = baseUrl + '/' + 'apiRegister';
 	const request = axios.post(url, {code: code});
-	request.then(response => console.log(response.data));
+	return new Promise((resolve, reject) => {
+		request.then(response => resolve(response.data));
+	});
 };
 
 export const logOut = (setState, socketState, all = false) => {
