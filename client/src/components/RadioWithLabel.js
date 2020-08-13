@@ -12,8 +12,10 @@ const RadioWithLabel = ({
 			option.checked = (state, value) => state === option.value;
 		return (
 		<span key={option.value + option.label}>
-			<label htmlFor={option.value}>{option.label}</label>
-			<input type='radio' name={name} value={option.value} checked={option.checked(state, option.value)} onChange={event => eventHandler(event)}/>
+			<div className="custom-control custom-radio">
+				<label htmlFor={option.value}>{option.label}</label>
+				<input type='radio' name={name} value={option.value} checked={option.checked(state, option.value)} onChange={event => eventHandler(event)}/>
+			</div>
 		</span>
 		)
 	});

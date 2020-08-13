@@ -6,9 +6,9 @@ const CustomInputField = ({type, name, label, state, setState, eventHandler, ste
 	if (type === 'textarea')
 		return <textarea name={name} onChange={event => eventHandler(event)} value={state} />;
 	else if (type === 'number')
-		return <input type={type} name={name} value={state} onChange={event => eventHandler(event)} step={step} />;
+		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} />;
 	else
-		return <input type={type} name={name} value={state} onChange={event => eventHandler(event)} />;
+		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} />;
 
 };
 

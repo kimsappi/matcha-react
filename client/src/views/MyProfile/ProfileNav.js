@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 const ProfileNav = () => {	
 
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand navbar-light bg-light">
 			<div className="navbar-nav">
                 <div className="navbar-nav">
                     <Link className="nav-item nav-link" to='/myProfile/profile'>Profile</Link>

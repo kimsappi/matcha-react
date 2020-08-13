@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import MyProfileImage from './MyProfileImage';
 import {Popup} from '../../components/Popup';
-
+import Form from 'react-bootstrap/Form';
 import {uploadPhoto} from '../../modules/httpQueries';
 import {generateImageUrl} from '../../modules/httpQueries';
 
@@ -48,7 +48,7 @@ const MyProfileImages = ({profile, rerenderTrick, setRerenderTrick}) => {
     return (
         <>
         <label htmlFor='photoUpload'>Upload a photo</label>
-        <input type='file' name='photoUpload' onChange={event => uploadPhotos(event, rerenderTrick, setRerenderTrick)} multiple />
+        <input type='file' name='photoUpload' className="form-control-file" id="exampleFormControlFile1" onChange={event => uploadPhotos(event, rerenderTrick, setRerenderTrick)} multiple />
         <p>Printed from MyProfileImages-component</p>
         {uploadedImages}
         {imagePopupState === true ?
