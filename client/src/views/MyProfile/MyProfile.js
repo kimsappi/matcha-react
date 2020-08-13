@@ -26,7 +26,7 @@ const MyProfile = ({state, setState}) => {
 		<ProfileNav />
 		<div className="row">
 			<div className="col-sm-6">
-				<MyProfileInfo profile={profileState}/>
+				<MyProfileInfo profile={profileState} age={profileState.age} rerenderTrick={rerenderTrick} setRerenderTrick={setRerenderTrick}/>
 			</div>
 			<div className="col-sm-6">
 				<MyProfileImages profile={profileState} rerenderTrick={rerenderTrick} setRerenderTrick={setRerenderTrick} />

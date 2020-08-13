@@ -73,7 +73,7 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 			parseInt(req.body.age), req.user.id, req.user.id
 		]
 	);
-	//console.log(query);
+	console.log(preparedQuery);
 
 	let newTokenData = {
 		user: req.user.user,
@@ -89,8 +89,10 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 	};
 
 	pool.query(preparedQuery, (error) => {
-		if (error)
+		if (error) {
+			//console.log(error);
 			return res.json(null);
+		}
 		else
 			return res.json({...newTokenData, token: generateJWT(newTokenData)});
 	});
