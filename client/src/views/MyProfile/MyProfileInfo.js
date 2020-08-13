@@ -19,11 +19,8 @@ const MyProfileInfo = ({profile}) => {
     const [biography, setBiography] = useState(profile.userData.biography);
     const [tags, setTags] = useState(profile.tags);
 
-    const [tagsArray, setTagsArray] = useState(profile.tags.split(','));
-
     return (
         <>
-        Printed from MyProfileInfo-component:
         <InputWithLabel
             type='text'
             name='firstName'
@@ -97,14 +94,8 @@ const MyProfileInfo = ({profile}) => {
             state={biography}
             setState={setBiography}
         />
-        <InputWithLabel
-            type='textarea'
-            name='tags'
-            label='Tags PLACEHOLDER'
-            state={tags}
-            setState={setTags}
-        />
-        <TagsInput tags={tagsArray} setTags={setTagsArray} />
+
+        <TagsInput tags={tags} setTags={setTags} />
 
         <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags)}>OK</Button>
         </>

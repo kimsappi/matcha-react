@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
+import {Button} from 'react-bootstrap';
 
 const SingleTag = ({tag, index, tagRemoval}) => {
 	return (
 		<div>
 			#{tag}
-			<button  id={'tagRemovalId' + index} onClick={event => tagRemoval(event)}>X</button>
+			<Button variant="danger" id={'tagRemovalId' + index} onClick={event => tagRemoval(event)}>X</Button>
 		</div>
 	);
 };
@@ -27,7 +28,7 @@ const TagsInput = ({tags, setTags}) => {
 			<div>
 				#
 				<input type='text' value={newTag} onChange={event => setNewTag(event.target.value)} />
-				<button onClick={() => {setTags([...tags, newTag]); setNewTag('');}}>+</button>
+				<Button variant='success' onClick={() => {if (newTag.length) {setTags([...tags, newTag]); setNewTag('');}}}>+</Button>
 			</div>
 		</>
 	);
