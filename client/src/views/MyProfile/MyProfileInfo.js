@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioWithLabel from '../../components/RadioWithLabel';
+import TagsInput from './TagsInput';
 
 import {sendMyProfileData} from '../../modules/httpQueries';
 
@@ -17,6 +18,8 @@ const MyProfileInfo = ({profile}) => {
     const [target, setTarget] = useState(profile.userData.target_genders);
     const [biography, setBiography] = useState(profile.userData.biography);
     const [tags, setTags] = useState(profile.tags);
+
+    const [tagsArray, setTagsArray] = useState(profile.tags.split(','));
 
     return (
         <>
@@ -101,6 +104,7 @@ const MyProfileInfo = ({profile}) => {
             state={tags}
             setState={setTags}
         />
+        <TagsInput tags={tagsArray} setTags={setTagsArray} />
 
         <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags)}>OK</Button>
         </>
