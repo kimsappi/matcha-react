@@ -22,6 +22,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
     return (
         <>
         <br />
+        <TagsInput tags={tags} setTags={setTags} />
+        <br /> <br />
         <InputWithLabel
             type='text'
             name='firstName'
@@ -97,7 +99,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             setState={setBiography}
         /> <br />
 
-        <TagsInput tags={tags} setTags={setTags} />
+
 
         <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>OK</Button>
         {rerenderTrick ? ' ' : ''}
