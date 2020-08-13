@@ -7,7 +7,7 @@ import TagsInput from './TagsInput';
 
 import {sendMyProfileData} from '../../modules/httpQueries';
 
-const MyProfileInfo = ({profile}) => {	
+const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {	
     const [firstName, setFirstName] = useState(profile.userData.first_name);
     const [lastName, setLastName] = useState(profile.userData.last_name);
     const [age, setAge] = useState(profile.userData.age);
@@ -49,6 +49,7 @@ const MyProfileInfo = ({profile}) => {
             state={age}
             setState={setAge}
             step='1'
+            integer={true}
         />
         <InputWithLabel
             type='number'
@@ -97,7 +98,8 @@ const MyProfileInfo = ({profile}) => {
 
         <TagsInput tags={tags} setTags={setTags} />
 
-        <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags)}>OK</Button>
+        <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>OK</Button>
+        {rerenderTrick ? ' ' : ''}
         </>
         );
 }

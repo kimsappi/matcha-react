@@ -12,11 +12,10 @@ const CustomInputField = ({type, name, label, state, setState, eventHandler, ste
 
 };
 
-const InputWithLabel = ({type, name, label, state, setState, step}) => {
-	// const id = generateRandomId();
-
+const InputWithLabel = ({type, name, label, state, setState, step, integer}) => {
 	const eventHandler = event => {
-		setState(event.target.value);
+		if (!integer || Number.isInteger(event.target.value))
+			setState(event.target.value);
 	};
 
 	return (

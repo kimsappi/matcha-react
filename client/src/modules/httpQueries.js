@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 
@@ -5,6 +6,7 @@ import {setUser, setToken} from './userData';
 import {getToken} from './userData';
 
 import {likeButtonStrings} from '../config.json';
+import { Redirect } from 'react-router-dom';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -105,7 +107,7 @@ export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
 	});	
 };
 
-export const sendMyProfileData = (firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags) => {
+export const sendMyProfileData = (firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick) => {
 	const url = baseUrl + '/myProfile/profile';
 	const reqBody = {
 		firstName: firstName,
@@ -126,8 +128,11 @@ export const sendMyProfileData = (firstName, lastName, age, latitude, longitude,
 			localLogout(true);
 			return;
 		}
-		else
-			setToken(response.data.token);
+		else {
+			setRerenderTrick(!rerenderTrick);
+			if (response.data && response.data.token)
+				setToken(response.data.token);
+		}
 	});
 }
 
