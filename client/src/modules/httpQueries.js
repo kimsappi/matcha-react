@@ -62,7 +62,6 @@ export const submit42Code = (code, action) => {
 export const logOut = (setState, socketState, all = false) => {
 	const url = baseUrl + '/logout';
 	const request = axios.post(url, {all: all}, {headers: getAuthHeader()});
-	console.log(getAuthHeader());
 	setState({});
 	socketState.emit('logOut', {user: getToken()});
 	localStorage.clear();
@@ -78,8 +77,14 @@ export const uploadPhoto = photos => {
 	});
 	console.log(formData.getAll('photos'));
 	const request = axios.post(baseUrl + '/myProfile/pics', formData, {headers: getAuthHeader()});
-	return request.then(response => response.data);
-	
+	return request.then(response => {
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
+		}
+		else
+			return response.data;
+	});	
 }
 
 export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
@@ -89,10 +94,15 @@ export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
 	if (action === 'delete')
 		window.location.reload(false);
 	return request.then(response => {
-		setRerenderTrick(!rerenderTrick);
-		return response.data;
-	});
-	
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
+		}
+		else {
+			setRerenderTrick(!rerenderTrick);
+			return response.data;
+		}
+	});	
 };
 
 export const sendMyProfileData = (firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags) => {
@@ -111,11 +121,14 @@ export const sendMyProfileData = (firstName, lastName, age, latitude, longitude,
 	};
 
 	const request = axios.post(url, reqBody, {headers: getAuthHeader()});
-	request.then(response => {
-		if (response.data) {
-			setToken(response.data.token);
+	return request.then(response => {
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
 		}
-	})
+		else
+			setToken(response.data.token);
+	});
 }
 
 export const submitLike = (path, action, state, setState) => {
@@ -134,8 +147,14 @@ export const submitLike = (path, action, state, setState) => {
 	console.error(url);
 	const request = axios.post(url, {action: likeAction},
 		{headers: getAuthHeader()});
-	request.then(response => console.log(response.data));
-	setState(!state);
+	request.then(response => {
+		if (response.data === 'logged out') {
+			localLogout(true);
+			return;
+		}
+		else
+			setState(!state);;
+	});
 };
 
 export const loginResponseHandler = (data, setState, setPopupState) => {
@@ -254,7 +273,7 @@ export const getConnections = () => {
 	const request = axios.get(baseUrl + '/getConnections', {headers: getAuthHeader()})
 		return request.then(response => {
 			// console.log(response);
-			if (!response.data)
+			if (!response.data || response.data === 'logged out')
 				alert('Something went wrong (getConnections) (probably trying to get connections without being logged in)');
 			else
 			{
