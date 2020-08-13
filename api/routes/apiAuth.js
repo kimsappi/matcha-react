@@ -1,7 +1,9 @@
+const mysql = require('mysql');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
+
 const config = require('../mailConfig.json');
-const { response } = require('express');
+const {loginFunction} = require('./login');
 
 const returnMeEndpoint = (code, action) => {
 	const data = new FormData();
@@ -50,14 +52,14 @@ const login = async (req, res, next) => {
 	if (!req.body.code)
 		res.json(null);
 
-	const apiResponse = await returnMeEndpoint(req.body.code);
+
+	const apiResponse = await returnMeEndpoint(req.body.code, 'Login');
+
 	console.log(apiResponse);
-	return res.json({
-		username: apiResponse.login,
-		first_name: apiResponse.first_name,
-		last_name: apiResponse.last_name,
-		email: apiResponse.email
-	});
+	const query = 'SELECT * FROM user_and_main_photo WHERE email = ?;';
+	const preparedQuery = mysql.format(query, [apiResponse.email]);
+
+	loginFunction(req, res, preparedQuery);
 };
 
 module.exports = {

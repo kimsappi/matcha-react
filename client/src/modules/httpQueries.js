@@ -52,7 +52,7 @@ const localLogout = (reload = false) => {
 }
 
 export const submit42Code = (code, action) => {
-	const url = baseUrl + '/' + 'apiRegister';
+	const url = baseUrl + '/' + action;
 	const request = axios.post(url, {code: code});
 	return new Promise((resolve, reject) => {
 		request.then(response => resolve(response.data));
@@ -138,7 +138,29 @@ export const submitLike = (path, action, state, setState) => {
 	setState(!state);
 };
 
-export const submitLogin = (event, state, setState, setPopupState, username, password) => {
+export const loginResponseHandler = (data, setState, setPopupState) => {
+	if (!data || data === 'email' || data === 'Database error') {
+		setState({});
+		localStorage.clear();
+		if (data === 'email')
+			alert('Make sure to confirm your email address before logging in.');
+		else
+			alert('Login failed.');
+		return false;
+	}
+	else {
+		console.log(data);
+		console.log('asddd');
+		setUser(data.username, data.id, data.age, data.tags, true);
+		setToken(data.token);
+		setState({loggedIn: true, username: data.username, id: data.id});
+		setPopupState(false);
+		window.location.href = '/';
+		return true;
+	}
+}
+
+export const submitLogin = (event, setState, setPopupState, username, password) => {
 	event.preventDefault();
 
 	let reqBody = {
@@ -154,25 +176,7 @@ export const submitLogin = (event, state, setState, setPopupState, username, pas
 
 	axios.post(baseUrl + '/login', reqBody)
 		.then(response => {
-			if (!response.data || response.data === 'email' || response.data === 'Database error') {
-				setState({});
-				localStorage.clear();
-				if (response.data === 'email')
-					alert('Make sure to confirm your email address before logging in.');
-				else
-					alert('Login failed.');
-				return false;
-			}
-			else {
-				console.log(response.data);
-				console.log('asddd');
-				setUser(response.data.username, response.data.id, response.data.age, response.data.tags, true);
-				setToken(response.data.token);
-				setState({loggedIn: true, username: response.data.username, id: response.data.id});
-				setPopupState(false);
-				window.location.href = '/';
-				return true;
-			}
+			loginResponseHandler(response.data, setState, setPopupState);
 		});
 };
 

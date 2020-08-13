@@ -6,22 +6,6 @@ const {getLoginCoordinates} = require('../modules/getLoginCoordinates');
 const {generateJWT} = require('../modules/authentication');
 
 const loginFunction = (req, res, preparedQuery) => {
-	
-};
-
-const post = (req, res, next) => {
-	// User is already logged in
-	if (req.user)
-		return res.json(null);
-	
-	// Username or password not provided
-	if (!req.body.username || !req.body.password)
-		return res.json(null);
-	
-	const hashedPassword = hashPassword(req.body.username, req.body.password);
-	const query = 'SELECT * FROM user_and_main_photo WHERE username = ? AND password = ?;';
-	const preparedQuery = mysql.format(query, [req.body.username, hashedPassword]);
-
 	pool.query(preparedQuery, (error, results) => {
 		// Some kind of DB error
 		if (error) {
@@ -72,7 +56,23 @@ const post = (req, res, next) => {
 	});
 };
 
+const post = (req, res, next) => {
+	// User is already logged in
+	if (req.user)
+		return res.json(null);
+	
+	// Username or password not provided
+	if (!req.body.username || !req.body.password)
+		return res.json(null);
+	
+	const hashedPassword = hashPassword(req.body.username, req.body.password);
+	const query = 'SELECT * FROM user_and_main_photo WHERE username = ? AND password = ?;';
+	const preparedQuery = mysql.format(query, [req.body.username, hashedPassword]);
+
+	loginFunction(req, res, preparedQuery);
+};
+
 module.exports = {
-	// get,
+	loginFunction,
 	post
 };
