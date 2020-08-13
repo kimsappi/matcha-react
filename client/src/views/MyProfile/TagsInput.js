@@ -25,11 +25,14 @@ const TagsInput = ({tags, setTags}) => {
 	return (
 		<>
 			{singleTags}
-			<div>
-				#
-				<input type='text' value={newTag} onChange={event => setNewTag(event.target.value)} />
-				<Button variant='success' onClick={() => {if (newTag.length) {setTags([...tags, newTag]); setNewTag('');}}}>+</Button>
+			<label>Add a tag!</label>
+			<div class="input-group">
+  				#<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={newTag} onChange={event => setNewTag(event.target.value)} />
+				<div class="input-group-append">
+					<button class="btn btn-success" type="button" onClick={() => {if (newTag.length) {setTags([...tags, newTag]); setNewTag('');}}}>Add!</button>
+				</div>
 			</div>
+			<br />
 		</>
 	);
 };

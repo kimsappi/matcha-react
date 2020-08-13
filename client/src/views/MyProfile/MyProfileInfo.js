@@ -21,6 +21,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
 
     return (
         <>
+        <br />
         <InputWithLabel
             type='text'
             name='firstName'
@@ -67,7 +68,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             setState={setLongitude}
             step='0.0001'
         />
-        <div>I am a...</div>
+        <div>Gender</div>
         <RadioWithLabel
             name='gender'
             state={gender}
@@ -76,8 +77,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
                 {label: 'Man', value: 'm'},
                 {label: 'Woman', value: 'f'}
             ]}
-        />
-        <div>Looking for...</div>
+        />  <br />
+        <div>Looking for</div>
         <RadioWithLabel
             name='target'
             state={target}
@@ -87,14 +88,14 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
                 {label: 'Both', value: 'fm', checked: (target, value) => target.length === 2},
                 {label: 'Women', value: 'f'}
             ]}
-        />
+        /> <br />
         <InputWithLabel
             type='textarea'
             name='biography'
             label='Biography'
             state={biography}
             setState={setBiography}
-        />
+        /> <br />
 
         <TagsInput tags={tags} setTags={setTags} />
 

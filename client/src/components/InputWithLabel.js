@@ -4,7 +4,7 @@ import React from 'react';
 
 const CustomInputField = ({type, name, label, state, setState, eventHandler, step = 1}) => {
 	if (type === 'textarea')
-		return <textarea name={name} onChange={event => eventHandler(event)} value={state} />;
+		return <textarea name={name} className="form-control" onChange={event => eventHandler(event)} value={state} />;
 	else if (type === 'number')
 		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} />;
 	else
@@ -22,6 +22,7 @@ const InputWithLabel = ({type, name, label, state, setState, step, integer}) => 
 		<div>
 			<label htmlFor={name}>{label}</label>
 			<CustomInputField type={type} name={name} label={label} state={state} setState={setState} eventHandler={eventHandler} step={step} />
+			<br />
 		</div>
 	);
 };
