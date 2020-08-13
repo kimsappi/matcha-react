@@ -13,8 +13,8 @@ const Chat= ({socket}) => {
     const connectionsWindow =
     {
         position: "fixed",
-        bottom: '40px',
-        right: '0px',
+        bottom: '45px',
+        right: '5px',
         width: '200px',
 
 
@@ -27,14 +27,14 @@ const Chat= ({socket}) => {
         display: 'flex',
         flexDirection: 'column-reverse',
         position: 'fixed',
-        bottom: '40px',
-        right: '200px',
+        bottom: '48px',
+        right: '203px',
         width: '200px',
         backgroundColor: 'gray',
-        height: '400px',
+        height: 'auto',
         maxHeight: '400px',
-        
-
+        marginRight: '10px',
+        borderRadius: '10px',
         zIndex: '33'
     }
 
@@ -44,8 +44,8 @@ const Chat= ({socket}) => {
         height: '40px',
         backgroundColor: 'gray',
         position: 'fixed',
-        bottom: '0px',
-        right: '0px',
+        bottom: '5px',
+        right: '5px',
         textAlign: 'center',
         zIndex: '32'
     }
@@ -85,17 +85,20 @@ const Chat= ({socket}) => {
             </div>
             {chatWindowOpen ?
                 <>
-
+                
                     <div style={chatWindow}>
+                   
                         {/* <div style={{backgroundColor: "light-blue", textAlign: 'center', height: '23px', position: 'relative', bottom: '-10px'}}><p>{chatUsername}</p></div> */}
                     
                         <Chatwindow socket={socket} chat={chat} chatWindow={chatWindowOpen} chatUsername={chatUsername}/>
-                        
+                        <div style={{backgroundColor: 'transparent', margin: '10px', position: 'absolute', top: '-40px'}}>
+                            <h3>{chatUsername}</h3>
+                        </div>
                     </div>
                     
                 </>
             : ''}
-            <div onClick={() => {openConnections(); setRefresh(!refresh); {chatWindowOpen === true ? setChatWindow(false) : setChatWindow(chatWindowOpen)}}} style={connectionButton}>Connections ({connections.length})</div>
+            <button className="btn btn-info" onClick={() => {openConnections(); setRefresh(!refresh); {chatWindowOpen === true ? setChatWindow(false) : setChatWindow(chatWindowOpen)}}} style={connectionButton}>Connections ({connections.length})</button>
 
         </>)
     }

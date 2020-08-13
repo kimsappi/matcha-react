@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Table from 'react-bootstrap/Table'
+import Table from 'react-bootstrap/Table';
 import ProfileNav from './ProfileNav';
 import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';

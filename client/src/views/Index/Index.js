@@ -7,6 +7,8 @@ import PopupTest from './PopupTest';
 import UserCard from './UserCard';
 import ProfilePreview from './ProfilePreview';
 import {getUser} from '../../modules/userData';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import {sortingMethods} from '../../config.json';
 
@@ -77,10 +79,11 @@ const Index = ({state, action, setPopupState}) => {
 		return (
 			<div>
 				<div className="row">
+				
+				
 					<div className="col-md-6 h-25 order-md-2" id="searchContainer">
-						<h1 className='d-md-none' data-toggle="collapse" data-target="#filtersCollapse">Filters</h1>
-						<h1 className='d-none d-md-block'>Filters</h1>
-						<div className='collapse d-md-block' id='filtersCollapse'>
+						
+						<DropdownButton id="dropdown-basic-button" title="Filters">
 							<Filters
 								distance={distanceFilter} setDistance={setDistanceFilter}
 								minAge={minAge} setMinAge={setMinAge}
@@ -89,23 +92,25 @@ const Index = ({state, action, setPopupState}) => {
 								sort={sort} setSort={setSort} sortingMethods={sortingMethods}
 								tagSearch={tagSearch} setTagSearch={setTagSearch}
 							/>
-							
-						</div>
-						<div>
+						</DropdownButton>
+						<div style={{marginTop: '10px'}}>
 
 							<ProfilePreview user={previewProfile}/>
 							<br />
 						</div>
 					</div>
+					
 					<div className="col-md-6 h-25 order-md-1" id="suggestionContainer">
-						<h1>Suggestions</h1>
-						<Suggestions
-							users={users} distanceFilter={distanceFilter}
-							minAge={minAge} maxAge={maxAge}
-							minCommonTags={minCommonTags}
-							sort={sortingMethods[sort]}
-							tagSearch={tagSearch}
-						/>
+
+						<div className="container">
+							<Suggestions
+								users={users} distanceFilter={distanceFilter}
+								minAge={minAge} maxAge={maxAge}
+								minCommonTags={minCommonTags}
+								sort={sortingMethods[sort]}
+								tagSearch={tagSearch}
+							/>
+						</div>
 					</div>
 					
 				</div>

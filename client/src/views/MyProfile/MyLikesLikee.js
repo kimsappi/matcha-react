@@ -45,7 +45,7 @@ console.log(likes)
         <>
             <>
             <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(2);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
-            {like.visitorPic ? <img src={generateImageUrl(like.visitorPic, like.visitorPhoto)} style={smallPic} /> : <img src={generateImageUrl(like.likerPic, like.likerPhoto)} style={smallPic} /> }
+            {like.visitorPic ? <img src={generateImageUrl(like.visitorPhoto)} style={smallPic} /> : <img src={generateImageUrl(like.likerPhoto)} style={smallPic} /> }
                 <b>  {like.likerUsername ? like.likerUsername : like.visitorUsername}</b>
             </button>
             <br />

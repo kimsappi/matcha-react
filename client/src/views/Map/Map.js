@@ -45,6 +45,7 @@ const UserMap = () => {
 	}, []);
 
 	const generatedMarkers = userLocations.map((location, index) => {
+		console.log(location);
 		return (
 			<GeneratedMarker lat={location.latitude} lon={location.longitude} key={index} />
 		)

@@ -36,51 +36,75 @@ const Filters = ({distance, setDistance,
 		);
 	});
 
-	return (
-		<>
-		<div>
-			<label htmlFor='sort'>Sort by:</label>
-			<select name='sort' value={sort} onChange={event => setSort(event.target.value)}>
-				{sortingMethodOptions}
-			</select>
-		</div>
-		<label htmlFor='distance'>Maximum distance: {distanceDisplay} km</label>
-		<Rcslider
-			step={1}
-			value={distance}
-			min={0}
-			max={501}
-			onChange={value => distanceHandler(value, setDistance)}
-		/>
-		{/* <input type='range' name='distance' value={distance} max='9000' onChange={event => eventHandler(event, setDistance)} /> */}
+	const filterWindow =
+	{
+		padding: '15px'
+	}
 
-		<div>Age range: {minAge} - {maxAge}</div>
-		<Range
-			step={1}
-			value={[minAge, maxAge]}
-			min={16}
-			max={99}
-			onChange={values => rangeEventHandler(values, setMinAge, setMaxAge)}
-		/>
-		{/* <div>
-			<label htmlFor='minAge'>Minimum age</label>
-			<input type='number' name='minAge' value={minAge} min='16' onChange={event => eventHandler(event, setMinAge)} />
-		</div>
-		<div>
-			<label htmlFor='minAge'>Maximum age</label>
-			<input type='number' name='maxAge' value={maxAge} max='99' onChange={event => eventHandler(event, setMaxAge)} />
-		</div> */}
-		<div>
-			<label htmlFor='minCommonTags'>Minimum common tags</label>
-			<input type='number' name='minCommonTags' value={minCommonTags} min='0' max='16' onChange={event => eventHandler(event, setMinCommonTags)} />
-		</div>
-		<div>
+	return (
+		<div style={filterWindow}>
+			<div>
+				<label htmlFor='sort'>Sort by:</label>
+				<select className="custom-select" name='sort' value={sort} onChange={event => setSort(event.target.value)}>
+					{sortingMethodOptions}
+				</select>
+			</div><br />
+			<label htmlFor='distance'>Maximum distance: {distanceDisplay} km</label>
+			<Rcslider
+				step={1}
+				value={distance}
+				min={0}
+				max={501}
+				onChange={value => distanceHandler(value, setDistance)}
+			/> <br />
+			{/* <input type='range' name='distance' value={distance} max='9000' onChange={event => eventHandler(event, setDistance)} /> */}
+
+			<div>Age range: {minAge} - {maxAge}</div>
+			<Range
+				step={1}
+				value={[minAge, maxAge]}
+				min={16}
+				max={99}
+				onChange={values => rangeEventHandler(values, setMinAge, setMaxAge)}
+			/> <br />
+			{/* <div>
+				<label htmlFor='minAge'>Minimum age</label>
+				<input type='number' name='minAge' value={minAge} min='16' onChange={event => eventHandler(event, setMinAge)} />
+			</div>
+			<div>
+				<label htmlFor='minAge'>Maximum age</label>
+				<input type='number' name='maxAge' value={maxAge} max='99' onChange={event => eventHandler(event, setMaxAge)} />
+			</div> */}
+			<div>
+				<label htmlFor='minCommonTags'>Minimum common tags</label>
+				<select className="form-control" type='number' name='minCommonTags' value={minCommonTags} onChange={event => eventHandler(event, setMinCommonTags)}>
+					<option>0</option>
+					<option>1</option>
+					<option>2</option>
+					<option>3</option>
+					<option>4</option>
+					<option>5</option>
+				</select>
+			</div> <br />
+			{/* <div>
+				<label htmlFor='tagSearch'>Tag search</label>
+				<input type='text' name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
+				<button onClick={() => setTagSearch(tagSearchInput)}>Search</button>
+				<button onClick={() => {setTagSearch(''); setTagSearchInput('');}}>Reset</button>
+			</div> */}
+			
 			<label htmlFor='tagSearch'>Tag search</label>
-			<input type='text' name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
-			<button onClick={() => setTagSearch(tagSearchInput)}>Search</button>
-			<button onClick={() => {setTagSearch(''); setTagSearchInput('');}}>Reset</button>
+			<div class="input-group">
+	
+				<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="button" onClick={() => setTagSearch(tagSearchInput)}>Search</button>
+				</div>
+				<div class="input-group-append">
+					<button class="btn btn-danger" type="button" onClick={() => {setTagSearch(''); setTagSearchInput('');}}>Reset</button>
+				</div>
+			</div>
 		</div>
-		</>
 	);
 };
 

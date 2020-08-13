@@ -39,11 +39,11 @@
 
 #suggestionContainer
 {
-  background-color: gray;
+  background-color: 'transparent';
 }
 
 #searchContainer
 {
 
-  background-color: lightgray;
+  background-color: 'transparent';
 }

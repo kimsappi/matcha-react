@@ -22,20 +22,18 @@ const get = (req, res, next) => {
 		res.json(null);
 
 	const selectvisitor = 'visitor.username AS visitorUsername, visitor.fame AS visitorFame, visitor.id AS visitor, visitor.first_name as visitorFName, visitor.last_name as visitorLName, \
-	visitor.latitude as visitorLat, visitor.longitude as visitorLon, visitor.main_pic AS visitorPic, visitorPhoto.extension AS visitorPhoto';
+	visitor.latitude as visitorLat, visitor.longitude as visitorLon, visitor.main_pic AS visitorPic, visitor.filename AS visitorPhoto';
 	const selectvisitee = selectvisitor.split("visitor").join("visitee");
 	const select = selectvisitor + ', ' + selectvisitee;
 
 	const query = 'SELECT ' + select + ' FROM visits \
-		INNER JOIN users AS visitor ON visitor.id = visits.visitor \
-		INNER JOIN users AS visitee ON visitee.id = visits.visitee \
-		INNER JOIN user_photos AS visitorPhoto ON visitorPhoto.id = visitor.main_pic \
-		INNER JOIN user_photos AS visiteePhoto ON visiteePhoto.id = visitee.main_pic \
+		INNER JOIN user_and_main_photo AS visitor ON visitor.id = visits.visitor \
+		INNER JOIN user_and_main_photo AS visitee ON visitee.id = visits.visitee \
 		WHERE visits.visitor = ? OR visits.visitee = ?;'
 		//ORDER BY FIELD(visitor, ?);'
 		// INNER JOIN user_and_main_photo AS 
 	console.log(query);
-	const preparedQuery = mysql.format(query, [req.user.id, req.user.id, req.user.id, req.user.id]);
+	const preparedQuery = mysql.format(query, [req.user.id, req.user.id]);
 	pool.query(preparedQuery, (error, results) => {
 		if (error)
 			return res.json(null);

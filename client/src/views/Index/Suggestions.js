@@ -28,7 +28,7 @@ const Suggestions = ({users, distanceFilter, minAge, maxAge, minCommonTags,
 		return (<div>There are some profiles available for you, but the current filters are too strict!</div>);
 
 	return userCards.sort((a, b) => {
-		return (a.props.profile[sort.key] - b.props.profile[sort.key]) * sort.order;
+			return (a.props.profile[sort.key] - b.props.profile[sort.key]) * sort.order;
 	});
 };
 

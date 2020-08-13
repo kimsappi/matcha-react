@@ -23,15 +23,13 @@ const get = (req, res, next) => {
 		res.json(null);
 
 	const selectLiker = 'liker.username AS likerUsername, liker.fame AS likerFame, liker.main_pic AS likerPic, liker.id AS liker, liker.first_name as likerFName, liker.last_name as likerLName, \
-	liker.latitude as likerLat, liker.longitude as likerLon, likerPhoto.extension AS likerPhoto';
+	liker.latitude as likerLat, liker.longitude as likerLon, liker.filename AS likerPhoto';
 	const selectLikee = selectLiker.split("liker").join("likee");
 	const select = selectLiker + ', ' + selectLikee;
 
 	const query = 'SELECT ' + select + ' FROM likes \
-		INNER JOIN users AS liker ON liker.id = likes.liker \
-		INNER JOIN users AS likee ON likee.id = likes.likee \
-		INNER JOIN user_photos AS likerPhoto ON likerPhoto.id = liker.main_pic \
-		INNER JOIN user_photos AS likeePhoto ON likeePhoto.id = likee.main_pic \
+		INNER JOIN user_and_main_photo AS liker ON liker.id = likes.liker \
+		INNER JOIN user_and_main_photo AS likee ON likee.id = likes.likee \
 		WHERE likes.liker = ? OR likes.likee = ?;'
 		//ORDER BY FIELD(liker, ?);'
 	console.log(query);

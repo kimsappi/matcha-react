@@ -96,7 +96,7 @@ const ProfilePreview = ({user}) => {
         if (previewState)
             return (
                 <>
-                <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px', zIndex: '-1'}}>x
+                <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px', zIndex: '-1'}}>
                 {previewState && previewState.profileData ?
                     <>
                     
@@ -123,7 +123,7 @@ const ProfilePreview = ({user}) => {
                                 : null}
                                 {console.log(image)}
                             </>
-                        )};
+                        )}
                         <p>{previewState.profileData.biography}</p>
                         {previewState && previewState.blockStatus === false ? 
                         <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
