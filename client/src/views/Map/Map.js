@@ -3,8 +3,20 @@ import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 import { getThisPage } from '../../modules/httpQueries';
 import {apiKey} from '../../apiKey.json';
 
+const coordinateRandomiser = coord => {
+	const randomComponent = (Math.random() - 0.5) * 0.05;
+	return coord + randomComponent;
+}
+
 const GeneratedMarker = ({lat, lon}) => {
-	const position = {lat: lat, lng: lon};
+	const randomisedLat = coordinateRandomiser(lat);
+	const randomisedLon = coordinateRandomiser(lon);
+	const latMagnitude = Math.abs(randomisedLat);
+	const lonMagnitude = Math.abs(randomisedLon);
+
+	const finalLat = latMagnitude > 90 ? 89.99 * latMagnitude / randomisedLat : randomisedLat;
+	const finalLon = lonMagnitude > 180 ? 179.99 * lonMagnitude / randomisedLon : randomisedLon;
+	const position = {lat: finalLat, lng: finalLon};
 
 	return (
 		<Marker
@@ -45,7 +57,6 @@ const UserMap = () => {
 	}, []);
 
 	const generatedMarkers = userLocations.map((location, index) => {
-		console.log(location);
 		return (
 			<GeneratedMarker lat={location.latitude} lon={location.longitude} key={index} />
 		)
