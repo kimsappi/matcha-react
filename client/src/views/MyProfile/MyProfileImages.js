@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 
 import MyProfileImage from './MyProfileImage';
 import {Popup} from '../../components/Popup';
-import Form from 'react-bootstrap/Form';
 import {uploadPhoto} from '../../modules/httpQueries';
 import {generateImageUrl} from '../../modules/httpQueries';
 
