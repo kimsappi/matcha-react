@@ -5,7 +5,7 @@ import {getConnections} from '../../modules/httpQueries';
 import Connection from './Connection';
 import Chatwindow from './Chatwindow';
 
-
+/* eslint-disable no-lone-blocks */
 
 const Chat= ({socket}) => {
 
@@ -114,7 +114,7 @@ function openConnections()
     var connections = document.getElementById('connections');
     console.log(connections);
     console.log("asd");
-    if (connections.style.display == 'none')
+    if (connections.style.display === 'none')
         connections.style.display = 'block'
     else
         connections.style.display = 'none'

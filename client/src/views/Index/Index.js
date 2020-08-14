@@ -3,15 +3,12 @@ import React, {useState, useEffect} from 'react';
 import Suggestions from './Suggestions';
 import Filters from './Filters';
 import {getThisPage, submitConfirmEmailOrResetPassword, parseSearchString, submit42Code, loginResponseHandler} from '../../modules/httpQueries';
-import PopupTest from './PopupTest';
 import UserCard from './UserCard';
 import ProfilePreview from './ProfilePreview';
 import {getUser} from '../../modules/userData';
-import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import {sortingMethods} from '../../config.json';
-import { Redirect } from 'react-router-dom';
 
 const Index = ({state, action, setPopupState, setState}) => {
 	const userData = getUser();

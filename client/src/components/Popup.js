@@ -20,7 +20,6 @@ export const Popup = ({children, setPopupState}) => {
 		height: 'fit-content',
 		maxHeight: '93%',
 		maxWidth: '93%',
-		zIndex: '23',
 		backgroundColor: 'white',
 		position: 'fixed',
 		borderRadius: '10px',

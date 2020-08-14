@@ -1,8 +1,4 @@
-import React, {useEffect, useState, forEach} from 'react';
-
-import {getToken} from '../../modules/userData';
-
-import {getThisPage} from '../../modules/httpQueries';
+import React from 'react';
 
 const ChatMessages = (({messages, otherUser, mostRecentMessage}) => {
 

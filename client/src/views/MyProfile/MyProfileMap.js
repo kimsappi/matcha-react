@@ -10,6 +10,7 @@ const containerStyle = {
 const MyProfileMap = ({lat, lon, setLat, setLon}) => {
 	const [mapCentre, setMapCentre] = useState({lat: 0, lng: 0});
 
+	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		setMapCentre({lat: parseFloat(lat), lng: parseFloat(lon)});
 	}, []);
