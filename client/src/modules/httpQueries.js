@@ -112,7 +112,13 @@ export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
 	});	
 };
 
-export const sendMyProfileData = (firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick) => {
+export const sendMyProfileData = (event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick) => {
+	event.preventDefault();
+	if (!event.target.checkValidity()) {
+		event.target.reportValidity();
+		return;
+	}
+	
 	const url = baseUrl + '/myProfile/profile';
 	const reqBody = {
 		firstName: firstName,

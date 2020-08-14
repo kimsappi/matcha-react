@@ -21,7 +21,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
     const [tags, setTags] = useState(profile.tags);
 
     return (
-        <>
+        <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>
         <br />
         <TagsInput tags={tags} setTags={setTags} />
         <br /> <br />
@@ -31,6 +31,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='First name'
             state={firstName}
             setState={setFirstName}
+            pattern="[\p{L}\-]{2,}"
+            required={true}
         />
         <InputWithLabel
             type='text'
@@ -38,6 +40,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Last name'
             state={lastName}
             setState={setLastName}
+            pattern="[\p{L}\-]{2,}"
+            required={true}
         />
         <InputWithLabel
             type='email'
@@ -45,6 +49,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Email'
             state={email}
             setState={setEmail}
+            required={true}
         />
         <InputWithLabel
             type='number'
@@ -53,7 +58,10 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             state={age}
             setState={setAge}
             step='1'
+            max='99'
+            min='16'
             integer={true}
+            required={true}
         />
         {/* <InputWithLabel
             type='number'
@@ -107,9 +115,9 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
 
 
 
-        <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>OK</Button>
+        <input class='button' type='submit' name='submit' value='OK' />
         {rerenderTrick ? ' ' : ''}
-        </>
+        </form>
         );
 }
 
