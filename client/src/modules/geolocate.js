@@ -5,8 +5,8 @@ export const userGeolocation = () => {
 				return;
 			else {
 				localStorage.setItem('coordinates', JSON.stringify({
-					latitude: position.coords.longitude,
-					longitude: position.coords.latitude
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude
 				}));
 			}
 		});
@@ -16,7 +16,7 @@ export const userGeolocation = () => {
 export const getGeolocation = () => {
 	const coords = localStorage.getItem('coordinates');
 	localStorage.removeItem('coordinates');
-	
+
 	if (!coords)
 		return {
 			latitude: null,
