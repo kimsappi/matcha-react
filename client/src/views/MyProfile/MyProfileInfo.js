@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioWithLabel from '../../components/RadioWithLabel';
 import TagsInput from './TagsInput';
+import MyProfileMap from './MyProfileMap';
 
 import {sendMyProfileData} from '../../modules/httpQueries';
 
@@ -54,7 +55,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             step='1'
             integer={true}
         />
-        <InputWithLabel
+        {/* <InputWithLabel
             type='number'
             name='latitude'
             label='Latitude'
@@ -69,6 +70,11 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             state={longitude}
             setState={setLongitude}
             step='0.0001'
+        /> */}
+        <div>Location</div>
+        <MyProfileMap
+            lat={latitude} lon={longitude}
+            setLat={setLatitude} setLon={setLongitude}
         />
         <div>Gender</div>
         <RadioWithLabel
