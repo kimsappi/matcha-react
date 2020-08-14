@@ -58,27 +58,9 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             state={age}
             setState={setAge}
             step='1'
-            max='99'
-            min='16'
             integer={true}
             required={true}
         />
-        {/* <InputWithLabel
-            type='number'
-            name='latitude'
-            label='Latitude'
-            state={latitude}
-            setState={setLatitude}
-            step='0.0001'
-        />
-        <InputWithLabel
-            type='number'
-            name='longitude'
-            label='Longitude'
-            state={longitude}
-            setState={setLongitude}
-            step='0.0001'
-        /> */}
         <div>Location</div>
         <MyProfileMap
             lat={latitude} lon={longitude}
@@ -115,8 +97,6 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             setState={setBiography}
             required={true}
         /> <br />
-
-
 
         <input className='button' type='submit' name='submit' value='OK' />
         {rerenderTrick ? ' ' : ''}
