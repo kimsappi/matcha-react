@@ -30,6 +30,10 @@ const Filters = ({distance, setDistance,
 		}
 	};
 
+	const tagEventHandler = (event, setTagSearchInput) => {
+		setTagSearchInput(event.target.value.replace(/[#+]/g, ''));
+	};
+
 	const sortingMethodOptions = sortingMethods.map((method, index) => {
 		return (
 			<option value={index} key={method.name}>{method.display}</option>
@@ -96,7 +100,7 @@ const Filters = ({distance, setDistance,
 			<label htmlFor='tagSearch'>Tag search</label>
 			<div className="input-group">
 	
-				<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
+				<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name='tagSearch' value={'#' + tagSearchInput} onChange={event => tagEventHandler(event, setTagSearchInput)} />
 				<div className="input-group-append">
 					<button className="btn btn-primary" type="button" onClick={() => setTagSearch(tagSearchInput)}>Search</button>
 				</div>

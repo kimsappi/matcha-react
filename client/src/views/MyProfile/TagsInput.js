@@ -27,7 +27,8 @@ const TagsInput = ({tags, setTags}) => {
 			{singleTags}
 			<br /><label>Add a tag!</label>
 			<div className="input-group">
-  				#<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={newTag} onChange={event => setNewTag(event.target.value)} />
+  				<span style={{position: 'relative', left: '20px'}}>#</span>
+				<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={'#' + newTag} onChange={event => setNewTag(event.target.value.replace(/[#+]/g, ''))} />
 				<div className="input-group-append">
 					<button className="btn btn-success" type="button" onClick={() => {if (newTag.length) {setTags([...tags, newTag]); setNewTag('');}}}>Add!</button>
 				</div>

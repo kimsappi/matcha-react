@@ -48,17 +48,15 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 			});
 	}
 
-	const getNotificationsViaLongPolling = () => {
-		//console.log(notifications)
-		getThisPage('/myProfile/longNotifications')
-			.then(results => {
-				console.warn(notifications.length)
-				if (results) {
-					setNotifications(notifications.concat(results));
-				}
-				//getNotificationsViaLongPolling(notifications);
-			});
-	};
+	// const getNotificationsViaLongPolling = () => {
+	// 	getThisPage('/myProfile/longNotifications')
+	// 		.then(results => {
+	// 			if (results) {
+	// 				setNotifications(notifications.concat(results));
+	// 			}
+	// 			//getNotificationsViaLongPolling(notifications);
+	// 		});
+	// };
 
 	useEffect(() => {
 		getNotifications(false);
@@ -71,7 +69,6 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 		//getNotificationsViaLongPolling();
 		getThisPage('/myProfile/longNotifications')
 			.then(results => {
-				console.warn(notifications.length)
 				if (results) {
 					setNotifications(notifications => [...notifications, ...results]);
 				}
