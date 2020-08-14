@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Button} from 'react-bootstrap';
 
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioWithLabel from '../../components/RadioWithLabel';
@@ -32,7 +31,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='First name'
             state={firstName}
             setState={setFirstName}
-            pattern="[\p{L}\-]{2,32}"
+            pattern="[\p{L}\-']{2,32}"
             required={true}
         />
         <InputWithLabel
@@ -41,7 +40,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Last name'
             state={lastName}
             setState={setLastName}
-            pattern="[\p{L}\-]{2,32}"
+            pattern="[\p{L}\-']{2,32}"
             required={true}
         />
         <InputWithLabel
@@ -58,6 +57,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Age'
             state={age}
             setState={setAge}
+            max={99}
+            min={16}
             step='1'
             integer={true}
             required={true}

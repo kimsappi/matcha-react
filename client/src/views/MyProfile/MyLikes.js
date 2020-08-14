@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Table from 'react-bootstrap/Table';
 import ProfileNav from './ProfileNav';
 import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';
@@ -18,9 +16,6 @@ const MyLikes = ({state, setState}) => {
     const [previewImage, modifyPreviewImage] = useState(null);
     const [imagePopupState, modifyImagePopupState] = useState(false);
     const [rerenderTrick, setRerenderTrick] = useState(false);
-
-    
-    var arr = []; 
 
     var blockFilter = {display: 'block'};
     if (previewState)

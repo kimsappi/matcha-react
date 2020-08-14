@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
 
 // Databasen 'likes' tableen lisattava id columni, jotta key helpompi saada uniikiksi.

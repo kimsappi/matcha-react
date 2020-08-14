@@ -33,7 +33,7 @@ const validateEmail = (email) => {
 };
 
 const validateName = (name) => {
-	const re = /^([A-Za-z\-]){2,32}$/;
+	const re = /^[\p{L}\-']{2,32}$/u;
 	return re.test(name);
 };
 

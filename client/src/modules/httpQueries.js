@@ -1,13 +1,10 @@
-import React from 'react';
 import axios from 'axios';
-import io from 'socket.io-client';
 
 import {setUser, setToken} from './userData';
 import {getToken} from './userData';
 import {getGeolocation} from './geolocate';
 
 import {likeButtonStrings} from '../config.json';
-import { Redirect } from 'react-router-dom';
 
 const baseUrl = 'http://localhost:3001';
 
@@ -15,7 +12,7 @@ const baseUrl = 'http://localhost:3001';
 // Can be used with 2 arguments: (id, extension) or 1: (filename)
 export const generateImageUrl = (id, extension) => {
 	if (id === 'placeholder.png' || !id || id === 'null')
-		return baseUrl + '/img/' + 'placeholder.png';
+		return baseUrl + '/img/placeholder.png';
 	const dirUrl = baseUrl + '/img/userPhotos/';
 	console.log("GENERATED PHOTO AS ::: " + id + "." + extension);
 	if (typeof extension === 'undefined')

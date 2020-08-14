@@ -19,17 +19,17 @@ const TagsInput = ({tags, setTags}) => {
 	};
 
 	const singleTags = tags.map((tag, index) =>
-		<SingleTag tag={tag} index={index} tagRemoval={tagRemoval} />
+		<SingleTag tag={tag} index={index} tagRemoval={tagRemoval} key={tag + index} />
 	);
 
 	return (
 		<>
 			{singleTags}
 			<br /><label>Add a tag!</label>
-			<div class="input-group">
-  				#<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={newTag} onChange={event => setNewTag(event.target.value)} />
-				<div class="input-group-append">
-					<button class="btn btn-success" type="button" onClick={() => {if (newTag.length) {setTags([...tags, newTag]); setNewTag('');}}}>Add!</button>
+			<div className="input-group">
+  				#<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={newTag} onChange={event => setNewTag(event.target.value)} />
+				<div className="input-group-append">
+					<button className="btn btn-success" type="button" onClick={() => {if (newTag.length) {setTags([...tags, newTag]); setNewTag('');}}}>Add!</button>
 				</div>
 			</div>
 			<br />

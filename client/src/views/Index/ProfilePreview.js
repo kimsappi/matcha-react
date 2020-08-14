@@ -3,7 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {getThisPage, generateImageUrl, submitLike} from '../../modules/httpQueries';
 import {Popup} from '../../components/Popup';
 
-
+/* eslint-disable */
 const ProfilePreview = ({user, stateChange, setStateChange}) => {
 
     const [previewState, modifyPreviewState] = useState(user);

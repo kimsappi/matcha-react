@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 
 import Nav from './components/Nav';
-import { Redirect } from 'react-router-dom';
 
 const CollapsedNotificationCount = ({count}) => {
 	const collapsedNotificationsNotifierStyle = {
