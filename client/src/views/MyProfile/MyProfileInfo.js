@@ -4,6 +4,7 @@ import {Button} from 'react-bootstrap';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioWithLabel from '../../components/RadioWithLabel';
 import TagsInput from './TagsInput';
+import MyProfileMap from './MyProfileMap';
 
 import {sendMyProfileData} from '../../modules/httpQueries';
 
@@ -20,7 +21,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
     const [tags, setTags] = useState(profile.tags);
 
     return (
-        <>
+        <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>
         <br />
         <TagsInput tags={tags} setTags={setTags} />
         <div> </div> 
@@ -49,6 +50,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Email'
             state={email}
             setState={setEmail}
+            required={true}
         />
         <InputWithLabel
             type='number'
@@ -58,22 +60,12 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             setState={setAge}
             step='1'
             integer={true}
+            required={true}
         />
-        <InputWithLabel
-            type='number'
-            name='latitude'
-            label='Latitude'
-            state={latitude}
-            setState={setLatitude}
-            step='0.0001'
-        />
-        <InputWithLabel
-            type='number'
-            name='longitude'
-            label='Longitude'
-            state={longitude}
-            setState={setLongitude}
-            step='0.0001'
+        <div>Location</div>
+        <MyProfileMap
+            lat={latitude} lon={longitude}
+            setLat={setLatitude} setLon={setLongitude}
         />
         <div>Gender</div>
         <RadioWithLabel
@@ -84,6 +76,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
                 {label: 'Man', value: 'm'},
                 {label: 'Woman', value: 'f'}
             ]}
+            required={true}
         />  <br />
         <div>Looking for</div>
         <RadioWithLabel
@@ -95,6 +88,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
                 {label: 'Both', value: 'fm', checked: (target, value) => target.length === 2},
                 {label: 'Women', value: 'f'}
             ]}
+            required={true}
         /> <br />
         <InputWithLabel
             type='textarea'
@@ -102,13 +96,12 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Biography'
             state={biography}
             setState={setBiography}
+            required={true}
         /> <br />
 
-
-
-        <Button onClick={() => sendMyProfileData(firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>OK</Button>
+        <input className='button' type='submit' name='submit' value='OK' />
         {rerenderTrick ? ' ' : ''}
-        </>
+        </form>
         );
 }
 
