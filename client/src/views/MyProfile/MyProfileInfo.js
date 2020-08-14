@@ -23,7 +23,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
         <>
         <br />
         <TagsInput tags={tags} setTags={setTags} />
-        <br /> <br />
+        <div> </div> 
+        <div />
         <InputWithLabel
             type='text'
             name='firstName'
