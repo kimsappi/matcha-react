@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioWithLabel from '../../components/RadioWithLabel';
@@ -7,18 +7,7 @@ import MyProfileMap from './MyProfileMap';
 
 import {sendMyProfileData} from '../../modules/httpQueries';
 
-const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {	
-    const [firstName, setFirstName] = useState(profile.userData.first_name);
-    const [lastName, setLastName] = useState(profile.userData.last_name);
-    const [age, setAge] = useState(profile.userData.age);
-    const [latitude, setLatitude] = useState(profile.userData.latitude);
-    const [longitude, setLongitude] = useState(profile.userData.longitude);
-    const [email, setEmail] = useState(profile.userData.email);
-    const [gender, setGender] = useState(profile.userData.gender);
-    const [target, setTarget] = useState(profile.userData.target_genders);
-    const [biography, setBiography] = useState(profile.userData.biography);
-    const [tags, setTags] = useState(profile.tags);
-
+const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName, lastName, setLastName, age, setAge, latitude, setLatitude, longitude, setLongitude, email, setEmail, gender, setGender, target, setTarget, biography, setBiography, tags, setTags}) => {
     return (
         <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>
         <br />
@@ -101,7 +90,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
         /> <br />
 
         <input className='button btn btn-primary' type='submit' name='submit' value='OK' />
-        {rerenderTrick ? ' ' : ''}
+        {rerenderTrick ? 'a' : 'b'}
         </form>
         );
 }
