@@ -46,13 +46,14 @@ const UserCard = ({profile, preview}) => {
 					
 				</div>
 				<div className="col-sm-6" style={cardInfo}>
-					{profile.distance < 1000 ? <p style={{color: 'green'}}>Very close to you!</p> : profile.distance < 10000 ? <p style={{color: 'yellow'}}>In the same city</p> : <p style={{color: 'red'}}>In another city</p>}
-					<p style={{display: 'inline'}}>Distance: {profile.distance < 1000 ? "less than a " : Number((profile.distance/1000).toFixed(0))} </p> <p style={{display: 'inline'}}>km</p>
+					{profile.distance < 1 ? <p style={{color: 'green'}}>Very close to you!</p> : profile.distance < 10 ? <p style={{color: 'yellow'}}>In the same city</p> : <p style={{color: 'red'}}>In another city</p>}
+					<p style={{display: 'inline'}}>Distance: {profile.distance < 1 ? "less than a " : Number((profile.distance).toFixed(0))} </p> <p style={{display: 'inline'}}>km</p>
 					<p>Rating: {Number((profile.matchRating).toFixed(0))} points!</p>
 					<div>Common tags: {profile.commonTags}</div>
 				</div>
 			</div>
 		</button>
+		{console.log(profile.distance)}
 		<br />
 		</>
 	);

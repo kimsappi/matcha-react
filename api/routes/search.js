@@ -52,10 +52,12 @@ const filterProfiles = (profiles, params, user) => {
 const get = (req, res, next) => {
 	// User is not logged in
 	//console.log(req.user);
+	
 	if (!req.user)
 		return res.json(null);
 	const query = mysql.format('SELECT * FROM user_and_main_photo WHERE id = ?;', [req.user.id]);
 	//console.log(query);
+	
 	pool.query(query, (error, result) => {
 		if (error || !result)
 			return res.json(null);
@@ -64,11 +66,17 @@ const get = (req, res, next) => {
 		const myData = result[0];
 		if (!myData.gender)
 			return res.json('gender not set');
+			
 		const genderQueries = getGenderQueries(myData);
-		const usersQuery = mysql.format(`SELECT * FROM user_and_main_photo WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ?;`, [req.user.id]);
-		pool.query(usersQuery, (error, results) => {
+		const usersQuery = mysql.format(`SELECT * FROM user_and_main_photo \
+
+		 WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ? AND NOT EXISTS (SELECT * FROM likes WHERE likes.liker=? AND likes.likee=user_and_main_photo.id);`, [req.user.id, req.user.id]);
+		console.log(usersQuery);
+		
+		 pool.query(usersQuery, (error, results) => {
 			if (error)
 				return res.json(null);
+				console.log("######################################JEES");
 			return res.json(filterProfiles(results, req.params, result[0]));
 		});
 	});

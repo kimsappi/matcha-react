@@ -29,7 +29,7 @@ const router = express.Router();
 
 // Public routes
 
-// index.js
+// search.js
 router.get('/', function(req, res, next) {
 	search.get(req, res, next);
 });

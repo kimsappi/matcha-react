@@ -97,7 +97,8 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
                     <>
                     
                         <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
-                        <h3>{previewState.gender}</h3>
+                        <h3 style={{lineHeight: '1px'}}>{previewState.gender}</h3>
+                        <h6 style={{color: 'red'}}>Fame: {previewState.profileData.fame}</h6>
                         
                         {previewState ? 
                                 previewState.blockStatus === true ? 
@@ -110,19 +111,19 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
                                 <img src={generateImageUrl(previewState.profileData.filename)} style={mainPicStyle}/>
                             </button>
                         </div>
-                        {previewState.images.map( (image) => 
-                            <>
+                        {previewState.images.map( (image, index) => 
+                            <div key={index} style={{display: 'inline'}}>
                                 {image !== previewState.profileData.filename ?
                                 <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
                                     <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                 </button>
                                 : null}
-                            </>
+                            </div>
                         )}
                         <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p> <br />
                         {previewState.profileData.tags_string ?
                         <>
-                            <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
+                            {previewState.profileData.tags_string.split(',').map((tag, index) => <h5 key={index} style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)} <br />
                         </>
                         : ''}
                         {previewState && previewState.blockStatus === false ? 

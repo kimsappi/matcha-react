@@ -138,7 +138,8 @@ const MyLikes = ({state, setState}) => {
                             <>
                             
                                 <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
-                                <h3>{previewState.gender}</h3>
+                                <h3 style={{lineHeight: '1px'}}>{previewState.gender}</h3>
+                                <h6 style={{color: 'red'}}>Fame: {previewState.profileData.fame}</h6>
                                 {previewState ? 
                                 previewState.blockStatus === true ? 
                                 <h1 style={{position: 'relative', top: '14px', textAlign: 'center', fontWeight: 'bolder', fontSize: '60px', color: 'red'}}>BLOCKED</h1> : ""
