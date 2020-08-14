@@ -20,7 +20,6 @@ export const Popup = ({children, setPopupState}) => {
 		height: 'fit-content',
 		maxHeight: '93%',
 		maxWidth: '85%',
-		zIndex: '23',
 		backgroundColor: 'white',
 		position: 'fixed',
 		borderRadius: '10px',
@@ -29,7 +28,7 @@ export const Popup = ({children, setPopupState}) => {
 		top: '50%',
 		left: '45%',
 		transform: 'translate(-50%, -50%)',
-		zIndex: 998
+		zIndex: '998'
 	};
 
 	const closeButton =
@@ -44,7 +43,7 @@ export const Popup = ({children, setPopupState}) => {
 		border: '1px solid gray',
 		boxShadow: '6px 6px 29px -1px rgba(0, 0, 0, 1)',
 		cursor: 'pointer',
-		zIndex: 999
+		zIndex: '999'
 	}
 
 	const button = 

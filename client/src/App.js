@@ -8,11 +8,9 @@ import Index from './views/Index/Index';
 import MyProfile from './views/MyProfile/MyProfile';
 import MyLikes from './views/MyProfile/MyLikes';
 import MyVisits from './views/MyProfile/MyVisits';
-import Profile from './views/Profile/Profile';
 import Map from './views/Map/Map';
 
 import Chat from './views/Chat/Chat';
-import CHATTEST from './CHATTEST';
 
 import {getUser} from './modules/userData';
 
@@ -20,7 +18,6 @@ import {getToken} from './modules/userData';
 
 function App() {
   let user = getUser();
-  console.log(user);
 
   const [state, setState] = useState(user);
   const [popupState, setPopupState] = useState(false);
@@ -28,7 +25,6 @@ function App() {
   
   // Logging in to the web socket thing..
 
-  console.log(getToken() );
   let socket = null;
 
   useEffect(() => {
@@ -64,8 +60,6 @@ function App() {
             <MyVisits setState={setState} state={state} />
           </Route>
 
-          <Route path='/profile/:id' component={Profile} />
-
           <Route path='/confirmEmail'>
             <Index state={state} action='confirmEmail' setPopupState={setPopupState} />
           </Route>
@@ -80,10 +74,6 @@ function App() {
 
           <Route path='/apiRegister'>
             <Index state={state} action='apiRegister' setPopupState={setPopupState} />
-          </Route>
-
-          <Route path='/CHATTEST'>
-            <CHATTEST />
           </Route>
 
           <Route path='/map'>

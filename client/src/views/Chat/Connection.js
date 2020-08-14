@@ -7,7 +7,7 @@ const Connection = ({connections, chat, setChat, chatWindow, setChatWindow, setC
 {
     return(
         connections.map( (connection) => 
-            <>
+            <div key={connection.username}>
             {connection.online ? 
             <>
                 <button className="btn btn-secondary" style={{width: '100%', marginBottom: '3px', justifyContent: 'center'}} onClick={() => {setChatUsername(connection.username); setChat(connection.id); {chat === connection.id ? setChatWindow(!chatWindow) : (chat === null ? setChatWindow(!chatWindow) : (chatWindow == true ? setChatWindow(chatWindow) : setChatWindow(!chatWindow)))}}}>
@@ -29,7 +29,7 @@ const Connection = ({connections, chat, setChat, chatWindow, setChatWindow, setC
                 <br/>
             </>
             }
-            </>
+            </div>
         )
         
     )

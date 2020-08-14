@@ -32,7 +32,6 @@ const get = (req, res, next) => {
 		WHERE visits.visitor = ? OR visits.visitee = ?;'
 		//ORDER BY FIELD(visitor, ?);'
 		// INNER JOIN user_and_main_photo AS 
-	console.log(query);
 	const preparedQuery = mysql.format(query, [req.user.id, req.user.id]);
 	pool.query(preparedQuery, (error, results) => {
 		if (error)

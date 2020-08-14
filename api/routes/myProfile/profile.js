@@ -6,7 +6,6 @@ const {generateJWT} = require('../../modules/authentication');
 
 const get = (req, res, next) => {
 	// User is not logged in
-	console.log(req.user);
 	if (!req.user)
 		return res.json(null);
 
@@ -38,17 +37,13 @@ const get = (req, res, next) => {
 };
 
 const post = (req, res, next) => {
-	console.log(req.body);
 	// User is not logged in
 	if (!req.user)
 		return res.json(null);
 
-	console.log(req.user);
-
 	// Profile is not filled completely/correctly
 	if (!validateMyProfileData(req.body))
 		return res.json(null);
-	console.log('passed validation');
 
 	// Remove duplicate and empty tags
 	const tags = parseTags(req.body.tags);
@@ -56,7 +51,6 @@ const post = (req, res, next) => {
 	// Check if input coordinates are valid and update them if necessary
 	// If input is invalid, updatedCoordinates will be empty
 	const updatedCoordinates = validateCoordinates(req.body);
-	//console.log('passed coords');
 	
 	// Query first updates the users table, then flushes all of the user's
 	// tags from the tags table and adds fresh entries to the tags table
@@ -73,8 +67,7 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 			req.body.gender, req.body.target, req.body.biography,
 			parseInt(req.body.age), req.user.id, req.user.id
 		]
-	);	
-	console.log(preparedQuery);
+	);
 
 	let newTokenData = {
 		user: req.user.user,
@@ -91,7 +84,6 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 
 	pool.query(preparedQuery, (error) => {
 		if (error) {
-			//console.log(error);
 			return res.json(null);
 		}
 		else
@@ -105,8 +97,6 @@ const generateTagsQuery = (tags, id) => {
 
 	const insertStrings = tags.map(element => "('" + element + "', " + id + ')');
 	const insertStringsJoined = insertStrings.join(',');
-	console.log("TTEEESSTTT############");
-console.log(insertStrings);
 	return `INSERT INTO tags(string, user) VALUES ` + insertStringsJoined + ';';
 };
 

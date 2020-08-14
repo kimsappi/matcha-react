@@ -20,7 +20,6 @@ const returnMeEndpoint = (code, action) => {
 		})
 			.then(response => response.json())
 			.then(response => {
-				console.log(response);
 				fetch('https://api.intra.42.fr/v2/me?access_token=' + response.access_token)
 					.then(response => response.json())
 					.then(response => resolve(response))
@@ -31,13 +30,10 @@ const returnMeEndpoint = (code, action) => {
 };
 
 const register = (req, res, next) => {
-	console.log(req.body);
 	if (!req.body.code)
 		res.json(null);
 
 	returnMeEndpoint(req.body.code, 'Register')
-		//.then(apiResponse => console.log(apiResponse))
-		//.catch(error => console.log(error));
 		.then(apiResponse => res.json({
 			action: 'register',
 			username: apiResponse.login,
@@ -48,14 +44,12 @@ const register = (req, res, next) => {
 };
 
 const login = async (req, res, next) => {
-	console.log(req.body);
 	if (!req.body.code)
 		res.json(null);
 
 
 	const apiResponse = await returnMeEndpoint(req.body.code, 'Login');
 
-	console.log(apiResponse);
 	const query = 'SELECT * FROM user_and_main_photo WHERE email = ?;';
 	const preparedQuery = mysql.format(query, [apiResponse.email]);
 

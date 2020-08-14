@@ -10,7 +10,6 @@ const post = (req, res, next) => {
 		randomQuery = "\`online\` = 0, login_id = '" + Math.random().toString(36).slice(2) + "'";
 
 	const query = mysql.format('UPDATE users SET ' + randomQuery + ' WHERE id = ?;', [req.user.id]);
-	console.log(query);
 	pool.query(query, (error, results) => {
 		if (error)
 			return res.json(null);

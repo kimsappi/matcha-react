@@ -79,13 +79,9 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
 
     const [rerenderTrick, setRerenderTrick] = useState(false);
 
-    console.log(previewState);
     useEffect(() => {
-        console.log(previewState);
-        console.log(rerenderTrick);
         if (user)
         {
-            console.log("jees")
             getThisPage('/profile/'+user.profileData.id)
                 .then(response => {
                     modifyPreviewState(response);
@@ -121,7 +117,6 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
                                     <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                 </button>
                                 : null}
-                                {console.log(image)}
                             </>
                         )}
                         <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p> <br />

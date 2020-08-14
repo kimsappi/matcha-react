@@ -26,9 +26,6 @@ const Index = ({state, action, setPopupState, setState}) => {
 	const [previewProfile, setPreviewProfile] = useState(null);
 	const [stateChange, setStateChange] = useState(false);
 
-	if (previewProfile)
-		console.log("EKA CONSOLE"+previewProfile.profileData.id);
-
 	if (action === 'resetPassword')
 		setPopupState('resetPassword');
 
@@ -41,7 +38,6 @@ const Index = ({state, action, setPopupState, setState}) => {
 	useEffect(() => {
 		if (action === 'confirmEmail') {
 			const searchObj = parseSearchString(window.location.search);
-			console.log(searchObj);
 			if (!searchObj || !searchObj.user || !searchObj.token)
 				return;
 			if (submitConfirmEmailOrResetPassword(searchObj, action)) {
@@ -66,8 +62,6 @@ const Index = ({state, action, setPopupState, setState}) => {
 		else if (!action)
 			getThisPage(window.location.pathname)
 				.then(response => {
-					console.log('/ search response:');
-					console.log(response);
 					response = response || [];
 					setUsers(generateUserCards(response));
 				});
@@ -78,7 +72,6 @@ const Index = ({state, action, setPopupState, setState}) => {
 		{
 			getThisPage('/profile/'+previewId)
 				.then(response => {
-					console.log(response);
 					setPreviewProfile(response);
 				});
 		}

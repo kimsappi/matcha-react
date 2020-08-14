@@ -35,7 +35,7 @@ const post = (req, res, next) => {
 	
 	pool.query(preparedQuery, (error, results) => {
 		if (error)
-			console.error(error);
+			return;
 		else if (results.affectedRows)
 			sendEmail(req.body.email, 'Matcha | Reset password', emailContent, true)
 	});

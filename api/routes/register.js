@@ -54,7 +54,6 @@ const post = (req, res, next) => {
 			(error, results, fields) => {
 				// Insert failed probably because of email/username clash
 				if (error) {
-					console.log('error',error);
 					return res.json(null);
 				}
 				else {

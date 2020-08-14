@@ -94,14 +94,14 @@ const Filters = ({distance, setDistance,
 			</div> */}
 			
 			<label htmlFor='tagSearch'>Tag search</label>
-			<div class="input-group">
+			<div className="input-group">
 	
-				<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
-				<div class="input-group-append">
-					<button class="btn btn-primary" type="button" onClick={() => setTagSearch(tagSearchInput)}>Search</button>
+				<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name='tagSearch' value={tagSearchInput} onChange={event => eventHandler(event, setTagSearchInput)} />
+				<div className="input-group-append">
+					<button className="btn btn-primary" type="button" onClick={() => setTagSearch(tagSearchInput)}>Search</button>
 				</div>
-				<div class="input-group-append">
-					<button class="btn btn-danger" type="button" onClick={() => {setTagSearch(''); setTagSearchInput('');}}>Reset</button>
+				<div className="input-group-append">
+					<button className="btn btn-danger" type="button" onClick={() => {setTagSearch(''); setTagSearchInput('');}}>Reset</button>
 				</div>
 			</div>
 		</div>

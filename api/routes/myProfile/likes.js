@@ -32,7 +32,6 @@ const get = (req, res, next) => {
 		INNER JOIN user_and_main_photo AS likee ON likee.id = likes.likee \
 		WHERE likes.liker = ? OR likes.likee = ?;'
 		//ORDER BY FIELD(liker, ?);'
-	console.log(query);
 
 	const preparedQuery = mysql.format(query, [req.user.id, req.user.id, req.user.id, req.user.id]);
 	pool.query(preparedQuery, (error, results) => {

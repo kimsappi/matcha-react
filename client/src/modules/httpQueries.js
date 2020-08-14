@@ -14,7 +14,6 @@ export const generateImageUrl = (id, extension) => {
 	if (id === 'placeholder.png' || !id || id === 'null')
 		return baseUrl + '/img/placeholder.png';
 	const dirUrl = baseUrl + '/img/userPhotos/';
-	console.log("GENERATED PHOTO AS ::: " + id + "." + extension);
 	if (typeof extension === 'undefined')
 		return dirUrl + id;
 	else
@@ -31,9 +30,6 @@ const getAuthHeader = () => {
 
 export const getThisPage = relativeUrl => {
 	const url = baseUrl + relativeUrl;
-	console.log('Requesting from url:');
-	console.log(url);
-	console.log(getToken());
 	const request = axios.get(url, {headers: getAuthHeader()});
 	return request.then(response => {
 		if (response.data === 'logged out') {
@@ -77,9 +73,7 @@ export const uploadPhoto = photos => {
 	let formData = new FormData();
 	Array.prototype.forEach.call(photos, photo => {
 		formData.append('photos', photo);
-		console.log('file appended');
 	});
-	console.log(formData.getAll('photos'));
 	const request = axios.post(baseUrl + '/myProfile/pics', formData, {headers: getAuthHeader()});
 	return request.then(response => {
 		if (response.data === 'logged out') {
@@ -156,8 +150,6 @@ export const submitLike = (path, action, state, setState) => {
 		likeAction = 'like';
 	else
 		likeAction = 'unlike';
-		console.log("ASd");
-	console.error(url);
 	const request = axios.post(url, {action: likeAction},
 		{headers: getAuthHeader()});
 	request.then(response => {
@@ -181,8 +173,6 @@ export const loginResponseHandler = (data, setState, setPopupState) => {
 		return false;
 	}
 	else {
-		console.log(data);
-		console.log('asddd');
 		setUser(data.username, data.id, data.age, data.tags, true);
 		setToken(data.token);
 		setState({loggedIn: true, username: data.username, id: data.id});
@@ -283,12 +273,10 @@ export const parseSearchString = str => {
 export const getConnections = () => {
 	const request = axios.get(baseUrl + '/getConnections', {headers: getAuthHeader()})
 		return request.then(response => {
-			// console.log(response);
 			if (!response.data || response.data === 'logged out')
 				alert('Something went wrong (getConnections) (probably trying to get connections without being logged in)');
 			else
 			{
-				console.log("jees");
 				return(response.data);
 			}
 		});

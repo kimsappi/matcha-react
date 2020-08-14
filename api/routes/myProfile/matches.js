@@ -8,7 +8,6 @@ const get = (req, res, next) => {
 
     var userId = req.user.id;
     
-    console.log("asddjoo");
     const query = `SELECT users.id, users.username, users.online, users.filename
      FROM user_and_main_photo AS users INNER JOIN likes ON users.id=likes.likee 
      WHERE likes.is_match=1 AND likes.liker=?;`;

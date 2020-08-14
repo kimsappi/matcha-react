@@ -9,7 +9,6 @@ const loginFunction = (req, res, preparedQuery) => {
 	pool.query(preparedQuery, (error, results) => {
 		// Some kind of DB error
 		if (error) {
-			console.log('error',error);
 			return res.json('Database error');
 		}
 		// Login successful
@@ -17,10 +16,6 @@ const loginFunction = (req, res, preparedQuery) => {
 			// Get login coordinates either from req.body or user's IP
 			const loginCoordinates = getLoginCoordinates(req, results[0]);
 
-			console.log('Reqbody: ');
-			console.log(req.body);
-			console.log('Logincoords:');
-			console.log(loginCoordinates);
 			const tags = results[0].tags_string ? results[0].tags_string.split(',') : null;
 			const userData = {
 				id: results[0].id,

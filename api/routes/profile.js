@@ -115,12 +115,10 @@ const get = async (req, res, next) => {
 // Liking another user, etc.
 const post = (req, res, next) => {
 	const userId = req.params.id;
-	console.log(req.user);
 	// User is not logged in or action not set
 	if (!req.user || !req.body.action || !userId || req.user.id == userId ||
 		!Number.isInteger(parseFloat(userId)))
 		return res.json(null);
-	console.log(req.body);
 
 	let query = ''; let preparedQuery = '';
 
@@ -137,7 +135,6 @@ const post = (req, res, next) => {
 
 	if (query.length) {
 		preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), mysqlDatetime()]);
-		console.log(preparedQuery);
 		pool.query(preparedQuery, (error, results) => {
 			if (error)
 				return res.json(null);
@@ -148,7 +145,6 @@ const post = (req, res, next) => {
 					query = 'UPDATE likes SET is_match=(SELECT * FROM(SELECT FLOOR(COUNT(*)/2) FROM likes WHERE (liker=? AND likee=?) OR (liker=? AND likee=?)) as temp) WHERE (liker=? AND likee=?) OR (liker=? AND likee=?);';
 
 					preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), parseInt(userId), req.user.id, req.user.id, parseInt(userId), parseInt(userId), req.user.id]);
-					console.log(preparedQuery);
 					pool.query(preparedQuery);
 					// pool.query(preparedQuery, (error, results) => {
 					// 	if (error)
@@ -163,15 +159,6 @@ const post = (req, res, next) => {
 	}
 	else
 		return res.json(null);
-
-
-	console.log('####\nPOISTIN YHDEN CALLBACKIN routes/profile.js, KATO KOMMENTTI\n####');
-	// Eli alun perin taa saatto palauttaa 'OK' sen jalkeen kun tama toinen query oli ajettu
-	// vaikka ensimmainen query ei valttamatta olisi mennyt lapi.
-	// Koska nama queryt ajetaan rinnakkain, ja periaatteessa saattaa olla mahdollista, etta
-	// is_matchin paivitys-queryn tulos olisi saatu ennen sita alkuperaista.
-	// Taa ei oo taydellinen ratkasu, mutta eikohan silla paase evalista lapi.
-
 
 };
 
