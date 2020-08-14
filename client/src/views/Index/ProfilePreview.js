@@ -4,7 +4,7 @@ import {getThisPage, generateImageUrl, submitLike} from '../../modules/httpQueri
 import {Popup} from '../../components/Popup';
 
 
-const ProfilePreview = ({user}) => {
+const ProfilePreview = ({user, stateChange, setStateChange}) => {
 
     const [previewState, modifyPreviewState] = useState(user);
 
@@ -116,7 +116,7 @@ const ProfilePreview = ({user}) => {
                         </div>
                         {previewState.images.map( (image) => 
                             <>
-                                {image.id !== previewState.profileData.main_pic ?
+                                {image !== previewState.profileData.filename ?
                                 <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
                                     <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                 </button>
@@ -124,12 +124,17 @@ const ProfilePreview = ({user}) => {
                                 {console.log(image)}
                             </>
                         )}
-                        <p>{previewState.profileData.biography}</p>
+                        <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p> <br />
+                        {previewState.profileData.tags_string ?
+                        <>
+                            <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
+                        </>
+                        : ''}
                         {previewState && previewState.blockStatus === false ? 
-                        <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
+                        <button onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}} className="btn btn-success">{previewState.likeButton}</button>
                         : ''}
                         {previewState ? 
-                        <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick)} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
+                        <button onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
                         : ''} 
                        
                     </>

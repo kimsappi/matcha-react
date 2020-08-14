@@ -27,6 +27,7 @@ const Index = ({state, action, setPopupState, setState}) => {
 	const [tagSearch, setTagSearch] = useState('');
 	const [previewId, setPreviewId] = useState(null);
 	const [previewProfile, setPreviewProfile] = useState(null);
+	const [stateChange, setStateChange] = useState(false);
 
 	if (previewProfile)
 		console.log("EKA CONSOLE"+previewProfile.profileData.id);
@@ -82,7 +83,7 @@ const Index = ({state, action, setPopupState, setState}) => {
 					setPreviewProfile(response);
 				});
 		}
-	}, [action, setPopupState, previewId]);
+	}, [action, setPopupState, previewId, stateChange]);
 
 	if (state.loggedIn)
 		return (
@@ -104,7 +105,7 @@ const Index = ({state, action, setPopupState, setState}) => {
 						</DropdownButton>
 						<div style={{marginTop: '10px'}}>
 
-							<ProfilePreview user={previewProfile}/>
+							<ProfilePreview user={previewProfile} stateChange={stateChange} setStateChange={setStateChange} />
 							<br />
 						</div>
 					</div>

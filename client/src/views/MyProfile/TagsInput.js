@@ -3,9 +3,9 @@ import {Button} from 'react-bootstrap';
 
 const SingleTag = ({tag, index, tagRemoval}) => {
 	return (
-		<div>
-			#{tag}
-			<Button variant="danger" id={'tagRemovalId' + index} onClick={event => tagRemoval(event)}>X</Button>
+		<div style={{display: 'inline'}}>
+			&nbsp;&nbsp;&nbsp;&nbsp;#{tag}
+			<Button variant="danger" id={'tagRemovalId' + index} onClick={event => tagRemoval(event)}>X</Button> 
 		</div>
 	);
 };
@@ -25,7 +25,7 @@ const TagsInput = ({tags, setTags}) => {
 	return (
 		<>
 			{singleTags}
-			<label>Add a tag!</label>
+			<br /><label>Add a tag!</label>
 			<div class="input-group">
   				#<input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={newTag} onChange={event => setNewTag(event.target.value)} />
 				<div class="input-group-append">

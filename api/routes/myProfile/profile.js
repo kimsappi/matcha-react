@@ -60,6 +60,7 @@ const post = (req, res, next) => {
 	
 	// Query first updates the users table, then flushes all of the user's
 	// tags from the tags table and adds fresh entries to the tags table
+
 	const query = `
 UPDATE users
 	SET email = ?, first_name = ?, last_name = ?, gender = ?, target_genders = ?,
@@ -72,7 +73,7 @@ DELETE FROM tags WHERE user = ?;` + generateTagsQuery(tags, req.user.id);
 			req.body.gender, req.body.target, req.body.biography,
 			parseInt(req.body.age), req.user.id, req.user.id
 		]
-	);
+	);	
 	console.log(preparedQuery);
 
 	let newTokenData = {
@@ -104,7 +105,8 @@ const generateTagsQuery = (tags, id) => {
 
 	const insertStrings = tags.map(element => "('" + element + "', " + id + ')');
 	const insertStringsJoined = insertStrings.join(',');
-
+	console.log("TTEEESSTTT############");
+console.log(insertStrings);
 	return `INSERT INTO tags(string, user) VALUES ` + insertStringsJoined + ';';
 };
 
