@@ -30,6 +30,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='First name'
             state={firstName}
             setState={setFirstName}
+            pattern="[\p{L}\-]{2,32}"
+            required={true}
         />
         <InputWithLabel
             type='text'
@@ -37,6 +39,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Last name'
             state={lastName}
             setState={setLastName}
+            pattern="[\p{L}\-]{2,32}"
+            required={true}
         />
         <InputWithLabel
             type='email'

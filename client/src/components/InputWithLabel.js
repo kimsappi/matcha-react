@@ -6,7 +6,7 @@ const CustomInputField = ({type, name, label, state, setState, eventHandler, ste
 	if (type === 'textarea')
 		return <textarea name={name} className="form-control" onChange={event => eventHandler(event)} value={state} required={required ? true : false} />;
 	else if (type === 'number' && typeof max !== 'undefined' && typeof min !== 'undefined')
-		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} min={min} max={max} />;
+		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} min={min} max={max} required={required} />;
 	else if (type === 'number')
 		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} />;
 	else if (type === 'text' && pattern)
@@ -18,7 +18,7 @@ const CustomInputField = ({type, name, label, state, setState, eventHandler, ste
 
 const InputWithLabel = ({type, name, label, state, setState, step, integer, pattern, required, max, min}) => {
 	const eventHandler = event => {
-		if (!integer || Number.isInteger(event.target.value))
+		if (!integer || Number.isInteger(Number(event.target.value)))
 			setState(event.target.value);
 	};
 
