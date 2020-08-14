@@ -24,7 +24,8 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
         <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>
         <br />
         <TagsInput tags={tags} setTags={setTags} />
-        <br /> <br />
+        <div> </div> 
+        <div />
         <InputWithLabel
             type='text'
             name='firstName'
