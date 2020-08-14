@@ -64,7 +64,7 @@ const post = (req, res, next) => {
 	// Username or password not provided
 	if (!req.body.username || !req.body.password)
 		return res.json(null);
-	
+
 	const hashedPassword = hashPassword(req.body.username, req.body.password);
 	const query = 'SELECT * FROM user_and_main_photo WHERE username = ? AND password = ?;';
 	const preparedQuery = mysql.format(query, [req.body.username, hashedPassword]);

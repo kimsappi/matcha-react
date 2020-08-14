@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 
 import {setUser, setToken} from './userData';
 import {getToken} from './userData';
+import {getGeolocation} from './geolocate';
 
 import {likeButtonStrings} from '../config.json';
 import { Redirect } from 'react-router-dom';
@@ -54,8 +55,12 @@ const localLogout = (reload = false) => {
 }
 
 export const submit42Code = (code, action) => {
+	let coords = {};
+	if (action === 'apiLogin')
+		coords = getGeolocation();
 	const url = baseUrl + '/' + action;
-	const request = axios.post(url, {code: code});
+	
+	const request = axios.post(url, {code: code, latitude: coords.latitude, longitude: coords.longitude});
 	return new Promise((resolve, reject) => {
 		request.then(response => resolve(response.data));
 	});
@@ -187,16 +192,14 @@ export const loginResponseHandler = (data, setState, setPopupState) => {
 export const submitLogin = (event, setState, setPopupState, username, password) => {
 	event.preventDefault();
 
+	const coords = getGeolocation();
+
 	let reqBody = {
 		username: username,
-		password: password
+		password: password,
+		latitude: coords.latitude,
+		longitude: coords.longitude
 	};
-	if (document.querySelector('#latitude')) {
-		reqBody = {...reqBody,
-			latitude: document.querySelector('#latitude').value || null,
-			longitude: document.querySelector('#longitude').value || null
-		}
-	}
 
 	axios.post(baseUrl + '/login', reqBody)
 		.then(response => {
