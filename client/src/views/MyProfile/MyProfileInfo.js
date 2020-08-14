@@ -100,7 +100,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             required={true}
         /> <br />
 
-        <input className='button' type='submit' name='submit' value='OK' />
+        <input className='button btn btn-primary' type='submit' name='submit' value='OK' />
         {rerenderTrick ? ' ' : ''}
         </form>
         );

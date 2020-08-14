@@ -47,9 +47,12 @@ const MyProfileImages = ({profile, rerenderTrick, setRerenderTrick}) => {
 
     return (
         <>
-        <label htmlFor='photoUpload'>Upload a photo</label>
-        <input type='file' name='photoUpload' className="form-control-file" id="exampleFormControlFile1" onChange={event => uploadPhotos(event, rerenderTrick, setRerenderTrick)} multiple />
-        <p>Printed from MyProfileImages-component</p>
+        <h1>Your photos</h1>
+        <div className="custom-file">
+            <input type='file' name='photoUpload' className="form-control-file" id="exampleFormControlFile1" onChange={event => uploadPhotos(event, rerenderTrick, setRerenderTrick)} multiple accept="image/*" />
+            <label className="custom-file-label" htmlFor="exampleFormControlFile1" data-browse="Upload">Upload photos</label>
+        </div>
+        <h2>Uploaded photos</h2>
         {uploadedImages}
         {imagePopupState === true ?
             <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage} alt='Enlarged profile' /></Popup>
