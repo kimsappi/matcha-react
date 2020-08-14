@@ -8,7 +8,7 @@ const CustomInputField = ({type, name, label, state, setState, eventHandler, ste
 	else if (type === 'number' && typeof max !== 'undefined' && typeof min !== 'undefined')
 		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} min={min} max={max} required={required} />;
 	else if (type === 'number')
-		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} />;
+		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} required={required} />;
 	else if (type === 'text' && pattern)
 		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} pattern={pattern} required={required} />;
 	else

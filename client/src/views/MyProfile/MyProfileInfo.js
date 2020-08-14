@@ -93,6 +93,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
                 {label: 'Man', value: 'm'},
                 {label: 'Woman', value: 'f'}
             ]}
+            required={true}
         />  <br />
         <div>Looking for</div>
         <RadioWithLabel
@@ -104,6 +105,7 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
                 {label: 'Both', value: 'fm', checked: (target, value) => target.length === 2},
                 {label: 'Women', value: 'f'}
             ]}
+            required={true}
         /> <br />
         <InputWithLabel
             type='textarea'
@@ -111,11 +113,12 @@ const MyProfileInfo = ({profile, rerenderTrick, setRerenderTrick}) => {
             label='Biography'
             state={biography}
             setState={setBiography}
+            required={true}
         /> <br />
 
 
 
-        <input class='button' type='submit' name='submit' value='OK' />
+        <input className='button' type='submit' name='submit' value='OK' />
         {rerenderTrick ? ' ' : ''}
         </form>
         );
