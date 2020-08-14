@@ -50,6 +50,8 @@ const Index = ({state, action, setPopupState, setState}) => {
 			}
 		}
 		else if ((action === 'apiLogin' || action === 'apiRegister') && window.location.search) {
+			if (window.location.search.substr(0,6) !== '?code=')
+				window.location.href = '/';
 			const req = submit42Code(window.location.search.substr(6), action)
 			req.then(data => {
 				if (data.action === 'register') {
