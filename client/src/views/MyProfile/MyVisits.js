@@ -153,7 +153,11 @@ const MyVisits = ({state, setState}) => {
                                 )}
                                 <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p>
 
-                                <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
+                                {previewState.profileData.tags_string ?
+                                <>  
+                                    <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
+                                </>
+                                : ''}
 
                                 {previewState && previewState.blockStatus === false ? 
                                 <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
@@ -169,6 +173,8 @@ const MyVisits = ({state, setState}) => {
                   
                 </div>
             </div>
+            <br />
+            <br />
         </>
         );
 

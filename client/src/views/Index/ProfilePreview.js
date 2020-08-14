@@ -96,7 +96,7 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
         if (previewState)
             return (
                 <>
-                <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px', zIndex: '-1'}}>
+                <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px', zIndex: '-1', backgroundColor: 'lightgray', borderRadius: '170px', boxShadow: '0 0 25px 40px lightGray'}}>
                 {previewState && previewState.profileData ?
                     <>
                     

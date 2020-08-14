@@ -19,7 +19,7 @@ export const Popup = ({children, setPopupState}) => {
 		width: 'fit-content',
 		height: 'fit-content',
 		maxHeight: '93%',
-		maxWidth: '93%',
+		maxWidth: '85%',
 		zIndex: '23',
 		backgroundColor: 'white',
 		position: 'fixed',
@@ -27,7 +27,7 @@ export const Popup = ({children, setPopupState}) => {
 		padding: '20px',
 		textAlign: 'center',
 		top: '50%',
-		left: '50%',
+		left: '45%',
 		transform: 'translate(-50%, -50%)',
 		zIndex: 998
 	};

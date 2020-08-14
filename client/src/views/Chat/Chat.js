@@ -16,8 +16,7 @@ const Chat= ({socket}) => {
         bottom: '45px',
         right: '5px',
         width: '200px',
-
-
+        maxWidth: '45%',
         display: 'none',
         zIndex: '33'
     }
@@ -30,6 +29,7 @@ const Chat= ({socket}) => {
         bottom: '48px',
         right: '203px',
         width: '200px',
+        maxWidth: '40%',
         backgroundColor: 'gray',
         height: 'auto',
         maxHeight: '400px',
@@ -41,6 +41,7 @@ const Chat= ({socket}) => {
     const connectionButton =
     {
         width: '200px',
+        maxWidth: '45%',
         height: '40px',
         backgroundColor: 'gray',
         position: 'fixed',

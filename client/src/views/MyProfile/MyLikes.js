@@ -165,9 +165,12 @@ const MyLikes = ({state, setState}) => {
                                     </>
                                 )}
                                 <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p>
-                                            
-                                <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
-                                
+
+                                {previewState.profileData.tags_string ?
+                                <>     
+                                    <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
+                                </>
+                                : ''}
                                 {/* {previewState.profileData.tags_string.split(',').map((word) => {<h1>{word}</h1>})} */}
 
                                 {previewState && previewState.blockStatus === false ? 
@@ -187,6 +190,8 @@ const MyLikes = ({state, setState}) => {
                 
                 </div>
             </div>
+            <br />
+            <br />
         </>
         );
 
