@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { getThisPage } from '../../../modules/httpQueries';
+import ProfileImage from '../../../components/ProfileImage';
 
 const NotificationCard = ({notification}) => {
 	const style = {
@@ -9,11 +10,21 @@ const NotificationCard = ({notification}) => {
 		marginTop: '4px',
 		marginBottom: '4px'
 	};
+
+	let notifiStr = '';
+	if (notification.reason === 'visit')
+		notifiStr = 'visited your profile!';
+	else if (notification.reason === 'like')
+		notifiStr = 'liked your profile!'
+	else if (notification.reason === 'unlike')
+		notifiStr = 'unliked you! :('
+
+
 	return (
-		<p style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>
-			User: {notification.causer} Action: {notification.reason}
-			New: {notification.read ? 'no' : 'yes'}
-		</p>
+		<div style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>
+			<ProfileImage filename={notification.filename} />
+			<strong>{notification.username}</strong> {notifiStr}
+		</div>
 	);
 }
 

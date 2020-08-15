@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS reports (
 CREATE TABLE IF NOT EXISTS notifications (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user INT UNSIGNED NOT NULL,
-	reason VARCHAR(6) NOT NULL,
+	reason ENUM('like', 'unlike', 'visit') NOT NULL,
 	causer INT UNSIGNED NOT NULL,
 	`read` BOOLEAN DEFAULT FALSE,
 	`time` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -179,8 +179,8 @@ ON user_photos.user = users.id;
 
 CREATE VIEW user_and_main_photo AS
 SELECT * FROM users
-LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
-ON user_photos.user = users.id AND user_photos.photo_id = users.main_pic
+LEFT OUTER JOIN (SELECT id AS photo_id, user as p_user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
+ON user_photos.p_user = users.id AND user_photos.photo_id = users.main_pic
 LEFT OUTER JOIN (SELECT `user` AS tag_user, GROUP_CONCAT(string SEPARATOR ',') AS tags_string FROM tags GROUP BY tag_user) AS tags
 ON tags.tag_user = users.id
 LEFT OUTER JOIN (SELECT `user` AS photos_user, GROUP_CONCAT(id, '.', extension SEPARATOR ',') AS photos_string FROM user_photos GROUP BY `user`) AS photos

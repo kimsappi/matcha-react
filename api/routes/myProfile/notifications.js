@@ -2,10 +2,12 @@ const mysql = require('mysql');
 const pool = require('../../modules/dbConnect');
 const mysqlDatetime = require('../../modules/mysqlDatetime');
 
+const notificationsColumns = 'notifications.id AS id, username, filename, `read`, `time`, reason'
+
 const get = (req, res, next) => {
 	if (!req.user)
 		return res.json(null);
-	const query = 'SELECT * FROM notifications WHERE user = ? ORDER BY id ASC;';
+	const query = 'SELECT ' + notificationsColumns + ' FROM notifications JOIN user_and_main_photo AS users ON users.id = causer WHERE user = ? ORDER BY id ASC;';
 	pool.query(mysql.format(query, [req.user.id]), (error, results) => {
 		if (error)
 			return res.json(null);
@@ -21,7 +23,7 @@ const get = (req, res, next) => {
 };
 
 const intervalQuery = (id, time) => {
-	const query = 'SELECT * FROM notifications WHERE user = ? AND ? < `time` ORDER BY id ASC;';
+	const query = 'SELECT ' + notificationsColumns + ' FROM notifications JOIN user_and_main_photo AS users ON users.id = causer WHERE user = ? AND ? < `time` ORDER BY id ASC;';
 	// console.log(mysql.format(query, [id, time]));
 	return new Promise((resolve, reject) => {
 		pool.query(mysql.format(query, [id, time]), (error, results) => {
