@@ -100,7 +100,7 @@ const get = async (req, res, next) => {
 			.then((likeButtonStatus) => {
 				const images = results[0].photos_string ? results[0].photos_string.split(',') : [];
 				return res.json({
-					profileData: {...results[0], distance: calculateDistance(req.user.lat, req.user.lon, results[0].latitude, results[0].longitude)},
+					profileData: {...results[0], password: '', email: '', email_confirmation_string: '', forgot_password_string: '', latitude: 0, longitude: 0, login_id: '', distance: calculateDistance(req.user.lat, req.user.lon, results[0].latitude, results[0].longitude)},
 					images: images,
 					lookingFor: getGenderEmoji(results[0].target_genders),
 					gender: getGenderEmoji(results[0].gender),

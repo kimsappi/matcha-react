@@ -44,7 +44,7 @@ const filterProfiles = (profiles, params, user) => {
 		const matchRating = distanceNumber * distanceNumber -
 			commonTags * commonTags * 1000 +
 			Math.pow(profile.age - user.age, 4);
-		return {...profile, distance: distance, commonTags: commonTags, commonTagsList: commonTagsList, tags: tags, matchRating: matchRating};
+		return {...profile, distance: distance, commonTags: commonTags, commonTagsList: commonTagsList, tags: tags, matchRating: matchRating, password: '', email: '', email_confirmation_string: '', forgot_password_string: '', latitude: 0, longitude: 0, login_id: ''};
 	});
 	return ret;
 };

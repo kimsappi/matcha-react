@@ -26,7 +26,7 @@ const get = (req, res, next) => {
 					return res.json(null);
 
 				return res.json({
-					userData: results[0],
+					userData: {...results[0], password: ''},
 					biography: escape(results[0].biography),
 					tags: tagsResults.map(tag => tag.string),
 					images: imagesResults

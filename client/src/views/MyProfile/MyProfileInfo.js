@@ -90,7 +90,6 @@ const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName
         /> <br />
 
         <input className='button btn btn-primary' type='submit' name='submit' value='OK' />
-        {rerenderTrick ? 'a' : 'b'}
         </form>
         );
 }
