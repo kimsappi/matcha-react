@@ -104,7 +104,7 @@ const Index = ({state, action, setPopupState, setState}) => {
 					
 					<div className="col-md-6 h-25 order-md-1" id="suggestionContainer">
 
-						<div className="container" style={{overflowY: 'scroll', maxHeight: '700px'}}>
+						<div className="container" style={{overflowY: 'auto', maxHeight: '700px'}}>
 							<Suggestions
 								users={users} distanceFilter={distanceFilter}
 								minAge={minAge} maxAge={maxAge}
