@@ -10,8 +10,9 @@ const MyProfileImage = ({photo, previewImage, popupState, main_pic, rerenderTric
 	if (photo.id === main_pic) {
 		disabled = true;
 		photoStyle = {...photoStyle,
-			backgroundColor: 'red',
-			padding: '10px'
+			boxShadow: '0 0 20px 10px lightsteelblue',
+			marginBottom: '10px',
+			marginTop: '10px'
 		}
 	}
 
@@ -19,7 +20,7 @@ const MyProfileImage = ({photo, previewImage, popupState, main_pic, rerenderTric
 	<Container>
 		<Row className="justify-content-center" style={{marginBottom: '10px'}}>
 			
-            	<button onClick={() => {previewImage(photo.id); popupState(true);}}><img alt='Your upload' src={generateImageUrl(photo.id, photo.extension)} style={photoStyle}/></button>
+            	<div onClick={() => {previewImage(photo.id); popupState(true);}}><img alt='Your upload' src={generateImageUrl(photo.id, photo.extension)} style={photoStyle}/></div>
 			
 		</Row>
 		<Row className="justify-content-center" style={{marginBottom: '30px'}}>

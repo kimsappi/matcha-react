@@ -51,7 +51,7 @@ const MyProfileImages = ({profile, rerenderTrick, setRerenderTrick}) => {
             <input type='file' name='photoUpload' className="form-control-file" id="exampleFormControlFile1" onChange={event => uploadPhotos(event, rerenderTrick, setRerenderTrick)} multiple accept="image/*" />
             <label className="custom-file-label" htmlFor="exampleFormControlFile1" data-browse="Upload">Upload photos</label>
         </div>
-        <h2>Uploaded photos</h2>
+        <h2>Uploaded photos ({profile.images.length}/5)</h2>
         {uploadedImages}
         {imagePopupState === true ?
             <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage, 'png')} style={popUpImage} alt='Enlarged profile' /></Popup>

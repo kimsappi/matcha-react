@@ -9,11 +9,9 @@ import {sendMyProfileData} from '../../modules/httpQueries';
 
 const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName, lastName, setLastName, age, setAge, latitude, setLatitude, longitude, setLongitude, email, setEmail, gender, setGender, target, setTarget, biography, setBiography, tags, setTags}) => {
     return (
-        <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>
-        <br />
-        <TagsInput tags={tags} setTags={setTags} />
-        <br />
-        
+        <>
+        <h2>Your information</h2>
+        <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>        
         <InputWithLabel
             type='text'
             name='firstName'
@@ -87,11 +85,15 @@ const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName
             state={biography}
             setState={setBiography}
             required={true}
-        /> <br />
+        />
 
-        <input className='button btn btn-primary' type='submit' name='submit' value='OK' />
+        <div>Tags</div>
+
+        <TagsInput tags={tags} setTags={setTags} />
+
+        <input className='button btn btn-primary' type='submit' name='submit' value='Save' style={{marginLeft: '50%', marginRight: '50%'}} />
         </form>
-        );
+        </>);
 }
 
 export default MyProfileInfo;

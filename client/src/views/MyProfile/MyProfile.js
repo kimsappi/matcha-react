@@ -48,11 +48,7 @@ const MyProfile = ({state, setState}) => {
 			<div className="col-sm-6">
 				<MyProfileImages profile={profileState} rerenderTrick={rerenderTrick} setRerenderTrick={setRerenderTrick} />
 			</div>
-		</div>
-		
-			<h1>My profile</h1>
-			<h2>{profileState.userData.first_name} {profileState.userData.last_name}</h2>
-			
+		</div>			
 		</>);
 
 	else

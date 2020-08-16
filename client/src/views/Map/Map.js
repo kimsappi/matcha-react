@@ -27,8 +27,9 @@ const GeneratedMarker = ({lat, lon}) => {
 }
 
 const containerStyle = {
-	width: '400px',
-	height: '400px'
+	width: '100%',
+	height: '90vh',
+	margin: 'auto'
 };
 
 const UserMap = () => {

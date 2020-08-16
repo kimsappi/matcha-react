@@ -3,8 +3,8 @@ import {Button} from 'react-bootstrap';
 
 const SingleTag = ({tag, index, tagRemoval}) => {
 	return (
-		<div style={{display: 'inline'}}>
-			&nbsp;&nbsp;&nbsp;&nbsp;#{tag}
+		<div style={{display: 'block', marginRight: '0.5em', marginLeft: '0.5em'}}>
+			<Button style={{backgroundColor: index % 2 ? 'gainsboro' : 'darkgray', color: 'black', borderColor: index % 2 ? 'darkgray' : 'gainsboro'}}>#{tag}</Button>
 			<Button variant="danger" id={'tagRemovalId' + index} onClick={event => tagRemoval(event)}>X</Button> 
 		</div>
 	);
@@ -24,9 +24,11 @@ const TagsInput = ({tags, setTags}) => {
 
 	return (
 		<>
-			{singleTags}
-			<br /><label>Add a tag!</label>
-			<div className="input-group">
+			<div style={{display: 'flex', flexFlow: 'row wrap'}}>
+				{singleTags}
+			</div>
+			<br />
+			<div className="input-group" style={{marginTop: '0.5em'}}>
   				<span style={{position: 'relative', left: '20px'}}>#</span>
 				<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={'#' + newTag} onChange={event => setNewTag(event.target.value.replace(/[#+]/g, ''))} />
 				<div className="input-group-append">
