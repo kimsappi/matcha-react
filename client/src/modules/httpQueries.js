@@ -12,7 +12,7 @@ const baseUrl = 'http://localhost:3001';
 // Can be used with 2 arguments: (id, extension) or 1: (filename)
 export const generateImageUrl = (id, extension) => {
 	if (id === 'placeholder.png' || !id || id === 'null')
-		return baseUrl + '/img/placeholder.png';
+		return '/img/placeholder.png';
 	const dirUrl = baseUrl + '/img/userPhotos/';
 	if (typeof extension === 'undefined')
 		return dirUrl + id;

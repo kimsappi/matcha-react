@@ -103,7 +103,6 @@ function onListening() {
 }
 
 const updateFames = () => {
-  console.log('Updating fame ratings');
   pool.query(`UPDATE users, (SELECT visitee, count(visitor) AS visitCount FROM visits GROUP BY visitee) AS visits
     SET    users.fame = visits.visitCount
     WHERE  users.id = visits.visitee;`);
