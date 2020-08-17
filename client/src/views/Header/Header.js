@@ -2,11 +2,11 @@ import React, {useState} from 'react';
 
 import Nav from './components/Nav';
 
-const CollapsedNotificationCount = ({count}) => {
+export const CollapsedNotificationCount = ({count, right = '-10'}) => {
 	const collapsedNotificationsNotifierStyle = {
 		position: 'absolute',
 		top: '-3px',
-		right: '-10px',
+		right: right + 'px',
 		backgroundColor: 'red',
 		color: 'cyan',
 		borderRadius: '50%',

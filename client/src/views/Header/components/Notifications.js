@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
+import {Button} from 'react-bootstrap';
+
 import { getThisPage } from '../../../modules/httpQueries';
 import ProfileImage from '../../../components/ProfileImage';
+import {CollapsedNotificationCount} from '../Header';
 
 const NotificationCard = ({notification}) => {
 	const style = {
@@ -89,8 +92,7 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	}, [longPollState]);
 
 	const displayNotifications = (setNotificationsDisplay, notificationsDisplay) => {
-		if (!notificationsDisplay)
-			getNotifications(true);
+		getNotifications(!notificationsDisplay);
 		setNotificationsDisplay(!notificationsDisplay);
 	};
 
@@ -102,7 +104,9 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 
 	return (
 		<>
-			<span onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications: {unreadCount} (click)</span>
+			<Button style={{position: 'relative'}} variant='secondary' onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications
+				{unreadCount ? <CollapsedNotificationCount count={unreadCount} right='0' /> : ''}
+			</Button>
 			{/* An outer container is required to get the scroll direction right */}
 			<div style={{...notificationWindowContainerStyle, display: notificationsDisplay ? 'flex' : 'none' }}>
 				<div style={notificationsWindowStyle}>
