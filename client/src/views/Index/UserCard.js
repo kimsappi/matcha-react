@@ -61,7 +61,6 @@ const UserCard = ({profile, preview}) => {
 				</div>
 			</div>
 		</button>
-		{console.log(profile.distance)}
 		<br />
 		</>
 	);

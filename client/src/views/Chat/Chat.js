@@ -59,20 +59,13 @@ const Chat= ({socket}) => {
 
 
     useEffect(() => {
-        console.log("USE");
 		getConnections()
 			.then(response => {
-				//console.log('myProfiles/likes response:');
-                //console.log(response);
                 setConnections(response);
-                // console.log(connections);
             });
 
     }, [refresh, chat]);
 
-    console.log(connections);
-    console.log(chat);
-    console.log("CHAT WINDOW STATUS::" + chatWindowOpen);
 
 
 
@@ -113,8 +106,6 @@ const Chat= ({socket}) => {
 function openConnections()
 {
     var connections = document.getElementById('connections');
-    console.log(connections);
-    console.log("asd");
     if (connections.style.display === 'none')
         connections.style.display = 'block'
     else

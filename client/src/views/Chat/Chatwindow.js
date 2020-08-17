@@ -19,8 +19,6 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
             .then(results => {
                 if (results)
                 {
-                    console.log(results);
-                    console.log("results chat");
                     setChatMessages(results)
                 }
             })
@@ -29,7 +27,6 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
     function message()
     {
         var message = document.getElementById('message').value;
-        console.log(socket);
         // socket.on('test', () => {
         if (message)
         {
@@ -37,7 +34,7 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
                 msg: message,
                 id: chat,
                 me: myToken
-            }, response => console.log(response))
+            }, response => {})
         
             document.getElementById('message').value = '';
         }
@@ -51,8 +48,6 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
     
     socket.on('chat', function(data) {
 
-        console.log(data);
-        console.log("testttt");
         if (data.error == "block")
             setMostRecentMessage("blocked");
         else

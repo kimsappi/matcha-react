@@ -8,7 +8,6 @@ const pool = require('./modules/dbConnect');
 const { startWatchingDataUpdate } = require('geoip-lite');
 
 // function auth(thetoken) {
-// 	console.log("TOKEN:::" + thetoken);
 // 	const authHeader = thetoken;
 // 	const token = authHeader;
 // 	if (!token) 
@@ -16,15 +15,11 @@ const { startWatchingDataUpdate } = require('geoip-lite');
 
 // 	else {
 // 		jwt.verify(token, tokenSecret, (err, user) => {
-// 			console.log("ennen");
-// 			console.log(user);
-// 			console.log("jalkeen");
 // 			return user;
 
 // 			if (err) 
 // 				return "jwt error";
 // 			else {
-// 				console.log('querying online status');
 // 				pool.query(mysql.format('SELECT `online` FROM users WHERE id = ? AND login_id = ?;', [user.id, user.login_id]), (error, results) => {
 // 					if (error || !results[0] || !results[0].online)
 // 						return res.json('logged out');
@@ -38,7 +33,6 @@ const { startWatchingDataUpdate } = require('geoip-lite');
 // }
 
 // preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), mysqlDatetime()]);
-// 		console.log(preparedQuery);
 // 		pool.query(preparedQuery, (error, results) => {
 // 			if (error)
 // 				return res.json(null);
@@ -59,19 +53,16 @@ function addMessageToDatabase(myId, otherId, message, io, keys)
 		}
 		else
 		{
-			console.log("RESULTTI COUNTTI::" + results.length);
 			const query= "INSERT INTO messages (sender, recipient, content) VALUES (?, ?, ?)";
 			const prepareSql = mysql.format(query, [myId, otherId, message]);
 			pool.query(prepareSql, (error, results) => {
 				if (error)
 				{
 					io.sockets.in(keys[myId]).emit('chat', {message: 'empty', error: 'database', sender: myId});
-					console.log("cb errori sisalla");
 					return false;
 				}
 				else
 				{
-					console.log("PAASI LOPPUUN ASTI")
 
 			
 
@@ -101,15 +92,10 @@ const wsServerInit = server => {
 		socket.on('privateChat', function(data) {
 			var temp;
 			jwt.verify(data.me, tokenSecret, (err, user) => {
-				if (err)
-					console.log("ERRRRORRRR");
-				else
-					console.log("Chat window opened succesfully");
+				if (!err)
 					temp = user;   // VALIAIKAINEN!
 			});
 			keys[temp.id] = socket.id;  // VALIAIKAINEN!
-
-			console.log("ARRAY: " + keys);
 
 			socket.join(keys[data.user]);
 	
@@ -121,13 +107,11 @@ const wsServerInit = server => {
 			jwt.verify(jees.me, tokenSecret, (err, user) => {
 				if (err)
 				{
-					console.log("ERRRRORRRR");
 					return;
 				}
 				else
 					temp = user;
 			});
-			console.log("KOKEILUUUU ennen");
 
 			addMessageToDatabase(temp.id, jees.id, jees.msg, io, keys);
 			
@@ -140,9 +124,6 @@ const wsServerInit = server => {
 			//io.emit('chat', {okei: 'jees'});
 
 			//io.emit('chat', user);
-			console.log(jees);
-			console.log(keys[1]);
-			console.log(socket.id + '###');
 		})
 
 			// function runs when a user logs in. The wsId array updates here.
@@ -151,43 +132,32 @@ const wsServerInit = server => {
 			jwt.verify(token.token, tokenSecret, (err, user) => {
 				if (err)
 				{
-					console.log("ERRRRORRRR");
 					return;
 				}
 				else
 				{
 					temp = user;
-					console.log(user);
 				}
 			});
 			keys[temp.id] = socket.id;
-			console.log("ARRAY: " + keys);
-			console.log('LOGGING IN');
 		})
 			// function run when user logs out
 		socket.on('logOut', function(data) {
-			console.log("LOG OUT WEBSOCKET");
 			var temp;
 			jwt.verify(data.user, tokenSecret, (err, user) => {
 				if (err)
 				{
-					console.log("ERRRRORRRR");
 					return;
 				}
 				else
 				{
 					temp = user;
-					console.log(user);
 				}
 			});
-			console.log(temp);
 			keys[temp.id] = '';
-			console.log("ARRAY: " + keys);
 		})
 
 
-		console.log("jees");
-		console.log(socket.id);
 	});
 
 
