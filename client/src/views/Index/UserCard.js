@@ -57,7 +57,7 @@ const UserCard = ({profile, preview}) => {
 				<div className="col-sm-6" style={cardInfo}>
 					{profile.distance < 1 ? <p style={{color: 'green'}}>Very close to you!</p> : profile.distance < 10 ? <p style={{color: 'yellow'}}>In the same city</p> : <p style={{color: 'red'}}>In another city</p>}
 					<p style={{display: 'inline'}}>Distance: {profile.distance < 1 ? "less than a " : Number((profile.distance).toFixed(0))} </p> <p style={{display: 'inline'}}>km</p>
-					{profile.commonTags ? <div>{profile.first_name} is also interested in: {commonTagsList}</div> : ''}
+					{profile.commonTags ? <div>{profile.first_name} is also interested in: {commonTagsList}</div> : <div style={{fontStyle: 'italic', color: 'rgb(100,100,100)'}}>No common interests</div>}
 				</div>
 			</div>
 		</button>

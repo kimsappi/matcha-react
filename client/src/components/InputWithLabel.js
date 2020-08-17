@@ -4,7 +4,7 @@ import React from 'react';
 
 const CustomInputField = ({type, name, label, state, setState, eventHandler, step = 1, pattern, required, max, min}) => {
 	if (type === 'textarea')
-		return <textarea name={name} className="form-control" onChange={event => eventHandler(event)} value={state} required={required ? true : false} />;
+		return <textarea name={name} className="form-control" onChange={event => eventHandler(event)} value={state || ''} required={required ? true : false} />;
 	else if (type === 'number' && typeof max !== 'undefined' && typeof min !== 'undefined')
 		return <input type={type} className="form-control" name={name} value={state} onChange={event => eventHandler(event)} step={step} min={min} max={max} required={required} />;
 	else if (type === 'number')

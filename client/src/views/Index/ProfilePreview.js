@@ -97,6 +97,7 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
                     <>
                     
                         <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
+                        <h3>{previewState.profileData.online ? 'Online' : 'Last online: ' + (previewState.profileData.last_login || 'never')}</h3>
                         <h3 style={{lineHeight: '1px'}}>{previewState.gender}</h3>
                         <h6 style={{color: 'red'}}>Fame: {previewState.profileData.fame}</h6>
                         

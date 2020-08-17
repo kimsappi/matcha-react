@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS users (
 	fame INT DEFAULT 0,
 	gender VARCHAR(1) DEFAULT '0',
 	target_genders VARCHAR(2) DEFAULT 'fm',
-	biography TEXT DEFAULT '',
+	biography TEXT,
 	email_confirmation_string VARCHAR(64),
 	forgot_password_string VARCHAR(64) DEFAULT NULL,
 	longitude FLOAT DEFAULT NULL,
