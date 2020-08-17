@@ -13,7 +13,7 @@ const MyProfileMap = ({lat, lon, setLat, setLon}) => {
 	/* eslint-disable react-hooks/exhaustive-deps */
 	useEffect(() => {
 		setMapCentre({lat: parseFloat(lat), lng: parseFloat(lon)});
-	}, []);
+	}, [lat, lon]);
 
 	const dragEndHandler = (event) => {
 		setLat(event.latLng.lat());

@@ -50,7 +50,7 @@ const Index = ({state, action, setPopupState, setState}) => {
 				window.location.href = '/';
 			const req = submit42Code(window.location.search.substr(6), action)
 			req.then(data => {
-				if (data.action === 'register') {
+				if (data && data.action === 'register') {
 					localStorage.setItem('registerPrefill', JSON.stringify(data));
 					setPopupState('register');
 				}
