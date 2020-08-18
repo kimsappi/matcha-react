@@ -74,7 +74,7 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	// };
 
 	useEffect(() => {
-		getNotifications(false);
+		setTimeout(() => getNotifications(false), 100);
 		// This alone would work for getting notifications with short polling
 		//setInterval(() => getNotifications(false), 5000);
 	}, []);
