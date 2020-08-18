@@ -10,11 +10,11 @@ if (messages)
     {var asd2 = 0}
     return (
         
-        messages.map((message) => {
+        messages.map((message, index) => {
             asd2 = asd;
             asd = otherUser == message.sender_name ? 1 : 2
             return (
-                <> 
+                <div key={index}> 
                 
                 {asd === 1 ?
                     <>
@@ -28,7 +28,7 @@ if (messages)
                     </>
                     }
                     
-                </>
+                </div>
             )
         })
     )

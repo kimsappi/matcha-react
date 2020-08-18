@@ -83,7 +83,6 @@ const MyLikes = ({state, setState}) => {
     }
 
 	useEffect(() => {
-        console.log("USE");
 		getThisPage(window.location.pathname)
 			.then(response => {
 				//console.log('myProfiles/likes response:');
@@ -92,20 +91,12 @@ const MyLikes = ({state, setState}) => {
             });
         if (previewState)
         {
-            console.log("jees")
             getThisPage('/profile/'+previewState.profileData.id)
                 .then(response => {
                     modifyPreviewState(response);
-                    
                 });
         }
     }, [rerenderTrick]);
-
-
-    
-    console.log(" TASSA PREVIEWSTATE");
-    console.log(previewState);
-    console.log(rerenderTrick);
 
     //console.log("imagepreview" + previewImage);
     if (likesState)
@@ -151,20 +142,20 @@ const MyLikes = ({state, setState}) => {
                                         <img src={generateImageUrl(previewState.profileData.filename)} style={mainPicStyle}/>
                                     </button>
                                 </div>
-                                {previewState.images.map( (image) => 
-                                    <>
+                                {previewState.images.map( (image, index) => 
+                                    <div key={index}>
                                         {image !== previewState.profileData.filename ?
                                         <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
                                             <img src={generateImageUrl(image)} style={smallPicStyle}/>
                                         </button>
                                         : null}
-                                    </>
+                                    </div>
                                 )}
                                 <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p>
 
                                 {previewState.profileData.tags_string ?
                                 <>     
-                                    <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
+                                    {previewState.profileData.tags_string.split(',').map((tag, index) => <h5 key={index} style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)} <br />
                                 </>
                                 : ''}
                                 {/* {previewState.profileData.tags_string.split(',').map((word) => {<h1>{word}</h1>})} */}

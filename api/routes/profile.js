@@ -127,20 +127,20 @@ const post = (req, res, next) => {
 	else if (req.body.action === 'unlike')
 		query = 'DELETE FROM likes WHERE liker = ? AND likee = ?;';
 	else if (req.body.action === 'block')
-		query = 'INSERT INTO blocks (blocker, blockee, time) VALUES (?, ?, ?);';
+		query = 'INSERT INTO blocks (blocker, blockee, time) VALUES (?, ?, ?); DELETE FROM likes WHERE liker=? AND likee=?';
 	else if (req.body.action === 'unblock')
 		query = 'DELETE FROM blocks WHERE blocker = ? AND blockee = ?;';
 	else if (req.body.action === 'report')
 		query = 'INSERT INTO reports (reporter, reportee) VALUES (?, ?);';	
 
 	if (query.length) {
-		preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), mysqlDatetime()]);
+		preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), mysqlDatetime(), req.user.id, parseInt(userId)]);
 		pool.query(preparedQuery, (error, results) => {
 			if (error)
 				return res.json(null);
 			else
 			{
-				if (req.body.action === 'like' || req.body.action === 'unlike')
+				if (req.body.action === 'like' || req.body.action === 'unlike' || req.body.action === 'block')
 				{
 					query = 'UPDATE likes SET is_match=(SELECT * FROM(SELECT FLOOR(COUNT(*)/2) FROM likes WHERE (liker=? AND likee=?) OR (liker=? AND likee=?)) as temp) WHERE (liker=? AND likee=?) OR (liker=? AND likee=?);';
 

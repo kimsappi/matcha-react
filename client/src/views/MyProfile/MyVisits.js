@@ -88,13 +88,10 @@ const MyVisits = ({state, setState}) => {
 	useEffect(() => {
 		getThisPage(window.location.pathname)
 			.then(response => {
-				console.log('myProfiles/visits response:');
-				console.log(response);
 				setVisitsState(response);
             });
             if (previewState)
             {
-                console.log("jees")
                 getThisPage('/profile/'+previewState.profileData.id)
                     .then(response => {
                         modifyPreviewState(response);
@@ -102,8 +99,7 @@ const MyVisits = ({state, setState}) => {
             }
 
 	}, [rerenderTrick]);
-    console.log({previewState});
-    console.log("ASD");
+
 	if (visitsState)
 		return (
         <>  
@@ -143,20 +139,20 @@ const MyVisits = ({state, setState}) => {
                                         <img src={generateImageUrl(previewState.profileData.filename)} style={mainPicStyle}/>
                                     </button>
                                 </div>
-                                {previewState.images.map( (image) => 
-                                    <>
+                                {previewState.images.map( (image, index) => 
+                                    <div key={index}>
                                         {image !== previewState.profileData.filename ?
                                         <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
                                             <img src={generateImageUrl(image)} style={smallPicStyle}/>{image.extension}
                                         </button>
                                         : null}
-                                    </>
+                                    </div>
                                 )}
                                 <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p>
 
                                 {previewState.profileData.tags_string ?
                                 <>  
-                                    <h5>{previewState.profileData.tags_string.split(',').map((tag) => <h5 style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}</h5> <br />
+                                    {previewState.profileData.tags_string.split(',').map((tag, index) => <h5 key={index} style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)}<br />
                                 </>
                                 : ''}
 
