@@ -111,26 +111,20 @@ CREATE TABLE IF NOT EXISTS notifications (
 	FOREIGN KEY (causer) REFERENCES users(id)
 );
 
-delimiter //
 CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW BEGIN
 	DELETE FROM notifications WHERE \`user\` = new.likee AND reason = 'like' AND causer = new.liker;
 	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.likee, 'like', new.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
-END;//
-delimiter ;
+END;
 
-delimiter //
 CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW BEGIN
 	DELETE FROM notifications WHERE user = old.likee AND reason = 'unlike' AND causer = old.liker;
 	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (old.likee, 'unlike', old.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
-END;//
-delimiter ;
+END;
 
-delimiter //
 CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW BEGIN
 	DELETE FROM notifications WHERE user = new.visitee AND reason = 'visit' AND causer = new.visitor;
 	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.visitee, 'visit', new.visitor, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
-END;//
-delimiter ;
+END;
 
 -- CREATE TABLE IF NOT EXISTS chats (
 -- 	id INT UNSIGNED AUTO_INCREMENT,

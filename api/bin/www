@@ -102,7 +102,7 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 
-  updateFames();
+  setTimeout(() => {updateFames()}, 5000);
   setInterval(() => updateFames(), 300000);  
 }
 
