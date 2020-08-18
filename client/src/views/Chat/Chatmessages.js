@@ -3,7 +3,7 @@ import React from 'react';
 const ChatMessages = (({messages, otherUser, mostRecentMessage}) => {
 
     if (mostRecentMessage == 'blocked')
-        alert("You have been blocked by the user you're trying to message");
+        alert("Both users must like eachother before messaging is possible!");
 if (messages)
 {
     {var asd = 0}

@@ -66,8 +66,8 @@ const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
             
             <button className="btn btn-primary" onClick={() => message()}>Send</button>
             <input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" name="msg" id="message" autoComplete="off" onKeyPress={enterPressed.bind(this)} />
-            <div style={{display: 'flex', flexDirection: 'column-reverse', overflowY: 'scroll'}}>
-                <div style={{display: 'flex', flexDirection: 'column', overflowWrap: 'break-word'}}>
+            <div style={{display: 'flex', flexDirection: 'column-reverse', overflowY: 'auto'}}>
+                <div style={{display: 'flex', flexDirection: 'column', overflowWrap: 'break-word', padding: '4px'}}>
                     <ChatMessages messages={chatMessages} otherUser={chatUsername} mostRecentMessage={mostRecentMessage}/>
                 </div>
             </div>

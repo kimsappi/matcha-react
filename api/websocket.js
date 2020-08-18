@@ -43,8 +43,8 @@ const { startWatchingDataUpdate } = require('geoip-lite');
 
 function addMessageToDatabase(myId, otherId, message, io, keys)
 {
-	const query = "SELECT * FROM blocks WHERE ((blocker = ? AND blockee = ?) OR (blocker = ? AND blockee = ?))";
-	const prepareSql = mysql.format(query, [myId, otherId, otherId, myId]);
+	const query = "SELECT * FROM blocks, likes  WHERE (blocker =? AND blockee = ?) OR (blocker = ? AND blockee = ?) OR (liker=? AND likee=? AND is_match=0) OR (liker=? AND likee=? AND is_match=0)";
+	const prepareSql = mysql.format(query, [myId, otherId, otherId, myId, myId, otherId, otherId, myId]);
 	pool.query(prepareSql, (error, results) => {
 		if (results.length || error)
 		{

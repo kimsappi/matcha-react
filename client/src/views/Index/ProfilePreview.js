@@ -89,6 +89,16 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
         }
     }, [user, rerenderTrick]);
 
+if (previewState && previewState.profileData.last_login)
+{
+    var date = previewState.profileData.last_login.split('.')[0].split('T')[0].split('-').reverse().join('.');
+    var time = previewState.profileData.last_login.split('.')[0].split('T')[1].split(':')[0] + ':' + previewState.profileData.last_login.split('.')[0].split('T')[1].split(':')[1];
+}
+else
+{
+    var date = 'never';
+    var time = '';
+}
         if (previewState)
             return (
                 <>
@@ -97,8 +107,7 @@ const ProfilePreview = ({user, stateChange, setStateChange}) => {
                     <>
                     
                         <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
-                        <h3>{previewState.profileData.online ? 'Online' : 'Last online: ' + (previewState.profileData.last_login || 'never')}</h3>
-                        <h3 style={{lineHeight: '1px'}}>{previewState.gender}</h3>
+                        <h6>{previewState.profileData.online ? 'Online' : 'Last online: ' + ( date + ' ' + time || 'never')}</h6>
                         <h6 style={{color: 'red'}}>Fame: {previewState.profileData.fame}</h6>
                         
                         {previewState ? 
