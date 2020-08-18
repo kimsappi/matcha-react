@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 
-import {getConnections} from '../../modules/httpQueries';
+import {getConnections, getThisPage} from '../../modules/httpQueries';
 
 import Connection from './Connection';
 import Chatwindow from './Chatwindow';
@@ -8,7 +8,7 @@ import Chatwindow from './Chatwindow';
 /* eslint-disable no-lone-blocks */
 
 const Chat= ({socket}) => {
-
+	const [longPollState, setLongPollState] = useState(false);
 
     const connectionsWindow =
     {
@@ -65,6 +65,17 @@ const Chat= ({socket}) => {
             });
 
     }, [refresh, chat]);
+
+    useEffect(() => {
+		getThisPage('/getLongConnections?count=' + (connections !== null ? connections.length : 0))
+			.then(results => {
+				if (results) {
+					setConnections(results);
+				}
+				//getNotificationsViaLongPolling(notifications);
+				setLongPollState(!longPollState);
+			});
+	}, [longPollState]);
 
 
 

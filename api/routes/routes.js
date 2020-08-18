@@ -172,4 +172,8 @@ router.get('/getConnections', (req, res, next) => {
 	matches.get(req, res, next);
 });
 
+router.get('/getLongConnections', (req, res, next) => {
+	matches.getLong(req, res, next);
+});
+
 module.exports = router;
