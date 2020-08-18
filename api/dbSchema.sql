@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS reports (
 CREATE TABLE IF NOT EXISTS notifications (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user INT UNSIGNED NOT NULL,
-	reason ENUM('like', 'unlike', 'visit') NOT NULL,
+	reason ENUM('like', 'unlike', 'visit', 'msg') NOT NULL,
 	causer INT UNSIGNED NOT NULL,
 	\`read\` BOOLEAN DEFAULT FALSE,
 	\`time\` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -124,23 +124,10 @@ CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW BEGIN
 	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.visitee, 'visit', new.visitor, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
 END;
 
--- CREATE TABLE IF NOT EXISTS chats (
--- 	id INT UNSIGNED AUTO_INCREMENT,
--- 	chatter1 INT UNSIGNED NOT NULL,
--- 	chatter2 INT UNSIGNED NOT NULL,
--- 	PRIMARY KEY (chatter1, chatter2),
--- 	FOREIGN KEY (chatter1) REFERENCES users(id),
--- 	FOREIGN KEY (chatter2) REFERENCES users(id)
--- );
-
--- CREATE TABLE IF NOT EXISTS messages (
--- 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
--- 	chat INT UNSIGNED,
--- 	chatter INT UNSIGNED NOT NULL,
--- 	message VARCHAR(512) NOT NULL,
--- 	FOREIGN KEY (chat) REFERENCES chats(id),
--- 	FOREIGN KEY (chatter) REFERENCES users(id)
--- );
+CREATE TRIGGER notify_on_message AFTER INSERT ON messages FOR EACH ROW BEGIN
+	DELETE FROM notifications WHERE \`user\` = new.recipient AND reason = 'msg' AND causer = new.sender;
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.recipient, 'msg', new.sender, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+END;
 
 -- Passwords are '123'
 

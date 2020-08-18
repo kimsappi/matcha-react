@@ -21,7 +21,8 @@ const NotificationCard = ({notification}) => {
 		notifiStr = 'liked your profile!'
 	else if (notification.reason === 'unlike')
 		notifiStr = 'unliked you! :('
-
+	else if (notification.reason === 'msg')
+		notifiStr = 'sent you a message!'
 
 	return (
 		<div style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>
@@ -73,7 +74,7 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	// };
 
 	useEffect(() => {
-		getNotifications(false);
+		setTimeout(() => getNotifications(false), 100);
 		// This alone would work for getting notifications with short polling
 		//setInterval(() => getNotifications(false), 5000);
 	}, []);
