@@ -24,7 +24,6 @@ const MyLikesLikes = ({likes, modifyPreview, modifyWho, rerenderTrick}) => {
         }
         else
         {
-            console.log(profile);
             getThisPage('/profile/' + profile.visitee)
 			.then(response => {
 				//console.log('myProfiles/likes response:');
@@ -35,8 +34,6 @@ const MyLikesLikes = ({likes, modifyPreview, modifyWho, rerenderTrick}) => {
     }
 
 
-console.log(likes);
-
     if (!likes)
     {
         return(<h1>Loading</h1>);
@@ -44,14 +41,14 @@ console.log(likes);
     else
     {
         return ( 
-            likes.map( (like) =>
-            <>
+            likes.map( (like, index) =>
+            <div key={index}>
                 <button className="btn btn-success" onClick={() => {changePreview(like); modifyPreview(like); modifyWho(1);}} style={{width: '80%', marginRight: '50px', marginBottom: '20px'}}>
                     {like.visiteePic ? <img src={generateImageUrl(like.visiteePhoto)} style={smallPic} /> : <img src={generateImageUrl(like.likeePhoto)} style={smallPic} /> }
                     <b>  {like.likeeUsername ? like.likeeUsername : like.visiteeUsername}</b>
                 </button>
                 <br />
-            </>)
+            </div>)
         ) 
     }
 }
