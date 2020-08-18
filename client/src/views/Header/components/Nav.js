@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 import {LoginPopup} from './LoginPopup';
 import {RegisterPopup} from './RegisterPopup';
@@ -9,7 +9,8 @@ import {ResetPopup} from './ResetPopup';
 import {logOut} from '../../../modules/httpQueries';
 import Notifications from './Notifications';
 
-const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount, socketState}) => {
+const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount, socketState,}) => {
+	const location = useLocation();
 	if (!state.loggedIn)
 		return (
 			<>
@@ -41,13 +42,13 @@ const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCou
 				<ul className="navbar-nav mr-auto">
 					
 					<li className="nav-item nav-link">
-						<Link to='/'>Home</Link>
+						<Link to='/' style={location.pathname == '/' ? {fontWeight: 'bold'} : {}}>Home</Link>
 					</li>
 					<li className="nav-item nav-link">
-						<Link to='/myProfile/profile'>Profile</Link>
+						<Link to='/myProfile/profile' style={location.pathname.substr(0,6) == '/myPro' ? {fontWeight: 'bold'} : {}}>Profile</Link>
 					</li>
 					<li className="nav-item nav-link">
-						<Link to='/map'>Map</Link>
+						<Link to='/map' style={location.pathname == '/map' ? {fontWeight: 'bold'} : {}}>User Map</Link>
 					</li>
 					
 				</ul>

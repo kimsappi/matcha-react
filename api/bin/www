@@ -9,6 +9,7 @@ var debug = require('debug')('matcha:server');
 var http = require('http');
 
 const pool = require('../modules/dbConnect');
+const initialiseDb = require('../dbSchema.sql');
 
 /**
  * Get port from environment and store in Express.
@@ -86,6 +87,9 @@ function onError(error) {
       throw error;
   }
 }
+
+// Database initialisation
+initialiseDb();
 
 /**
  * Event listener for HTTP server "listening" event.

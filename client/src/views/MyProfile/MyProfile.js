@@ -26,7 +26,7 @@ const MyProfile = ({state, setState}) => {
 		getThisPage(window.location.pathname)
 			.then(response => {
 				setProfileState(response);
-				setFirstName(response.userData.first_name); setLastName(response.userData.last_name); setAge(response.userData.age);
+				setFirstName(response.userData.first_name); setLastName(response.userData.last_name); setAge(response.userData.age || 0);
 				setLatitude(response.userData.latitude); setLongitude(response.userData.longitude); setEmail(response.userData.email);
 				setGender(response.userData.gender); setTarget(response.userData.target_genders); setBiography(response.userData.biography);
 				setTags(response.tags);

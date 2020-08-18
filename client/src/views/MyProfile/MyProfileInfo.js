@@ -39,16 +39,13 @@ const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName
             required={true}
         />
         <InputWithLabel
-            type='number'
+            type='text'
             name='age'
             label='Age'
             state={age}
             setState={setAge}
-            max={99}
-            min={16}
-            step='1'
-            integer={true}
             required={true}
+            pattern="(1[6-9])|([2-9][0-9])"
         />
         <div>Location</div>
         <MyProfileMap

@@ -1,6 +1,18 @@
--- We do this to synchronise Node time to database time, there might be a better way
-SET @@global.time_zone = '+03:00';
+const mysql = require('mysql');
+const config = require('./config.json');
+const database = config.database;
 
+const initialiseDb = () => {
+	const connection = mysql.createConnection({
+		host: database.host,
+		user: database.user,
+		password: database.password,
+		database: database.database,
+		connectionLimit: 5,
+		multipleStatements: true
+	});
+
+	const query = `
 DROP DATABASE IF EXISTS matcha;
 
 CREATE DATABASE IF NOT EXISTS matcha;
@@ -10,7 +22,7 @@ USE matcha;
 CREATE TABLE IF NOT EXISTS users (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	username VARCHAR(24) UNIQUE NOT NULL,
-	`password` CHAR(64),
+	\`password\` CHAR(64),
 	email VARCHAR(99) UNIQUE NOT NULL,
 	first_name VARCHAR(32) NOT NULL,
 	last_name VARCHAR(32) NOT NULL,
@@ -25,15 +37,15 @@ CREATE TABLE IF NOT EXISTS users (
 	latitude FLOAT DEFAULT NULL,
 	last_login DATETIME DEFAULT NULL,
 	main_pic INT UNSIGNED DEFAULT NULL,
-	`online` INT DEFAULT 0,
+	\`online\` INT DEFAULT 0,
 	login_id TEXT DEFAULT (UUID())
 );
 
 CREATE TABLE IF NOT EXISTS user_photos (
-	`id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-	`user` INT UNSIGNED,
-	`extension` VARCHAR(16),
-	FOREIGN KEY (`user`) REFERENCES users (id)
+	\`id\` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	\`user\` INT UNSIGNED,
+	\`extension\` VARCHAR(16),
+	FOREIGN KEY (\`user\`) REFERENCES users (id)
 );
 
 CREATE TABLE IF NOT EXISTS tags (
@@ -55,7 +67,7 @@ CREATE TABLE IF NOT EXISTS likes (
 CREATE TABLE IF NOT EXISTS visits (
 	visitor INT UNSIGNED NOT NULL,
 	visitee INT UNSIGNED NOT NULL,
-	`time` DATETIME NOT NULL,
+	\`time\` DATETIME NOT NULL,
 	PRIMARY KEY (visitor, visitee),
 	FOREIGN KEY (visitor) REFERENCES users(id),
 	FOREIGN KEY (visitee) REFERENCES users(id)
@@ -73,7 +85,7 @@ CREATE TABLE IF NOT EXISTS messages (
 CREATE TABLE IF NOT EXISTS blocks (
 	blocker INT UNSIGNED NOT NULL,
 	blockee INT UNSIGNED NOT NULL,
-	`time` DATETIME NOT NULL,
+	\`time\` DATETIME NOT NULL,
 	PRIMARY KEY (blocker, blockee),
 	FOREIGN KEY (blocker) REFERENCES users(id),
 	FOREIGN KEY (blockee) REFERENCES users(id)
@@ -82,7 +94,7 @@ CREATE TABLE IF NOT EXISTS blocks (
 CREATE TABLE IF NOT EXISTS reports (
 	reporter INT UNSIGNED NOT NULL,
 	reportee INT UNSIGNED NOT NULL,
-	`time` DATETIME NOT NULL,
+	\`time\` DATETIME NOT NULL,
 	PRIMARY KEY (reporter, reportee),
 	FOREIGN KEY (reporter) REFERENCES users(id),
 	FOREIGN KEY (reportee) REFERENCES users(id)
@@ -93,20 +105,32 @@ CREATE TABLE IF NOT EXISTS notifications (
 	user INT UNSIGNED NOT NULL,
 	reason ENUM('like', 'unlike', 'visit') NOT NULL,
 	causer INT UNSIGNED NOT NULL,
-	`read` BOOLEAN DEFAULT FALSE,
-	`time` DATETIME DEFAULT CURRENT_TIMESTAMP,
+	\`read\` BOOLEAN DEFAULT FALSE,
+	\`time\` DATETIME DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (user) REFERENCES users(id),
 	FOREIGN KEY (causer) REFERENCES users(id)
 );
 
-CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW
-INSERT INTO notifications (user, reason, causer, `time`) VALUES (new.likee, 'like', new.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+delimiter //
+CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW BEGIN
+	DELETE FROM notifications WHERE \`user\` = new.likee AND reason = 'like' AND causer = new.liker;
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.likee, 'like', new.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+END;//
+delimiter ;
 
-CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW
-INSERT INTO notifications (user, reason, causer, `time`) VALUES (old.likee, 'unlike', old.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+delimiter //
+CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW BEGIN
+	DELETE FROM notifications WHERE user = old.likee AND reason = 'unlike' AND causer = old.liker;
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (old.likee, 'unlike', old.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+END;//
+delimiter ;
 
-CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW
-INSERT INTO notifications (user, reason, causer, `time`) VALUES (new.visitee, 'visit', new.visitor, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+delimiter //
+CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW BEGIN
+	DELETE FROM notifications WHERE user = new.visitee AND reason = 'visit' AND causer = new.visitor;
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.visitee, 'visit', new.visitor, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+END;//
+delimiter ;
 
 -- CREATE TABLE IF NOT EXISTS chats (
 -- 	id INT UNSIGNED AUTO_INCREMENT,
@@ -129,7 +153,7 @@ INSERT INTO notifications (user, reason, causer, `time`) VALUES (new.visitee, 'v
 -- Passwords are '123'
 
 
-INSERT INTO users (username, `password`, email, first_name, last_name, gender, age, latitude, longitude) VALUES
+INSERT INTO users (username, \`password\`, email, first_name, last_name, gender, age, latitude, longitude) VALUES
 	('admin1', 'ad9b191cd8d24d4e57710893f9922c11c6aeb8143ec99baf4332f191c6bfba9c', 'admin1@example.com', 'Admin', 'One', 'm', 21, 60, 34),
 	('admin2', 'b0b46aaf9bab6524f15c40e3c82febe1bbad1f5cb87def29023f3303edd709f1', 'admin2@example.com', 'Admin', 'Two', 'f', 23, 65, 35),
 	('test', '09d40999b9d76c0de6b1bb578be88f82fe345cb1aa384dffcdecd365bcd0c1e2', 'test@example.com', 'test', 'asd', 'f', NULL, 55, 24),
@@ -174,16 +198,16 @@ INSERT INTO messages (sender, recipient, content) VALUES
 
 CREATE VIEW user_and_photos AS
 SELECT * FROM users
-LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
+LEFT OUTER JOIN (SELECT id AS photo_id, user, CONCAT(id, '.', extension) AS \`filename\` FROM user_photos) AS user_photos
 ON user_photos.user = users.id;
 
 CREATE VIEW user_and_main_photo AS
 SELECT * FROM users
-LEFT OUTER JOIN (SELECT id AS photo_id, user as p_user, CONCAT(id, '.', extension) AS `filename` FROM user_photos) AS user_photos
+LEFT OUTER JOIN (SELECT id AS photo_id, user as p_user, CONCAT(id, '.', extension) AS \`filename\` FROM user_photos) AS user_photos
 ON user_photos.p_user = users.id AND user_photos.photo_id = users.main_pic
-LEFT OUTER JOIN (SELECT `user` AS tag_user, GROUP_CONCAT(string SEPARATOR ',') AS tags_string FROM tags GROUP BY tag_user) AS tags
+LEFT OUTER JOIN (SELECT \`user\` AS tag_user, GROUP_CONCAT(string SEPARATOR ',') AS tags_string FROM tags GROUP BY tag_user) AS tags
 ON tags.tag_user = users.id
-LEFT OUTER JOIN (SELECT `user` AS photos_user, GROUP_CONCAT(id, '.', extension SEPARATOR ',') AS photos_string FROM user_photos GROUP BY `user`) AS photos
+LEFT OUTER JOIN (SELECT \`user\` AS photos_user, GROUP_CONCAT(id, '.', extension SEPARATOR ',') AS photos_string FROM user_photos GROUP BY \`user\`) AS photos
 ON photos.photos_user = users.id;
 
 CREATE VIEW chat_and_user AS
@@ -191,6 +215,17 @@ SELECT messages.id AS id, messages.content AS content, s.username AS sender_name
 JOIN users AS s ON s.id = messages.sender
 JOIN users AS r ON r.id = messages.recipient;
 
+SET GLOBAL FOREIGN_KEY_CHECKS=0;
+ALTER TABLE blocks DISABLE KEYS;
+INSERT INTO blocks VALUES (0, 0, CURRENT_TIMESTAMP());
+ALTER TABLE blocks ENABLE KEYS;
+SET GLOBAL FOREIGN_KEY_CHECKS=1;
+
 -- DROP USER 'dbuser'@'%';
 -- CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY '123dbuser';
 -- GRANT ALL PRIVILEGES ON *.* TO 'dbuser'@'%';
+`;
+	connection.query(query);
+};
+
+module.exports = initialiseDb;
