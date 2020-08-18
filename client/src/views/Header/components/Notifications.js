@@ -25,7 +25,7 @@ const NotificationCard = ({notification}) => {
 
 	return (
 		<div style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>
-			<ProfileImage filename={notification.filename} />
+			<ProfileImage filename={notification.filename} style={{height: '50px', marginRight: '0.5em'}} />
 			<strong>{notification.username}</strong> {notifiStr}
 		</div>
 	);
@@ -44,7 +44,7 @@ const notificationWindowContainerStyle = {
 	flexFlow: 'column nowrap',
 	overflow: 'auto',
 	zIndex: 9,
-	position: 'fixed'
+	position: 'absolute'
 }
 
 const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) => {
@@ -104,8 +104,8 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 
 	return (
 		<>
-			<Button style={{position: 'relative'}} variant='secondary' onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications
-				{unreadCount ? <CollapsedNotificationCount count={unreadCount} right='0' /> : ''}
+			<Button size='sm' style={{position: 'relative'}} variant='secondary' onClick={() => displayNotifications(setNotificationsDisplay, notificationsDisplay)}>Notifications
+				{unreadCount ? <CollapsedNotificationCount count={unreadCount} right='-3' /> : ''}
 			</Button>
 			{/* An outer container is required to get the scroll direction right */}
 			<div style={{...notificationWindowContainerStyle, display: notificationsDisplay ? 'flex' : 'none' }}>
