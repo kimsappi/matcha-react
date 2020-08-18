@@ -86,9 +86,7 @@ CREATE TABLE IF NOT EXISTS blocks (
 	blocker INT UNSIGNED NOT NULL,
 	blockee INT UNSIGNED NOT NULL,
 	\`time\` DATETIME NOT NULL,
-	PRIMARY KEY (blocker, blockee),
-	FOREIGN KEY (blocker) REFERENCES users(id),
-	FOREIGN KEY (blockee) REFERENCES users(id)
+	PRIMARY KEY (blocker, blockee)
 );
 
 CREATE TABLE IF NOT EXISTS reports (

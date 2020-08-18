@@ -154,6 +154,10 @@ const post = (req, res, next) => {
 					//});
 					return res.json('OK');
 				}
+				else if (req.body.action === 'report')
+				{
+					return res.json('OK');	
+				}
 			}
 		});
 	}
