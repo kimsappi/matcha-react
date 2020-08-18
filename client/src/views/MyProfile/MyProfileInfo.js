@@ -91,7 +91,7 @@ const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName
 
         <TagsInput tags={tags} setTags={setTags} />
 
-        <input className='button btn btn-primary' type='submit' name='submit' value='Save' style={{marginLeft: '50%', marginRight: '50%'}} />
+        <input className='button btn btn-primary' type='submit' name='submit' value='Save' style={{marginLeft: '50%', marginRight: '50%', marginBottom: '1em'}} />
         </form>
         </>);
 }
