@@ -21,7 +21,8 @@ const NotificationCard = ({notification}) => {
 		notifiStr = 'liked your profile!'
 	else if (notification.reason === 'unlike')
 		notifiStr = 'unliked you! :('
-
+	else if (notification.reason === 'msg')
+		notifiStr = 'sent you a message!'
 
 	return (
 		<div style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>
