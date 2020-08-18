@@ -146,10 +146,13 @@ export const submitLike = (path, action, state, setState) => {
 		likeAction = 'block';
 	else if (action === 'unblock')
 		likeAction = 'unblock';
+	else if (action === 'report')
+		likeAction = 'report';
 	else if (action === likeButtonStrings.noLikes || action === likeButtonStrings.theyLike)
 		likeAction = 'like';
 	else
 		likeAction = 'unlike';
+
 	const request = axios.post(url, {action: likeAction},
 		{headers: getAuthHeader()});
 	request.then(response => {

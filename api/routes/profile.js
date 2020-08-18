@@ -29,6 +29,25 @@ const getBlockButtonStatus = async (user, other) => {
 	return ret;
 }
 
+const getReportButtonStatus = async (user, other) => {
+	if (user.id === other.id)
+		return null;
+
+	const query = mysql.format(
+		'SELECT * FROM reports WHERE reporter=? AND reportee=?;',
+		[user.id, other.id]);
+
+	const ret = new Promise((resolve, reject) => {
+		pool.query(query, (error, results) => {
+			if (error || !results.length)
+				resolve(false);
+			else
+				resolve(true);
+		})
+	});
+	return ret;
+}
+
 const getLikeButtonStatus = async (user, other) => {
 	// User is looking at their own profile
 	if (user.id === other.id)
@@ -93,10 +112,11 @@ const get = async (req, res, next) => {
 		// Don't really care about success so no callback
 		pool.query(preparedVisitQuery, (error, results) => {});
 
+		const reportButtonStatus = getReportButtonStatus(req.user, results[0]);
 		const blockButtonStatus = getBlockButtonStatus(req.user, results[0]);
 		const likeButtonStatus = getLikeButtonStatus(req.user, results[0]);
 		//const images = getImages(req.params.id);
-		Promise.all([likeButtonStatus, blockButtonStatus])//, images])
+		Promise.all([likeButtonStatus, blockButtonStatus, reportButtonStatus])//, images])
 			.then((likeButtonStatus) => {
 				const images = results[0].photos_string ? results[0].photos_string.split(',') : [];
 				return res.json({
@@ -106,7 +126,8 @@ const get = async (req, res, next) => {
 					gender: getGenderEmoji(results[0].gender),
 					title: `${results[0].first_name} ${results[0].last_name[0]}.`,
 					likeButton: likeButtonStatus[0],
-					blockStatus: likeButtonStatus[1]
+					blockStatus: likeButtonStatus[1],
+					reportStatus: likeButtonStatus[2]
 				});
 			});
 	});
@@ -137,7 +158,10 @@ const post = (req, res, next) => {
 		preparedQuery = mysql.format(query, [req.user.id, parseInt(userId), mysqlDatetime(), req.user.id, parseInt(userId)]);
 		pool.query(preparedQuery, (error, results) => {
 			if (error)
+			{
+				console.log(error);
 				return res.json(null);
+			}
 			else
 			{
 				if (req.body.action === 'like' || req.body.action === 'unlike' || req.body.action === 'block')
@@ -156,7 +180,7 @@ const post = (req, res, next) => {
 				}
 				else if (req.body.action === 'report')
 				{
-					return res.json('OK');	
+					return res.json('OK');
 				}
 			}
 		});
