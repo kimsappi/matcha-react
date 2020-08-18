@@ -29,10 +29,10 @@ const get = (req, res, next) => {
 	const query = 'SELECT ' + select + ' FROM visits \
 		INNER JOIN user_and_main_photo AS visitor ON visitor.id = visits.visitor \
 		INNER JOIN user_and_main_photo AS visitee ON visitee.id = visits.visitee \
-		WHERE visits.visitor = ? OR visits.visitee = ?;'
+		WHERE (visits.visitor = ? OR visits.visitee = ?) AND NOT EXISTS (SELECT * FROM blocks WHERE (blocker=visits.visitor OR blocker=visits.visitee) AND blockee=?);'
 		//ORDER BY FIELD(visitor, ?);'
 		// INNER JOIN user_and_main_photo AS 
-	const preparedQuery = mysql.format(query, [req.user.id, req.user.id]);
+	const preparedQuery = mysql.format(query, [req.user.id, req.user.id, req.user.id]);
 	pool.query(preparedQuery, (error, results) => {
 		if (error)
 			return res.json(null);

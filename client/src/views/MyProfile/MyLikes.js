@@ -4,6 +4,7 @@ import Tab from 'react-bootstrap/Tab';
 import ProfileNav from './ProfileNav';
 import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';
+import ProfilePreview from '../Index/ProfilePreview';
 import {Popup} from '../../components/Popup';
 
 import {getThisPage, generateImageUrl, submitLike} from '../../modules/httpQueries';
@@ -86,7 +87,6 @@ const MyLikes = ({state, setState}) => {
 		getThisPage(window.location.pathname)
 			.then(response => {
 				//console.log('myProfiles/likes response:');
-				//console.log(response);
                 setLikesState(response);
             });
         if (previewState)
@@ -110,70 +110,23 @@ const MyLikes = ({state, setState}) => {
                 <div className="row">
                     <div className="col-sm-6">
                         <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example" className="w-80" style={{margin: '20px'}}>
-                            <Tab eventKey="home" title="Users you have liked" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
+                            <Tab eventKey="home" title="Users you have liked" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'auto'}}>
                                 <Likes likes={likesState.liked} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState} render={rerenderTrick}/>
                             </Tab>
-                            <Tab eventKey="profile" title="Users that have liked you" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'scroll'}}>
+                            <Tab eventKey="profile" title="Users that have liked you" className="w-80" style={{margin: '20px', maxHeight: '800px', overflowY: 'auto'}}>
                                 <Likee likes={likesState.likedMe} modifyPreview={modifyPreviewState} modifyWho={modifyPreviewLikedWhoState}/>
                             </Tab>
                         </Tabs>
                     </div>
                 <div className="col-sm-5" style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px'}}>
 
-               
-
-                    
-
-                    
                         {previewState && previewState.profileData ?
-                            <>
-                            
-                                <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
-                                <h3 style={{lineHeight: '1px'}}>{previewState.gender}</h3>
-                                <h6 style={{color: 'red'}}>Fame: {previewState.profileData.fame}</h6>
-                                {previewState ? 
-                                previewState.blockStatus === true ? 
-                                <h1 style={{position: 'relative', top: '14px', textAlign: 'center', fontWeight: 'bolder', fontSize: '60px', color: 'red'}}>BLOCKED</h1> : ""
-                                    
-                                    : ''}
-
-                                <div style={{width: '100%'}}>
-                                    <button onClick={() => {modifyPreviewImage(previewState.profileData.filename); modifyImagePopupState(true);}}  style={imageButton}>
-                                        <img src={generateImageUrl(previewState.profileData.filename)} style={mainPicStyle}/>
-                                    </button>
-                                </div>
-                                {previewState.images.map( (image, index) => 
-                                    <div key={index}>
-                                        {image !== previewState.profileData.filename ?
-                                        <button onClick={() => {modifyPreviewImage(image); modifyImagePopupState(true);}} style={imageButton}>
-                                            <img src={generateImageUrl(image)} style={smallPicStyle}/>
-                                        </button>
-                                        : null}
-                                    </div>
-                                )}
-                                <p style={{overflowWrap: 'break-word'}}>{previewState.profileData.biography}</p>
-
-                                {previewState.profileData.tags_string ?
-                                <>     
-                                    {previewState.profileData.tags_string.split(',').map((tag, index) => <h5 key={index} style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)} <br />
-                                </>
+                            <ProfilePreview user={previewState} stateChange={rerenderTrick} setStateChange={setRerenderTrick} />
                                 : ''}
-                                {/* {previewState.profileData.tags_string.split(',').map((word) => {<h1>{word}</h1>})} */}
-
-                                {previewState && previewState.blockStatus === false ? 
-                                <button onClick={() => submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick)} className="btn btn-success">{previewState.likeButton}</button>
-                                : ''}
-                                {previewState ? 
-                                <button onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick); setRerenderTrick(!rerenderTrick);}} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
-                                : ''} 
-
-                            </>
-                        : null}
+                          
                         {imagePopupState === true ?
-                        <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage)} style={popUpImage}/></Popup>
-                        : ''}
-                    
-                    
+                            <Popup setPopupState={modifyImagePopupState}><img src={generateImageUrl(previewImage)} style={popUpImage}/></Popup>
+                                : ''}
                 
                 </div>
             </div>

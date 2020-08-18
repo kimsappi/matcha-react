@@ -66,7 +66,7 @@ const get = (req, res, next) => {
 		const genderQueries = getGenderQueries(myData);
 		const usersQuery = mysql.format(`SELECT * FROM user_and_main_photo \
 
-		 WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ? AND NOT EXISTS (SELECT * FROM likes WHERE likes.liker=? AND likes.likee=user_and_main_photo.id);`, [req.user.id, req.user.id]);
+		 WHERE ${genderQueries.targets} AND ${genderQueries.targetTargets} AND id != ? AND NOT EXISTS (SELECT * FROM likes WHERE likes.liker=? AND likes.likee=user_and_main_photo.id) AND NOT EXISTS (SELECT * FROM blocks WHERE blocker=user_and_main_photo.id AND blockee=?);`, [req.user.id, req.user.id, req.user.id]);
 		
 		 pool.query(usersQuery, (error, results) => {
 			if (error)
