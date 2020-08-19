@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import Table from 'react-bootstrap/Table'
+
 
 import ProfileNav from './ProfileNav';
 import ProfilePreview from '../Index/ProfilePreview';
-import {getThisPage, generateImageUrl, submitLike} from '../../modules/httpQueries';
+import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
 import Likes from './MyLikesLikes';
 import Likee from './MyLikesLikee';
 import {Popup} from '../../components/Popup';
+
+/* eslint-disable */
 
 const MyVisits = ({state, setState}) => {
 

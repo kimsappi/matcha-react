@@ -10,6 +10,8 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import {sortingMethods} from '../../config.json';
 
+/* eslint-disable */
+
 const Index = ({state, action, setPopupState, setState}) => {
 	const userData = getUser();
 	// Userdata doesn't load instantly, so set a default to prevent errors

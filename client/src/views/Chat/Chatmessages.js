@@ -1,5 +1,7 @@
 import React from 'react';
 
+/* eslint-disable */
+
 const ChatMessages = (({messages, otherUser, mostRecentMessage}) => {
 
     if (mostRecentMessage == 'blocked')

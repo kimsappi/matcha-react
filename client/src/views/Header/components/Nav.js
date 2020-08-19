@@ -9,6 +9,8 @@ import {ResetPopup} from './ResetPopup';
 import {logOut} from '../../../modules/httpQueries';
 import Notifications from './Notifications';
 
+/* eslint-disable */
+
 const Nav = ({state, setState, popupState, setPopupState, unreadNotificationsCount, setUnreadNotificationsCount, socketState,}) => {
 	const location = useLocation();
 	if (!state.loggedIn)

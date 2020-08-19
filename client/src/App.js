@@ -16,6 +16,8 @@ import {getUser} from './modules/userData';
 
 import {getToken} from './modules/userData';
 
+/* eslint-disable */
+
 function App() {
   let user = getUser();
 

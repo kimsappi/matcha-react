@@ -6,6 +6,8 @@ import {getThisPage} from '../../modules/httpQueries';
 
 import ChatMessages from './Chatmessages';
 
+/* eslint-disable */
+
 const Chatwindow = (({socket, chat, chatWindow, chatUsername}) => {
 
     const [chatMessages, setChatMessages] = useState(null);

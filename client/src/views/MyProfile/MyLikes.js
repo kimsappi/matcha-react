@@ -7,7 +7,9 @@ import Likee from './MyLikesLikee';
 import ProfilePreview from '../Index/ProfilePreview';
 import {Popup} from '../../components/Popup';
 
-import {getThisPage, generateImageUrl, submitLike} from '../../modules/httpQueries';
+import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
+
+/* eslint-disable */
 
 const MyLikes = ({state, setState}) => {
 

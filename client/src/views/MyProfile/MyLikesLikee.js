@@ -4,6 +4,9 @@ import {getThisPage, generateImageUrl} from '../../modules/httpQueries';
 // Databasen 'likes' tableen lisattava id columni, jotta key helpompi saada uniikiksi.
 
 // USERS THAT HAVE LIKED ME
+
+/* eslint-disable */
+
 const MyLikesLikee = ({likes, modifyPreview, modifyWho}) => {
 
     const smallPic = 

@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
+/* eslint-disable */
+
 ReactDOM.render(
-  <React.StrictMode>
+
     <div className="container-fluid">
       <App />
-    </div>
-  </React.StrictMode>,
+    </div>,
   document.getElementById('root')
 );

@@ -1,6 +1,7 @@
 import React from 'react';
 import {generateImageUrl} from '../../modules/httpQueries';
 
+/* eslint-disable */
 
 const Connection = ({connections, chat, setChat, chatWindow, setChatWindow, setChatUsername}) => {
 

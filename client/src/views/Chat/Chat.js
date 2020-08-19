@@ -5,7 +5,7 @@ import {getConnections, getThisPage} from '../../modules/httpQueries';
 import Connection from './Connection';
 import Chatwindow from './Chatwindow';
 
-/* eslint-disable no-lone-blocks */
+/* eslint-disable */
 
 const Chat= ({socket}) => {
 	const [longPollState, setLongPollState] = useState(false);
