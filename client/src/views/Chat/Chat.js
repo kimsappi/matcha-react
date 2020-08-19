@@ -21,7 +21,7 @@ const Chat= ({socket}) => {
         zIndex: '33'
     }
 
-    const chatWindow = 
+    const chatWindoww = 
     {
         display: 'flex',
         flexDirection: 'column-reverse',
@@ -91,7 +91,7 @@ const Chat= ({socket}) => {
             {chatWindowOpen ?
                 <>
                 
-                    <div style={chatWindow}>
+                    <div style={chatWindoww}>
                    
                         {/* <div style={{backgroundColor: "light-blue", textAlign: 'center', height: '23px', position: 'relative', bottom: '-10px'}}><p>{chatUsername}</p></div> */}
                     

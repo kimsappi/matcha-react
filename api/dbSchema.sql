@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS user_photos (
 );
 
 CREATE TABLE IF NOT EXISTS tags (
-	string VARCHAR(32) NOT NULL,
+	string VARCHAR(256),
 	user INT UNSIGNED,
 	PRIMARY KEY (string, user),
 	FOREIGN KEY (user) REFERENCES users(id)
@@ -145,7 +145,7 @@ INSERT INTO users (username, \`password\`, email, first_name, last_name, gender,
 
 INSERT INTO likes (liker, likee, is_match) VALUES 
 	(1, 2, 1),
-	(2, 1, 0),
+	(2, 1, 1),
 	(1, 3, 1),
 	(3, 1, 1),
 	(1, 4, 1),

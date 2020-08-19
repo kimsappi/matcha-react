@@ -105,8 +105,8 @@ else
                 <div style={{margin: '20px', justifyContent: 'center', textAlign: 'center', paddingTop: '10px', zIndex: '-1', backgroundColor: 'lightgray', borderRadius: '170px', boxShadow: '0 0 25px 40px lightGray'}}>
                 {previewState && previewState.profileData ?
                     <>
-                    
-                        <h1>{previewState.profileData.username}, {previewState.profileData.age}</h1>
+                        <h1>{previewState.profileData.first_name}, {previewState.profileData.age}</h1>
+                        <h6>{previewState.profileData.username}</h6>
                         <h6>{previewState.profileData.online ? 'Online' : 'Last online: ' + ( date + ' ' + time || 'never')}</h6>
                         <h6 style={{color: 'red'}}>Fame: {previewState.profileData.fame}</h6>
                         
@@ -137,7 +137,7 @@ else
                         </>
                         : ''}
                         {previewState && previewState.blockStatus === false ? 
-                        <button onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}} className="btn btn-success">{previewState.likeButton}</button>
+                        <button style={{marginRight: '10px'}} onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}} className="btn btn-success">{previewState.likeButton}</button>
                         : ''}
                         {previewState ? 
                         <button onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
