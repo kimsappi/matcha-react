@@ -18,7 +18,7 @@ const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName
             label='First name'
             state={firstName}
             setState={setFirstName}
-            pattern="[\p{L}\-']{2,32}"
+            pattern="[a-zA-Z\u00c0-\u017e]{2,32}"
             required={true}
         />
         <InputWithLabel
@@ -27,7 +27,7 @@ const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName
             label='Last name'
             state={lastName}
             setState={setLastName}
-            pattern="[\p{L}\-']{2,32}"
+            pattern="[a-zA-Z\u00c0-\u017e]{2,32}"
             required={true}
         />
         <InputWithLabel

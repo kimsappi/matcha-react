@@ -209,6 +209,10 @@ export const submitLogin = (event, setState, setPopupState, username, password) 
 
 export const submitRegister = (event, setPopupState, username, password, confirmPassword, email, firstName, lastName) => {
 	event.preventDefault();
+	if (!event.target.checkValidity()) {
+		event.target.reportValidity();
+		return;
+	}
 
 	const reqBody = {
 		username: username,

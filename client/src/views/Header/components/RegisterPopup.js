@@ -44,7 +44,9 @@ export const RegisterPopup = ({setPopupState}) => {
 					label='Username'
 					state={username}
 					setState={setUsername}
+					pattern='[A-Za-z0-9]{4,16}'
 				/>
+				<p>4-16 characters</p>
 				<InputWithLabel
 					type='email'
 					name='email' 
@@ -58,6 +60,7 @@ export const RegisterPopup = ({setPopupState}) => {
 					label='First name'
 					state={firstName}
 					setState={setFirstName}
+					pattern="[a-zA-Z\u00c0-\u017e]{2,32}"
 				/>
 				<InputWithLabel
 					type='text'
@@ -65,6 +68,7 @@ export const RegisterPopup = ({setPopupState}) => {
 					label='Last name'
 					state={lastName}
 					setState={setLastName}
+					pattern="[a-zA-Z\u00c0-\u017e]{2,32}"
 				/>
 				<InputWithLabel
 					type='password'
@@ -73,6 +77,7 @@ export const RegisterPopup = ({setPopupState}) => {
 					state={password}
 					setState={setPassword}
 				/>
+				<p>Password must be at least 8 characters long and include 3 of: lowercase, uppercase, number, special character</p>
 				<InputWithLabel
 					type='password'
 					name='confirmPassword' 
