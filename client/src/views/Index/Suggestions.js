@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Suggestions = ({users, distanceFilter, minAge, maxAge, minCommonTags,
-	sort, tagSearch}) => {
+	sort, tagSearch, minFame, maxFame}) => {
 
 	if (!users.length)
 		return <div>There are currently no suggestions available for you!</div>;
@@ -14,6 +14,10 @@ const Suggestions = ({users, distanceFilter, minAge, maxAge, minCommonTags,
 		if (element.props.profile.age > maxAge)
 			return false;
 		if (element.props.profile.commonTags < minCommonTags)
+			return false;
+		if (element.props.profile.fame < minFame)
+			return false;
+		if (element.props.profile.fame > maxFame)
 			return false;
 		
 		// This filter must be just before the final `return true;`

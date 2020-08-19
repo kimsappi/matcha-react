@@ -21,6 +21,8 @@ const Index = ({state, action, setPopupState, setState}) => {
 	const [distanceFilter, setDistanceFilter] = useState(100);
 	const [minAge, setMinAge] = useState(age - 3);
 	const [maxAge, setMaxAge] = useState(age + 3);
+	const [minFame, setMinFame] = useState(0);
+	const [maxFame, setMaxFame] = useState(9999999999999);
 	const [minCommonTags, setMinCommonTags] = useState(0);
 	const [sort, setSort] = useState(0);
 	const [tagSearch, setTagSearch] = useState('');
@@ -95,6 +97,8 @@ const Index = ({state, action, setPopupState, setState}) => {
 								minCommonTags={minCommonTags} setMinCommonTags={setMinCommonTags}
 								sort={sort} setSort={setSort} sortingMethods={sortingMethods}
 								tagSearch={tagSearch} setTagSearch={setTagSearch}
+								minFame={minFame} setMinFame={setMinFame}
+								maxFame={maxFame} setMaxFame={setMaxFame}
 							/>
 						</DropdownButton>
 						<div style={{marginTop: '10px'}}>
@@ -113,6 +117,7 @@ const Index = ({state, action, setPopupState, setState}) => {
 								minCommonTags={minCommonTags}
 								sort={sortingMethods[sort]}
 								tagSearch={tagSearch}
+								minFame={minFame} maxFame={maxFame}
 							/>
 						</div>
 						<br />

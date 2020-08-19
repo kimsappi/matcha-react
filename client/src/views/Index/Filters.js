@@ -7,10 +7,13 @@ const Filters = ({distance, setDistance,
 	minAge, setMinAge, maxAge, setMaxAge,
 	minCommonTags, setMinCommonTags,
 	sort, setSort, sortingMethods,
-	tagSearch, setTagSearch}) => {
+	tagSearch, setTagSearch,
+	minFame, setMinFame, maxFame, setMaxFame}) => {
 
 	const [tagSearchInput, setTagSearchInput] = useState('');
 	const [distanceDisplay, setDistanceDisplay] = useState(distance);
+	const [minFameDisplay, setMinFameDisplay] = useState(minFame);
+	const [maxFameDisplay, setMaxFameDisplay] = useState(maxFame);
 
 	const eventHandler = (event, setFunction) => {
 		setFunction(event.target.value);
@@ -29,6 +32,19 @@ const Filters = ({distance, setDistance,
 			setDistanceDisplay('500+');
 		}
 	};
+
+	const fameHandler = (values, setMin, setMax) => {
+		const min = values[0] === 1000 ? 99999999 : values[0];
+		const max = values[1] === 1000 ? 99999999 : values[1];
+		setMin(min);
+		setMax(max);
+		setMinFameDisplay(min);
+		setMaxFameDisplay(max);
+		if (min > 999)
+			setMinFameDisplay('infinity');
+		if (max > 999)
+			setMaxFameDisplay('infinity');
+	}
 
 	const tagEventHandler = (event, setTagSearchInput) => {
 		setTagSearchInput(event.target.value.replace(/[#+]/g, ''));
@@ -79,6 +95,14 @@ const Filters = ({distance, setDistance,
 				<label htmlFor='minAge'>Maximum age</label>
 				<input type='number' name='maxAge' value={maxAge} max='99' onChange={event => eventHandler(event, setMaxAge)} />
 			</div> */}
+			<div>Fame range: {minFameDisplay} - {maxFameDisplay}</div>
+			<Range
+				step={1}
+				value={[minFame, maxFame]}
+				min={0}
+				max={1000}
+				onChange={values => fameHandler(values, setMinFame, setMaxFame)}
+			/> <br />
 			<div>
 				<label htmlFor='minCommonTags'>Minimum common tags</label>
 				<select className="form-control" type='number' name='minCommonTags' value={minCommonTags} onChange={event => eventHandler(event, setMinCommonTags)}>
