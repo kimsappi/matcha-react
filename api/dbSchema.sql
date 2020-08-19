@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS reports (
 CREATE TABLE IF NOT EXISTS notifications (
 	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 	user INT UNSIGNED NOT NULL,
-	reason ENUM('like', 'unlike', 'visit', 'msg') NOT NULL,
+	reason ENUM('like', 'unlike', 'visit', 'msg', 'match') NOT NULL,
 	causer INT UNSIGNED NOT NULL,
 	\`read\` BOOLEAN DEFAULT FALSE,
 	\`time\` DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -110,8 +110,9 @@ CREATE TABLE IF NOT EXISTS notifications (
 );
 
 CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW BEGIN
-	DELETE FROM notifications WHERE \`user\` = new.likee AND reason = 'like' AND causer = new.liker;
-	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.likee, 'like', new.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+	DELETE FROM notifications WHERE \`user\` = new.likee AND (reason = 'like' OR reason = 'match') AND causer = new.liker;
+	SET @likeType = IF((SELECT COUNT(*) FROM likes WHERE liker = new.likee AND likee = new.liker), 'match', 'like');
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.likee, @likeType, new.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
 END;
 
 CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW BEGIN

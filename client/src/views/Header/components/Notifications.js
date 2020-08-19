@@ -22,7 +22,9 @@ const NotificationCard = ({notification}) => {
 	else if (notification.reason === 'unlike')
 		notifiStr = 'unliked you! :('
 	else if (notification.reason === 'msg')
-		notifiStr = 'sent you a message!'
+		notifiStr = 'sent you a message!';
+	else if (notification.reason === 'match')
+		notifiStr = 'matched with you!';
 
 	return (
 		<div style={{...style, backgroundColor: notification.read ? 'lightgrey' : 'lightblue'}}>
