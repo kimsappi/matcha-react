@@ -74,7 +74,7 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	// };
 
 	useEffect(() => {
-		setTimeout(() => getNotifications(false), 100);
+		setTimeout(() => getNotifications(false), 1000);
 		// This alone would work for getting notifications with short polling
 		//setInterval(() => getNotifications(false), 5000);
 	}, []);
@@ -101,7 +101,7 @@ const Notifications = ({unreadNotificationsCount, setUnreadNotificationsCount}) 
 	<p>Empty!</p> :
 	notifications.map(item => <NotificationCard notification={item} key={item.id} new={!item.read} />);
 	const unreadCount = notifications.filter(i => !i.read).length;
-	setUnreadNotificationsCount(unreadCount);
+	setTimeout(() => setUnreadNotificationsCount(unreadCount), 100);
 
 	return (
 		<>

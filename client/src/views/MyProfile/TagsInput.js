@@ -30,9 +30,9 @@ const TagsInput = ({tags, setTags}) => {
 			<br />
 			<div className="input-group" style={{marginTop: '0.5em'}}>
   				<span style={{position: 'relative', left: '20px'}}>#</span>
-				<input type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={'#' + newTag} onChange={event => setNewTag(event.target.value.replace(/[#+]/g, ''))} />
+				<input pattern=".{1,200}" type="text" className="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" value={'#' + newTag} onChange={event => setNewTag(event.target.value.replace(/[#+]/g, ''))} />
 				<div className="input-group-append">
-					<button className="btn btn-success" type="button" onClick={() => {if (newTag.length) {setTags([...tags, newTag]); setNewTag('');}}}>Add!</button>
+					<button className="btn btn-success" type="button" onClick={() => {if (newTag.length > 1 && newTag.length < 200) {setTags([...tags, newTag]); setNewTag('');}}}>Add!</button>
 				</div>
 			</div>
 			<br />
