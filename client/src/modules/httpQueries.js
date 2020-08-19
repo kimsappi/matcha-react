@@ -6,14 +6,14 @@ import {getGeolocation} from './geolocate';
 
 import {likeButtonStrings} from '../config.json';
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = '/api';
 
 // This function will generate a link to a user image on the server.
 // Can be used with 2 arguments: (id, extension) or 1: (filename)
 export const generateImageUrl = (id, extension) => {
 	if (id === 'placeholder.png' || !id || id === 'null')
 		return '/img/placeholder.png';
-	const dirUrl = baseUrl + '/img/userPhotos/';
+	const dirUrl = '/img/userPhotos/';
 	if (typeof extension === 'undefined')
 		return dirUrl + id;
 	else
