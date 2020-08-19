@@ -40,7 +40,7 @@ const MyProfileImages = ({profile, rerenderTrick, setRerenderTrick}) => {
                 else
                     return a.key - b.key;
             }) :
-        <p>You haven't uploaded any images!</p>;
+        <p style={{color: 'red'}}>You haven't uploaded any images! You must upload atleast one image before you can like other users</p>;
 
     return (
         <>

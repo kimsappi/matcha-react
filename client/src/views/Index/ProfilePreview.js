@@ -136,7 +136,7 @@ else
                             {previewState.profileData.tags_string.split(',').map((tag, index) => <h5 key={index} style={{display: 'inline', color: 'red', overflowWrap: 'break-word'}}>  #{tag}</h5>)} <br />
                         </>
                         : ''}
-                        {previewState && previewState.blockStatus === false ? 
+                        {previewState && previewState.blockStatus === false && previewState.mainPhotoStatus ? 
                         <button style={{marginRight: '10px'}} onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.likeButton, rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}} className="btn btn-success">{previewState.likeButton}</button>
                         : ''}
                         {previewState ? 

@@ -76,6 +76,20 @@ const getLikeButtonStatus = async (user, other) => {
 	return ret;
 };
 
+const getMainPhotoStatus = async (user) => {
+	const query = mysql.format('SELECT main_pic FROM users WHERE id=?', [user.id]);
+
+	const ret = new Promise((resolve, reject) => {
+		pool.query(query, (error, results) => {
+			if (results[0].main_pic === null || error)
+				resolve(false);
+			else
+				resolve(true);
+		})
+	})
+	return ret;
+}
+
 // const getImages = async id => {
 // 	const ret = new Promise((resolve, reject) => {
 // 		pool.query(mysql.format("SELECT * FROM user_photos WHERE user = ?;", [parseInt(id)]), (error, results) => {
@@ -115,8 +129,9 @@ const get = async (req, res, next) => {
 		const reportButtonStatus = getReportButtonStatus(req.user, results[0]);
 		const blockButtonStatus = getBlockButtonStatus(req.user, results[0]);
 		const likeButtonStatus = getLikeButtonStatus(req.user, results[0]);
+		const mainPhotoStatus = getMainPhotoStatus(req.user);
 		//const images = getImages(req.params.id);
-		Promise.all([likeButtonStatus, blockButtonStatus, reportButtonStatus])//, images])
+		Promise.all([likeButtonStatus, blockButtonStatus, reportButtonStatus, mainPhotoStatus])//, images])
 			.then((likeButtonStatus) => {
 				const images = results[0].photos_string ? results[0].photos_string.split(',') : [];
 				return res.json({
@@ -127,7 +142,8 @@ const get = async (req, res, next) => {
 					title: `${results[0].first_name} ${results[0].last_name[0]}.`,
 					likeButton: likeButtonStatus[0],
 					blockStatus: likeButtonStatus[1],
-					reportStatus: likeButtonStatus[2]
+					reportStatus: likeButtonStatus[2],
+					mainPhotoStatus: likeButtonStatus[3]
 				});
 			});
 	});

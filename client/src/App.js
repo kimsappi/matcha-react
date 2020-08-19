@@ -32,7 +32,7 @@ function App() {
   useEffect(() => {
     if (getToken() != "null" && getToken())
     {
-      socket = io.connect('http://localhost:3001');
+      socket = io.connect('/');
       socket.emit('logIn', {token: getToken()});
       setSocketState(socket);
     }
