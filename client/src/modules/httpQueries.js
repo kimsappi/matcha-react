@@ -103,7 +103,7 @@ export const photoActions = (action, id, rerenderTrick, setRerenderTrick) => {
 	});	
 };
 
-export const sendMyProfileData = (event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick) => {
+export const sendMyProfileData = (event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick, setMyProfileSaveStatus) => {
 	event.preventDefault();
 	if (!event.target.checkValidity()) {
 		event.target.reportValidity();
@@ -132,8 +132,12 @@ export const sendMyProfileData = (event, firstName, lastName, age, latitude, lon
 		}
 		else {
 			setRerenderTrick(!rerenderTrick);
-			if (response.data && response.data.token)
+			if (response.data && response.data.token) {
 				setToken(response.data.token);
+				setMyProfileSaveStatus('OK');
+			}
+			else
+				setMyProfileSaveStatus('Error, changes not saved');
 		}
 	});
 }

@@ -20,7 +20,8 @@ const MyProfile = ({state, setState}) => {
     const [gender, setGender] = useState('f');
     const [target, setTarget] = useState('fm');
     const [biography, setBiography] = useState('');
-    const [tags, setTags] = useState([]);
+	const [tags, setTags] = useState([]);
+	const [myProfileSaveStatus, setMyProfileSaveStatus] = useState('');
 	
 	useEffect(() => {
 		getThisPage(window.location.pathname)
@@ -42,7 +43,7 @@ const MyProfile = ({state, setState}) => {
 					age={age} setAge={setAge} firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastName={setLastName}
 					latitude={latitude} setLatitude={setLatitude} longitude={longitude} setLongitude={setLongitude} email={email} setEmail={setEmail}
 					gender={gender} setGender={setGender} target={target} setTarget={setTarget} biography={biography} setBiography={setBiography}
-					tags={tags} setTags={setTags}
+					tags={tags} setTags={setTags} myProfileSaveStatus={myProfileSaveStatus} setMyProfileSaveStatus={setMyProfileSaveStatus}
 				/>
 			</div>
 			<div className="col-sm-6">

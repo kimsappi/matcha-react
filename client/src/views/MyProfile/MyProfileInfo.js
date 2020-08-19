@@ -7,11 +7,11 @@ import MyProfileMap from './MyProfileMap';
 
 import {sendMyProfileData} from '../../modules/httpQueries';
 
-const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName, lastName, setLastName, age, setAge, latitude, setLatitude, longitude, setLongitude, email, setEmail, gender, setGender, target, setTarget, biography, setBiography, tags, setTags}) => {
+const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName, lastName, setLastName, age, setAge, latitude, setLatitude, longitude, setLongitude, email, setEmail, gender, setGender, target, setTarget, biography, setBiography, tags, setTags, myProfileSaveStatus, setMyProfileSaveStatus}) => {
     return (
         <>
         <h2>Your information</h2>
-        <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick)}>        
+        <form id='myProfileForm' onSubmit={(event) => sendMyProfileData(event, firstName, lastName, age, latitude, longitude, email, gender, target, biography, tags, rerenderTrick, setRerenderTrick, setMyProfileSaveStatus)}>        
         <InputWithLabel
             type='text'
             name='firstName'
@@ -87,6 +87,13 @@ const MyProfileInfo = ({rerenderTrick, setRerenderTrick, firstName, setFirstName
         <div>Tags</div>
 
         <TagsInput tags={tags} setTags={setTags} />
+        
+        {myProfileSaveStatus.length === 2 ?
+            <div className='alert alert-success'>{myProfileSaveStatus}</div> :
+            myProfileSaveStatus.length ?
+                <div className='alert alert-danger'>{myProfileSaveStatus}</div> :
+                ''
+        }
 
         <input className='button btn btn-primary' type='submit' name='submit' value='Save' style={{marginLeft: '50%', marginRight: '50%', marginBottom: '1em'}} />
         </form>
