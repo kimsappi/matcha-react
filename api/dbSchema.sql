@@ -83,17 +83,17 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 
 CREATE TABLE IF NOT EXISTS blocks (
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	blocker INT UNSIGNED NOT NULL,
 	blockee INT UNSIGNED NOT NULL,
-	\`time\` DATETIME NOT NULL,
-	PRIMARY KEY (blocker, blockee)
+	\`time\` DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS reports (
+	id INT AUTO_INCREMENT PRIMARY KEY,
 	reporter INT UNSIGNED NOT NULL,
 	reportee INT UNSIGNED NOT NULL,
-	\`time\` DATETIME NOT NULL,
-	PRIMARY KEY (reporter, reportee),
+	\`time\` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (reporter) REFERENCES users(id),
 	FOREIGN KEY (reportee) REFERENCES users(id)
 );
@@ -194,11 +194,11 @@ SELECT messages.id AS id, messages.content AS content, s.username AS sender_name
 JOIN users AS s ON s.id = messages.sender
 JOIN users AS r ON r.id = messages.recipient;
 
-SET GLOBAL FOREIGN_KEY_CHECKS=0;
-ALTER TABLE blocks DISABLE KEYS;
-INSERT INTO blocks VALUES (0, 0, CURRENT_TIMESTAMP());
-ALTER TABLE blocks ENABLE KEYS;
-SET GLOBAL FOREIGN_KEY_CHECKS=1;
+
+
+INSERT INTO blocks (blocker, blockee, time) VALUES (0, 0, CURRENT_TIMESTAMP);
+
+
 
 -- DROP USER 'dbuser'@'%';
 -- CREATE USER 'dbuser'@'%' IDENTIFIED WITH mysql_native_password BY '123dbuser';

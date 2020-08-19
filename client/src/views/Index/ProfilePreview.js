@@ -141,6 +141,9 @@ else
                         : ''}
                         {previewState ? 
                         <button onClick={() => {submitLike('/profile/'+previewState.profileData.id, previewState.blockStatus === true ? "unblock" : "block", rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}} className="btn btn-danger">{previewState.blockStatus === true ? "Unblock user" : "Block user"}</button>
+                        : ''} <br />
+                        {previewState ? 
+                        <button style={{margin: '9px', height: '70%'}} onClick={() => {if (confirm('Do you really want to report this user?')) {submitLike('/profile/'+previewState.profileData.id, 'report', rerenderTrick, setRerenderTrick); setStateChange(!stateChange);}}} className="btn btn-danger btn-sm" disabled={previewState.reportStatus} > {previewState.reportStatus === false ? "Report user" : "reported"}</button>
                         : ''} 
                        
                     </>
