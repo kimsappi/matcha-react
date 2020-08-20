@@ -160,9 +160,9 @@ const post = (req, res, next) => {
 	let query = ''; let preparedQuery = '';
 
 	if (req.body.action === 'like')
-		query = 'INSERT INTO likes (liker, likee) VALUES (?, ?);';
+		query = 'INSERT INTO likes (liker, likee, timestamp) VALUES (?, ?, ?);';
 	else if (req.body.action === 'unlike')
-		query = 'DELETE FROM likes WHERE liker = ? AND likee = ?;';
+		query = 'INSERT INTO unlikes (unliker, unlikee, timestamp) VALUES (?, ?, ?);';
 	else if (req.body.action === 'block')
 		query = 'INSERT INTO blocks (blocker, blockee, time) VALUES (?, ?, ?); DELETE FROM likes WHERE liker=? AND likee=?';
 	else if (req.body.action === 'unblock')

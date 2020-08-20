@@ -15,6 +15,7 @@ var routes = require('./routes/routes');
 var app = express();
 
 // app.use(logger('dev'));
+console.log = console.warn = console.error = () => {};
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

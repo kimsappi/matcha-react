@@ -6,6 +6,8 @@ import App from './App';
 
 /* eslint-disable */
 
+console.log = console.warn = console.error = () => {};
+
 ReactDOM.render(
 
     <div className="container-fluid">

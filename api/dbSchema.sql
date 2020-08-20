@@ -59,9 +59,17 @@ CREATE TABLE IF NOT EXISTS likes (
 	liker INT UNSIGNED NOT NULL,
 	likee INT UNSIGNED NOT NULL,
 	is_match BOOLEAN DEFAULT FALSE,
+	timestamp DATETIME NOT NULL DEFAULT '2020-08-20 08:39:26',
 	PRIMARY KEY (liker, likee),
 	FOREIGN KEY (liker) REFERENCES users(id),
 	FOREIGN KEY (likee) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS unlikes (
+	id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	unliker INT UNSIGNED NOT NULL,
+	unlikee INT UNSIGNED NOT NULL,
+	timestamp DATETIME NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS visits (
@@ -78,6 +86,7 @@ CREATE TABLE IF NOT EXISTS messages (
 	sender INT UNSIGNED NOT NULL,
 	recipient INT UNSIGNED NOT NULL,
 	content VARCHAR(512) NOT NULL,
+	timestamp DATETIME NOT NULL DEFAULT '2020-08-20 08:39:26',
 	FOREIGN KEY (sender) REFERENCES users(id),
 	FOREIGN KEY (recipient) REFERENCES users(id)
 );
@@ -93,7 +102,7 @@ CREATE TABLE IF NOT EXISTS reports (
 	id INT AUTO_INCREMENT PRIMARY KEY,
 	reporter INT UNSIGNED NOT NULL,
 	reportee INT UNSIGNED NOT NULL,
-	\`time\` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	\`time\` DATETIME NOT NULL DEFAULT '2020-08-20 08:39:26',
 	FOREIGN KEY (reporter) REFERENCES users(id),
 	FOREIGN KEY (reportee) REFERENCES users(id)
 );
@@ -104,7 +113,7 @@ CREATE TABLE IF NOT EXISTS notifications (
 	reason ENUM('like', 'unlike', 'visit', 'msg', 'match') NOT NULL,
 	causer INT UNSIGNED NOT NULL,
 	\`read\` BOOLEAN DEFAULT FALSE,
-	\`time\` DATETIME DEFAULT CURRENT_TIMESTAMP,
+	\`time\` DATETIME DEFAULT '2020-08-20 08:39:26',
 	FOREIGN KEY (user) REFERENCES users(id),
 	FOREIGN KEY (causer) REFERENCES users(id)
 );
@@ -112,22 +121,23 @@ CREATE TABLE IF NOT EXISTS notifications (
 CREATE TRIGGER notify_on_like AFTER INSERT ON likes FOR EACH ROW BEGIN
 	DELETE FROM notifications WHERE \`user\` = new.likee AND (reason = 'like' OR reason = 'match') AND causer = new.liker;
 	SET @likeType = IF((SELECT COUNT(*) FROM likes WHERE liker = new.likee AND likee = new.liker), 'match', 'like');
-	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.likee, @likeType, new.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.likee, @likeType, new.liker, new.timestamp);
 END;
 
-CREATE TRIGGER notify_on_unlike AFTER DELETE ON likes FOR EACH ROW BEGIN
-	DELETE FROM notifications WHERE user = old.likee AND reason = 'unlike' AND causer = old.liker;
-	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (old.likee, 'unlike', old.liker, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+CREATE TRIGGER delete_like_on_unlike BEFORE INSERT ON unlikes FOR EACH ROW BEGIN
+	DELETE FROM likes WHERE liker = new.unliker AND likee = new.unlikee;
+	DELETE FROM notifications WHERE user = new.unlikee AND reason = 'unlike' AND causer = new.unliker;
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.unlikee, 'unlike', new.unliker, new.timestamp);
 END;
 
 CREATE TRIGGER notify_on_visit AFTER INSERT ON visits FOR EACH ROW BEGIN
 	DELETE FROM notifications WHERE user = new.visitee AND reason = 'visit' AND causer = new.visitor;
-	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.visitee, 'visit', new.visitor, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.visitee, 'visit', new.visitor, new.\`time\`);
 END;
 
 CREATE TRIGGER notify_on_message AFTER INSERT ON messages FOR EACH ROW BEGIN
 	DELETE FROM notifications WHERE \`user\` = new.recipient AND reason = 'msg' AND causer = new.sender;
-	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.recipient, 'msg', new.sender, CURRENT_TIMESTAMP - INTERVAL 3 HOUR);
+	INSERT INTO notifications (user, reason, causer, \`time\`) VALUES (new.recipient, 'msg', new.sender, new.timestamp);
 END;
 
 -- Passwords are '123'
@@ -157,16 +167,16 @@ INSERT INTO likes (liker, likee, is_match) VALUES
 	(6, 2, 0);
 
 INSERT INTO visits (visitor, visitee, time) VALUES
-(4, 1, CURRENT_TIMESTAMP),
-(4, 2, CURRENT_TIMESTAMP),
-(4, 3, CURRENT_TIMESTAMP),
-(1, 2, CURRENT_TIMESTAMP),
-(1, 3, CURRENT_TIMESTAMP),
-(2, 3, CURRENT_TIMESTAMP),
-(2, 5, CURRENT_TIMESTAMP),
-(1, 6, CURRENT_TIMESTAMP),
-(6, 1, CURRENT_TIMESTAMP),
-(3, 1, CURRENT_TIMESTAMP);
+(4, 1, '2020-08-20 08:39:26'),
+(4, 2, '2020-08-20 08:39:26'),
+(4, 3, '2020-08-20 08:39:26'),
+(1, 2, '2020-08-20 08:39:26'),
+(1, 3, '2020-08-20 08:39:26'),
+(2, 3, '2020-08-20 08:39:26'),
+(2, 5, '2020-08-20 08:39:26'),
+(1, 6, '2020-08-20 08:39:26'),
+(6, 1, '2020-08-20 08:39:26'),
+(3, 1, '2020-08-20 08:39:26');
 
 INSERT INTO messages (sender, recipient, content) VALUES
 (1, 2, "hello world"),
@@ -197,7 +207,7 @@ JOIN users AS r ON r.id = messages.recipient;
 
 
 
-INSERT INTO blocks (blocker, blockee, time) VALUES (0, 0, CURRENT_TIMESTAMP);
+INSERT INTO blocks (blocker, blockee, time) VALUES (0, 0, '2020-08-20 08:39:26');
 
 
 

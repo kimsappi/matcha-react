@@ -6,6 +6,7 @@ const mysql = require('mysql');
 const {tokenSecret} = require('./config.json');
 const pool = require('./modules/dbConnect');
 const { startWatchingDataUpdate } = require('geoip-lite');
+const mysqlDatetime = require('./modules/mysqlDatetime');
 
 // function auth(thetoken) {
 // 	const authHeader = thetoken;
@@ -53,8 +54,8 @@ function addMessageToDatabase(myId, otherId, message, io, keys)
 		}
 		else
 		{
-			const query= "INSERT INTO messages (sender, recipient, content) VALUES (?, ?, ?)";
-			const prepareSql = mysql.format(query, [myId, otherId, message]);
+			const query= "INSERT INTO messages (sender, recipient, content, timestamp) VALUES (?, ?, ?, ?)";
+			const prepareSql = mysql.format(query, [myId, otherId, message, mysqlDatetime]);
 			pool.query(prepareSql, (error, results) => {
 				if (error)
 				{
