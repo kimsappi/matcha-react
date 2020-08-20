@@ -2,5 +2,5 @@
 
 npm --prefix api i
 npm --prefix client i
-npm i
-npm run start
+npm --prefix client run build
+npm --prefix api run start
