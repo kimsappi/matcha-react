@@ -12,11 +12,3 @@
 	"42redirectUriLogin": "https://kimsappi-matcha.herokuapp.com/apiLogin",
 	"42redirectUriRegister": "https://kimsappi-matcha.herokuapp.com/apiRegister"
 }
-
-
-// This file needs to be included as api/mailConfig.json
-//
-// If "user" and "pass" belong to a valid Gmail account,
-// nodemailer will be able to send confirmation emails correctly
-
-// Delete these comments
