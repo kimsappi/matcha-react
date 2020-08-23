@@ -1,7 +1,7 @@
 # About
-Hive webdev project: dating site. There is an **extremely unstable** version of the app running [here](https://kimsappi-matcha.herokuapp.com/).
+Hive webdev project: dating site made in collaboration with @josiz. There is a slightly temperamental version of the app running [here](https://kimsappi-matcha.herokuapp.com/). Among other issues with this deployment, the remote database doesn't allow for triggers, meaning the notifications system don't work.
 
-Full-stack JavaScript: Node.JS Express back-end, React front-end. MySQL database (relational DB mandated by the exercise).
+Full-stack JavaScript: Node.JS Express back-end, React front-end. MySQL database (relational DB mandated by the exercise). The product is a (mostly) single-page app that communicates through the back-end through a JSON API with JSON Web Token authentication, Socket.io chat and long-polling notifications.
 
 # Instructions
 1. *You can skip this step if you don't require full functionality.* Edit the files `mailConfig.README` (provide a valid Gmail SMTP account or similar, as well as Ecole 42 API app details) and `apiKey.README` (provide a valid Google API key with the Maps API enabled) and move the files to the folders specified in the files, removing the comments therein.
